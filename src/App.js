@@ -62,11 +62,11 @@ class App extends React.Component {
           onClick = {this.handleTweet}
         > TWEET</button>
         <h1> {this.state.message}</h1>
-        <div>
+        <div className = 'allTweets'>
           <h1>TWEETS</h1>
           {tweets.map(tweet => {
             return(
-            <div>{tweet}</div>
+            <div className = 'singleTweet'>{tweet}</div>
             )
           })}
         </div>

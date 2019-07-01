@@ -31,3 +31,23 @@
     transform: rotate(360deg);
   }
 }
+
+.allTweets {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.singleTweet {
+  display: flex;
+  align-items: flex-start;
+  color: black;
+  font-weight: bolder;
+  width: 30%;
+  height: 40px;
+  border: 1px solid black;
+  border-radius: 10px;
+  background-color: white;
+  padding: 10px;
+  margin: auto;
+}
