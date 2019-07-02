@@ -8,6 +8,7 @@ export default tweets => {
   // console.log(tweets['Twittor']['getMessageLength']['0x0'], 'TWEETS')
   // console.log(web3, 'WEB3')
   let length = tweets['Twittor']['getMessageLength']['0x0'];
+  console.log('length ', length)
   let mapArray = []
   if(length) {
     // console.log(length.value, 'lENGTH')
@@ -21,31 +22,31 @@ console.log(mapArray, 'lENGTH')
   return (
  <div className="App">
    <ToastContainer />
-   <h1> Please just work</h1>
+   
    <div>
      <h1>TWEETS</h1>
 
-    {}
-<h1>
-{<ContractData contract="Twittor" method="getMessageLength"/>}
+<ContractForm contract="Twittor" method="setMessage" />
 
-</h1>
-
-<ul>
+<div className = "allTweets">
 {mapArray.map((tweet, idx) => {
-  return <li><ContractData contract="Twittor" method="getMessageByIndex" 
+  return <div className = "singleTweet"><ContractData contract="Twittor" method="getMessageByIndex" 
   methodArgs = {[idx]}
-  key={idx}/></li>
-})
-    }</ul>
+  key={idx}/></div>
+}).reverse()
+    }</div>
 
-<div>
+{/* <div>
 <h1>FETCH USER TWEETS</h1>
 <ContractData contract="Twittor" method="fetchUserTweets" methodArgs = {["0x42d83DC64F5DbDFd4eff8A0B36f7c64ddd24B256"]} />
 
+</div> */}
+<div className = "hide">
+{<ContractData  contract="Twittor" method="getMessageLength"/>}
+
 </div>
 
-     <ContractForm contract="Twittor" method="setMessage" />
+
    </div>
  </div>
 )};
