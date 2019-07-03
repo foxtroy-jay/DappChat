@@ -51,3 +51,13 @@
   padding: 10px;
   margin: auto;
 }
+
+.hide {
+  display: none;
+}
+
+.pure-button {
+  color: blue;
+  
+}
+

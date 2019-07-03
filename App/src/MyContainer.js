@@ -3,6 +3,8 @@ import { drizzleConnect } from 'drizzle-react'
 
 const mapStateToProps = state => {
   // console.log(state.contracts, 'CONTRACTS')
+  console.log("state ", state)
+
   return ({
   accounts: state.accounts,
   Twittor: state.contracts.Twittor,
