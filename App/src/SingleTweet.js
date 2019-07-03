@@ -25,6 +25,7 @@ export default class SingleTweet extends React.Component {
   render() {
     return (
       <div>
+        <h1>Single</h1>
         <p>Address: {this.props.address}</p>
         <p>Block Num: {this.state[2]}</p>
         <p>Replies: {this.state[3]}</p>

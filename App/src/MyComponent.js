@@ -4,14 +4,25 @@ import 'react-toastify/dist/ReactToastify.css';
 import { ContractData } from 'drizzle-react-components';
 import TweetForm from './TweetForm';
 import SingleTweet from './SingleTweet';
+import { Drizzle } from 'drizzle';
+import options from './drizzleOptions';
 
+const drizzle = new Drizzle(options);
 export default class tweets extends React.Component {
+  constructor(props) {
+    super();
+    this.state = { userAddress: '' };
+  }
+  async componentDidMount() {
+    const accounts = await drizzle.web3.eth.getAccounts();
+    this.setState({ userAddress: accounts[0] });
+  }
+
   render() {
     let length = 0;
-    const userAddress = this.props.accounts[0];
     const getNumTweetsFirstKey = Object.keys(
       this.props.Twittor.getNumTweets
-    )[0];
+    )[1];
     if (this.props.Twittor.getNumTweets[getNumTweetsFirstKey]) {
       length = this.props.Twittor.getNumTweets[getNumTweetsFirstKey].value;
     }
@@ -26,14 +37,17 @@ export default class tweets extends React.Component {
         <ToastContainer />
 
         <div>
-          <h1>Test</h1>
           <h1>TWEETS</h1>
           <TweetForm contract="Twittor" method="addTweetStruct" />
           <div className="allTweets">
             {mapArray
               .map((tweet, idx) => {
                 return (
-                  <SingleTweet address={userAddress} index={idx} key={idx} />
+                  <SingleTweet
+                    address={this.state.userAddress}
+                    index={idx}
+                    key={idx}
+                  />
                 );
               })
               .reverse()}
@@ -43,7 +57,7 @@ export default class tweets extends React.Component {
               <ContractData
                 contract="Twittor"
                 method="getNumTweets"
-                methodArgs={[userAddress]}
+                methodArgs={[this.state.userAddress]}
               />
             }
           </div>
