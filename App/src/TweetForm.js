@@ -1,17 +1,17 @@
-import { drizzleConnect } from "drizzle-react";
-import React, { Component } from "react";
-import PropTypes from "prop-types";
+import { drizzleConnect } from 'drizzle-react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 const translateType = type => {
   switch (true) {
     case /^uint/.test(type):
-      return "number";
+      return 'number';
     case /^string/.test(type) || /^bytes/.test(type):
-      return "text";
+      return 'text';
     case /^bool/.test(type):
-      return "checkbox";
+      return 'checkbox';
     default:
-      return "text";
+      return 'text';
   }
 };
 
@@ -37,7 +37,7 @@ class TweetForm extends Component {
         this.inputs = abi[i].inputs;
 
         for (var j = 0; j < this.inputs.length; j++) {
-          initialState[this.inputs[j].name] = "";
+          initialState[this.inputs[j].name] = '';
         }
 
         break;
@@ -48,20 +48,16 @@ class TweetForm extends Component {
   }
 
   findHashTag(str) {
-      this.setState({hashT: str.split(' ').filter(word => {
-          return word[0] === '#'
-      })[0]})
+    return str.split(' ').filter(word => {
+      return word[0] === '#';
+    })[0];
   }
 
   handleSubmit(event) {
     event.preventDefault();
 
-    this.findHashTag(this.state.tweet)
-   
-    console.log("state", this.state)
-
     const convertedInputs = this.inputs.map(input => {
-      if (input.type === "bytes32") {
+      if (input.type === 'bytes32') {
         return this.utils.toHex(this.state[input.name]);
       }
       return this.state[input.name];
@@ -79,7 +75,11 @@ class TweetForm extends Component {
   }
 
   handleInputChange(event) {
-    this.setState({ [event.target.name]: event.target.value });
+    this.setState({
+      tweet: event.target.value,
+      hashT: this.findHashTag(event.target.value),
+    });
+    console.log(this.state);
   }
 
   render() {
@@ -93,8 +93,6 @@ class TweetForm extends Component {
       });
     }
 
-// this.inputs.length = 1
-
     return (
       <form
         className="pure-form pure-form-stacked"
@@ -106,13 +104,13 @@ class TweetForm extends Component {
             ? this.props.labels[index]
             : input.name;
           // check if input type is struct and if so loop out struct fields as well
-          let hideClass = "";
-          if(index === 1) {
-            hideClass = "hide";
+          let hideClass = '';
+          if (index === 1) {
+            hideClass = 'hide';
           }
           return (
             <input
-            className = {hideClass}
+              className={hideClass}
               key={input.name}
               type={inputType}
               name={input.name}
