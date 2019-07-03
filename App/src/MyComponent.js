@@ -4,6 +4,8 @@ import 'react-toastify/dist/ReactToastify.css';
 import { ContractData, ContractForm } from 'drizzle-react-components';
 import web3 from './web3'
 import twittor from './twittor'
+import { Contract } from 'web3-eth-contract';
+import TweetForm from './TweetForm'
 // import store from '../../contracts/Twittor.sol';
 
 export default class tweets extends React.Component{
@@ -16,7 +18,8 @@ export default class tweets extends React.Component{
       if (this.props.Twittor.getNumTweets[getNumTweetsFirstKey]) {
         length = this.props.Twittor.getNumTweets[getNumTweetsFirstKey].value;
       }
-      console.log('length ', length)
+      // console.log("Store ", this.props)
+      // console.log('length ', length)
       let mapArray = []
       if(length) {
     mapArray.length = length
@@ -33,7 +36,7 @@ export default class tweets extends React.Component{
       <div>
         <h1>TWEETS</h1>
 
-    <ContractForm contract="Twittor" method="addTweetStruct" />
+    <TweetForm contract="Twittor" method="addTweetStruct" />
    
   
 
@@ -56,6 +59,8 @@ export default class tweets extends React.Component{
       {<ContractData  contract="Twittor" method="getNumTweets" methodArgs = {[userAddress]}/>}
 
    </div>
+
+   {/* <ContractForm contract="Twittor" method="getTweetStruct" /> */}
 
 
 

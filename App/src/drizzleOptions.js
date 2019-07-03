@@ -2,13 +2,13 @@ import Migrations from "./contracts/Migrations.json";
 import Twittor from "./contracts/Twittor.json";
 
 const options = {
-  web3: {
-    block: false,
-    fallback: {
-      type: "ws",
-      url: "ws://127.0.0.1:9545",
-    },
-  },
+  // web3: {
+  //   block: false,
+  //   fallback: {
+  //     type: "ws",
+  //     url: "ws://127.0.0.1:9545",
+  //   },
+  // },
   contracts: [Migrations, Twittor],
   // events: {
   //   Twittor: ["Tweet"],
