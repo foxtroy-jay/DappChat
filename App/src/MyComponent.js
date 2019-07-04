@@ -10,20 +10,41 @@ import { DrizzleContext } from "drizzle-react";
 
 // const drizzle = new Drizzle(options);
 export default class tweets extends React.Component {
-  constructor(props) {
+  constructor(props, context) {
     super(props);
+    this.drizzleState = context.drizzle
+    // this.contractInstance = context.drizzle.contracts.Twittor
     this.state = { userAddress: '',
     tweet: "",
     hashT: "",
-    numTweets: 0
+    numTweets: 0,
+    dataKey: null
   };
+
   }
   async componentDidMount() {
     // console.log("drizzle ", drizzle)
+    const {drizzle} = this.props;
+
     const accounts = await this.props.drizzle.web3.eth.getAccounts();
-    const numTweets = await this.props.drizzle.contracts.Twittor.methods.getNumTweets(accounts[0]).call();
-    console.log("numTweets ", numTweets)
-    this.setState({ userAddress: accounts[0], numTweets });
+    // const numTweets = await this.props.drizzle.contracts.Twittor.methods.getNumTweets(accounts[0]).call();
+    
+    // Initializes getNumTweets of store state 
+    // getNumTweets is initially an empty object so this call sets it to however
+    // many tweets the current address passed to it has
+    drizzle.contracts.Twittor.methods.getNumTweets.cacheCall(accounts[0])
+    
+    // let numTweets = 0;
+    
+
+    // console.log("numTweets ", numTweets)
+    this.setState({ userAddress: accounts[0] });
+    // const contract = ;
+
+    // drizzle.contracts.Twittor.methods.getNumTweets.cacheCall(accounts[0])
+    // this.setState({dataKey});
+
+    // console.log("KEY ", dataKey)
   }
 
   handleInputChange = (event) => {
@@ -39,9 +60,12 @@ export default class tweets extends React.Component {
 
 
   await this.props.drizzle.contracts.Twittor.methods.addTweetStruct(this.state.tweet, this.state.hashT).send({from: this.state.userAddress})
-//  this.forceUpdate();
-const numTweets = await this.props.drizzle.contracts.Twittor.methods.getNumTweets(this.state.userAddress).call();
-this.setState({numTweets });
+
+  
+
+  //  this.forceUpdate();
+//const numTweets = await this.props.drizzle.contracts.Twittor.methods.getNumTweets(this.state.userAddress).call();
+//this.setState({numTweets });
 
     
 }
@@ -68,7 +92,16 @@ findHashTag(str) {
 }
 
   render() {
-    let length = this.state.numTweets;
+
+    const {drizzleState} = this.props;
+    let length = 0;
+
+    const key = Object.keys(drizzleState.contracts.Twittor.getNumTweets)[0]
+    //if getNumTweets has been initialized then set length to equal getNumTweets
+    if(drizzleState.contracts.Twittor.getNumTweets[key]){  
+      length = drizzleState.contracts.Twittor.getNumTweets[key].value;
+    }
+
     // const getNumTweetsFirstKey = Object.keys(
     //   this.props.drizzleState.contracts.Twittor.getNumTweets
     // )[1];
@@ -83,10 +116,12 @@ findHashTag(str) {
     
 
     console.log("props", this.props)
+    console.log("drizzleState>>>>", this.props.drizzle.store.getState())
+    // console.log("contractInstance>>>>>", this.contractInstance)
     return (
       <div className="App">
         <ToastContainer />
-        {<h1>{this.state.numTweets} </h1>}
+        {<h1>{length} </h1>}
         <div>
           <button onClick = {this.getTweet} >GET TWEET</button>
           <button onClick = {this.getNum} >GET Numtweets</button>
