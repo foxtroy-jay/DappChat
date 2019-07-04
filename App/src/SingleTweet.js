@@ -1,5 +1,6 @@
 import React from 'react';
 import ReplyTweet from './ReplyTweet';
+import { toast, Flip } from 'react-toastify';
 
 export default class SingleTweet extends React.Component {
   constructor(props) {
@@ -32,6 +33,12 @@ export default class SingleTweet extends React.Component {
 
   handleSubmit = async event => {
     event.preventDefault();
+
+    toast.info('Processing reply...', {
+      position: 'top-right',
+      autoClose: 10000,
+      transition: Flip,
+    });
     await this.props.drizzle.contracts.Twittor.methods
       .addReply(this.props.address, this.props.index, this.state.reply)
       .send({ from: this.props.address });

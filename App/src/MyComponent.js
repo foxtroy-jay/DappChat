@@ -1,5 +1,5 @@
 import React from 'react';
-import { ToastContainer } from 'react-toastify';
+import { ToastContainer, toast, Flip } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import SingleTweet from './SingleTweet';
 
@@ -35,7 +35,14 @@ export default class tweets extends React.Component {
 
   handleSubmit = async event => {
     event.preventDefault();
-    console.log(this.state, 'WHAT IS BEING SUBMITTED');
+
+    // console.log(this.state, 'WHAT IS BEING SUBMITTED');
+
+    toast.info('Processing tweet...', {
+      position: 'top-right',
+      autoClose: 10000,
+      transition: Flip,
+    });
     await this.props.drizzle.contracts.Twittor.methods
       .addTweetStruct(this.state.tweet, this.state.hashT)
       .send({ from: this.state.userAddress });
