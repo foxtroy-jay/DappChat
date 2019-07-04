@@ -1,6 +1,7 @@
 import { drizzleConnect } from 'drizzle-react';
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+// import store from './middleware'
 
 const translateType = type => {
   switch (true) {
@@ -150,9 +151,36 @@ TweetForm.propTypes = {
  */
 
 const mapStateToProps = state => {
+  console.log("State ", state )
   return {
     contracts: state.contracts,
   };
 };
+
+
+// import MyComponent from './MyComponent'
+// import React from "react";
+// import { DrizzleContext } from "drizzle-react";
+// import TweetForm from './TweetForm';
+
+// export default () => (
+//   <DrizzleContext.Consumer>
+//     {drizzleContext => {
+//       const { drizzle, drizzleState, initialized } = drizzleContext;
+  
+//       if (!initialized) {
+//         return "Loading...";
+//       }
+
+//       return (
+//       <div>
+//               <MyComponent drizzle={drizzle} drizzleState={drizzleState} />
+//       <TweetForm drizzle = {drizzle} drizzleState = {drizzleState} />
+//       </div>
+
+//       );
+//     }}
+//   </DrizzleContext.Consumer>
+// )
 
 export default drizzleConnect(TweetForm, mapStateToProps);

@@ -9,6 +9,7 @@ const mapStateToProps = state => {
     accounts: state.accounts,
     Twittor: state.contracts.Twittor,
     drizzleStatus: state.drizzleStatus,
+    state: state
   };
 };
 

@@ -1,19 +1,29 @@
-import React from 'react';
-// import logo from './logo.svg';
-import './App.css';
-// import web3 from './web3';
-// import twittor from './twittor';
+// import React from 'react';
+// // import logo from './logo.svg';
+// import './App.css';
+// // import web3 from './web3';
+// // import twittor from './twittor';
 
-import { DrizzleProvider } from "drizzle-react";
-import { LoadingContainer } from "drizzle-react-components";
+// import { DrizzleProvider } from "drizzle-react";
+// import { LoadingContainer } from "drizzle-react-components";
+// import {Drizzle, generateStore} from 'drizzle'
+// import { DrizzleContext } from "drizzle-react";
+// import "./App.css";
 
-import "./App.css";
+// import Migrations from "./contracts/Migrations.json";
+// import Twittor from "./contracts/Twittor.json";
 
-import drizzleOptions from "./drizzleOptions";
-import MyContainer from "./MyContainer";
-import store from './middleware'
+// import drizzleOptions from "./drizzleOptions";
+// import MyContainer from "./MyContainer";
+// import store from './middleware'
+// const options = {contracts: [Migrations, Twittor]};
+// const drizzleStore = generateStore(options);
+// const drizzle = new Drizzle(options, drizzleStore);
 
-class App extends React.Component {
+
+
+
+// class App extends React.Component {
   // constructor() {
   //   super();
   //   this.state ={
@@ -88,17 +98,41 @@ class App extends React.Component {
   //   );
   // }
  
-  render() {
-    return (
-      <DrizzleProvider store={store} options={drizzleOptions}>
-        <LoadingContainer>
-          <MyContainer />
-        </LoadingContainer>
-      </DrizzleProvider>
-    );
-  }
-}
-
-export default App;
+//   render() {
+//     return (
+//       <DrizzleProvider store={store} options={drizzleOptions}>
+//         <LoadingContainer>
+//           <MyContainer />
+//         </LoadingContainer>
+//       </DrizzleProvider>
+//     );
+//   }
+// }
 
 
+
+// export default App;
+
+
+import MyComponent from './MyComponent'
+import React from "react";
+import { DrizzleContext } from "drizzle-react";
+import TweetForm from './TweetForm';
+
+export default () => (
+  <DrizzleContext.Consumer>
+    {drizzleContext => {
+      const { drizzle, drizzleState, initialized } = drizzleContext;
+  
+      if (!initialized) {
+        return "Loading...";
+      }
+      return (
+      <div>
+              <MyComponent drizzle={drizzle} drizzleState={drizzleState} />
+      </div>
+
+      );
+    }}
+  </DrizzleContext.Consumer>
+)
