@@ -12,13 +12,20 @@ import Migrations from './contracts/Migrations.json';
 import Twittor from './contracts/Twittor.json';
 
 import store from './middleware';
+
+import Routes from './routes';
+import { Router } from 'react-router-dom';
+import { BrowserRouter } from 'react-router-dom';
 const options = { contracts: [Migrations, Twittor] };
 // const drizzleStore = generateStore(options);
 const drizzle = new Drizzle(options, store);
 
 ReactDOM.render(
   <DrizzleContext.Provider drizzle={drizzle}>
-    <App />
+    <BrowserRouter>
+      <Routes drizzle={drizzle} />
+    </BrowserRouter>
+    {/* <App /> */}
   </DrizzleContext.Provider>,
 
   document.getElementById('root')

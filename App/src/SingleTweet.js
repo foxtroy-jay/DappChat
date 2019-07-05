@@ -1,12 +1,29 @@
 import React from 'react';
 import ReplyTweet from './ReplyTweet';
 import { toast, Flip } from 'react-toastify';
+import {
+  Button,
+  Form,
+  Message,
+  Accordion,
+  AccordionContent,
+  AccordionTitle,
+  Icon,
+  Loader,
+} from 'semantic-ui-react';
 
 export default class SingleTweet extends React.Component {
   constructor(props) {
     super();
 
-    this.state = { reply: '' };
+    this.state = {
+      reply: '',
+      activeIndex: false,
+      loading: false,
+      errorMessage: '',
+      displayReply: false,
+      loadingData: true,
+    };
   }
   async componentDidMount() {
     await this.props.drizzle.contracts.Twittor.methods.getNumReplies.cacheCall(
@@ -33,15 +50,31 @@ export default class SingleTweet extends React.Component {
 
   handleSubmit = async event => {
     event.preventDefault();
+    this.setState({ loading: true });
 
     toast.info('Processing reply...', {
       position: 'top-right',
       autoClose: 10000,
       transition: Flip,
     });
-    await this.props.drizzle.contracts.Twittor.methods
-      .addReply(this.props.address, this.props.index, this.state.reply)
-      .send({ from: this.props.address });
+
+    try {
+      await this.props.drizzle.contracts.Twittor.methods
+        .addReply(this.props.address, this.props.index, this.state.reply)
+        .send({ from: this.props.address });
+    } catch (error) {
+      toast.dismiss();
+      this.setState({ errorMessage: error.message });
+    }
+    this.setState({ loading: false, reply: '' });
+  };
+
+  handleClick = (e, titleProps) => {
+    const { index } = titleProps;
+    const { activeIndex } = this.state;
+    const newIndex = activeIndex === index ? -1 : index;
+
+    this.setState({ activeIndex: newIndex });
   };
 
   render() {
@@ -74,25 +107,29 @@ export default class SingleTweet extends React.Component {
       mapArray.length = length;
       mapArray.fill(1);
     }
+    const { displayReply } = this.state;
 
     return (
       <div>
-        <h1>Single</h1>
-        <p>Address: {this.props.address}</p>
-        <p>Block Num: {this.state[2]}</p>
+        <div>
+          Block Num:{' '}
+          {this.state[2] ? this.state[2] : <Loader size="mini" active inline />}
+          {/* (this.setState({ loadingData: false }), */}
+        </div>
+        <div>
+          Tweet:{' '}
+          {this.state[0] ? this.state[0] : <Loader size="mini" active inline />}
+        </div>
         <p>Replies: {length}</p>
 
+        {/* Should move to new component */}
         <div>
-          <button
-            onClick={() =>
-              this.setState({ displayReply: !this.state.displayReply })
-            }
-          >
-            Replies
-          </button>
-          {this.state.displayReply ? (
+          <Accordion fluid styled>
             <div>
-              <form onSubmit={this.handleSubmit}>
+              <Form
+                onSubmit={this.handleSubmit}
+                error={!!this.state.errorMessage}
+              >
                 <input
                   key="reply"
                   name="reply"
@@ -100,35 +137,51 @@ export default class SingleTweet extends React.Component {
                   placeholder="reply"
                   onChange={this.handleInputChange}
                 />
-                <button type="submit">Reply</button>
-              </form>
+                <Message
+                  error
+                  header="Oops!"
+                  content={this.state.errorMessage}
+                />
 
+                <Button loading={this.state.loading}>Reply</Button>
+              </Form>
               <div>
-                {mapArray.length > 0 ? (
-                  mapArray
-                    .map((tweet, idx) => {
-                      return (
+                <AccordionTitle
+                  active={displayReply}
+                  onClick={() => {
+                    this.setState({
+                      displayReply: !displayReply,
+                    });
+                  }}
+                >
+                  <Icon name="dropdown" />
+                  Replies
+                </AccordionTitle>
+
+                {mapArray
+                  .map((tweet, idx) => {
+                    return (
+                      <AccordionContent active={displayReply} key={idx}>
                         <ReplyTweet
                           address={this.props.address}
                           index={this.props.index}
                           replyIndex={idx}
-                          key={idx}
                           drizzle={this.props.drizzle}
                         />
-                      );
-                    })
-                    .reverse()
-                ) : (
+                      </AccordionContent>
+                    );
+                  })
+                  .reverse()}
+                <AccordionContent
+                  active={displayReply && mapArray.length === 0}
+                >
                   <h2>No replies yet</h2>
-                )}
+                </AccordionContent>
               </div>
             </div>
-          ) : (
-            <p />
-          )}
+          </Accordion>
         </div>
-
-        <p>Tweet: {this.state[0]}</p>
+        {/* Should move to new component */}
       </div>
     );
   }

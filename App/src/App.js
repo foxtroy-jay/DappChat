@@ -8,7 +8,7 @@ export default () => (
       const { drizzle, drizzleState, initialized } = drizzleContext;
 
       if (!initialized) {
-        return 'Loading...';
+        return <h1>'Loading...'</h1>;
       }
       return (
         <div>

@@ -2,28 +2,32 @@ import React from 'react';
 import { ToastContainer, toast, Flip } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import SingleTweet from './SingleTweet';
+import { Button, Form, Message } from 'semantic-ui-react';
+import UserPage from './UserPage';
+import { Link } from 'react-router-dom';
 
 export default class tweets extends React.Component {
   constructor(props, context) {
     super(props);
     this.drizzleState = context.drizzle;
     this.state = {
-      userAddress: '',
+      userAddress: this.props.props.match.params.address || '',
       tweet: '',
       hashT: '',
       numTweets: 0,
       dataKey: null,
+      loading: false,
+      errorMessage: '',
     };
   }
   async componentDidMount() {
-    const { drizzle } = this.props;
-    const accounts = await this.props.drizzle.web3.eth.getAccounts();
-
-    // Initializes getNumTweets of store state
-    // getNumTweets is initially an empty object so this call sets it to however
-    // many tweets the current address passed to it has
-    drizzle.contracts.Twittor.methods.getNumTweets.cacheCall(accounts[0]);
-    this.setState({ userAddress: accounts[0] });
+    if (!this.state.userAddress) {
+      const accounts = await this.props.drizzle.web3.eth.getAccounts();
+      this.setState({ userAddress: accounts[0] });
+    }
+    this.props.drizzle.contracts.Twittor.methods.getNumTweets.cacheCall(
+      this.state.userAddress
+    );
   }
 
   handleInputChange = event => {
@@ -35,21 +39,26 @@ export default class tweets extends React.Component {
 
   handleSubmit = async event => {
     event.preventDefault();
-
-    // console.log(this.state, 'WHAT IS BEING SUBMITTED');
-
+    this.setState({ loading: true });
     toast.info('Processing tweet...', {
       position: 'top-right',
       autoClose: 10000,
       transition: Flip,
     });
-    await this.props.drizzle.contracts.Twittor.methods
-      .addTweetStruct(this.state.tweet, this.state.hashT)
-      .send({ from: this.state.userAddress });
+
+    try {
+      await this.props.drizzle.contracts.Twittor.methods
+        .addTweetStruct(this.state.tweet, this.state.hashT)
+        .send({ from: this.state.userAddress });
+    } catch (error) {
+      this.setState({ errorMessage: error.message });
+      toast.dismiss();
+    }
+
+    this.setState({ loading: false, tweet: '', hashT: '' });
   };
 
   getTweet = async index => {
-    console.log('props ', this.props);
     const result = await this.props.drizzle.contracts.Twittor.methods
       .getEverythingTweetStruct(this.state.userAddress, index)
       .call();
@@ -80,7 +89,6 @@ export default class tweets extends React.Component {
   render() {
     const { drizzleState } = this.props;
     let length = 0;
-
     const key = Object.keys(drizzleState.contracts.Twittor.getNumTweets)[0];
     //if getNumTweets has been initialized then set length to equal getNumTweets
     if (drizzleState.contracts.Twittor.getNumTweets[key]) {
@@ -93,19 +101,17 @@ export default class tweets extends React.Component {
       mapArray.fill(1);
     }
 
-    // console.log("props", this.props)
     // console.log("drizzleState>>>>", this.props.drizzle.store.getState())
     // console.log("contractInstance>>>>>", this.contractInstance)
     return (
       <div className="App">
         <ToastContainer />
+        <Button href="/UserPage">User Page</Button>
+        {/* <UserPage drizzle={this.props.drizzle} drizzleState={drizzleState} /> */}
         {<h1>{length} </h1>}
         <div>
-          <button onClick={this.getTweet}>GET TWEET</button>
-          <button onClick={this.getNum}>GET Numtweets</button>
-
-          <h1>TWEETS</h1>
-          <form onSubmit={this.handleSubmit}>
+          <h1>{this.state.userAddress}'s Tweets</h1>
+          <Form onSubmit={this.handleSubmit} error={!!this.state.errorMessage}>
             <input
               key="tweet"
               name="tweet"
@@ -113,8 +119,11 @@ export default class tweets extends React.Component {
               placeholder="tweet"
               onChange={this.handleInputChange}
             />
-            <button type="submit">TWEET</button>
-          </form>
+            <Message error header="Oops!" content={this.state.errorMessage} />
+            <Button primary loading={this.state.loading}>
+              Tweet
+            </Button>
+          </Form>
           <div className="allTweets">
             {mapArray
               .map((tweet, idx) => {

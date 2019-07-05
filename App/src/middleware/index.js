@@ -3,7 +3,8 @@ import { generateStore } from 'drizzle';
 import drizzleOptions from '../drizzleOptions';
 
 const contractEventNotifier = store => next => action => {
-  if (action.type === 'BLOCK_RECEIVED') {
+  //BLOCK_RECEIVED
+  if (action.type === 'CONTRACT_SYNCED') {
     toast.dismiss();
     toast.success('Tweet sent! ✔️', {
       autoclose: 5000,
