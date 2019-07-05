@@ -83,6 +83,7 @@ export default class SingleTweet extends React.Component {
     let identifier;
 
     //Gets list of all single tweet keys
+    console.log(drizzleState.contracts.Twittor.getNumReplies);
     const keys = Object.keys(drizzleState.contracts.Twittor.getNumReplies);
 
     //Searches through the getNumReply arguments, matches the index, and saves indentifier

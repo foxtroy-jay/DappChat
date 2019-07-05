@@ -31,10 +31,9 @@ export default class UserPage extends React.Component {
           .call()
       );
     }
+
     const numReplies = await Promise.all(batch);
-    const numRepliesTotal = numReplies
-      .filter(replyNum => replyNum > 0)
-      .reduce((acc, curr) => acc + +curr, 0);
+    const numRepliesTotal = numReplies.reduce((acc, curr) => acc + +curr, 0);
     this.setState({ numReplies: numRepliesTotal });
   };
 

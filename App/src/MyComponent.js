@@ -75,15 +75,15 @@ export default class tweets extends React.Component {
   };
 
   findHashTag(str) {
-    const hashTIndex = str.indexOf('#');
-    let hashT = '';
+    const hashTagIndex = str.indexOf('#');
+    let hashTag = '';
 
-    if (hashTIndex !== -1) {
-      let endOfHashT = str.indexOf(' ', hashTIndex);
+    if (hashTagIndex !== -1) {
+      let endOfHashT = str.indexOf(' ', hashTagIndex);
       if (endOfHashT === -1) endOfHashT = str.length;
-      hashT = str.slice(hashTIndex, endOfHashT);
+      hashTag = str.slice(hashTagIndex, endOfHashT);
     }
-    return hashT || '';
+    return hashTag || '';
   }
 
   render() {
