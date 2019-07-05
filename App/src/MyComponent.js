@@ -1,71 +1,146 @@
 import React from 'react';
-import { ToastContainer } from 'react-toastify';
+import { ToastContainer, toast, Flip } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { ContractData, ContractForm } from 'drizzle-react-components';
-import web3 from './web3'
-import twittor from './twittor'
-import { Contract } from 'web3-eth-contract';
-import TweetForm from './TweetForm'
-// import store from '../../contracts/Twittor.sol';
+import SingleTweet from './SingleTweet';
+import { Button, Form, Message } from 'semantic-ui-react';
+import UserPage from './UserPage';
+import { Link } from 'react-router-dom';
 
-export default class tweets extends React.Component{
+export default class tweets extends React.Component {
+  constructor(props, context) {
+    super(props);
+    this.drizzleState = context.drizzle;
+    this.state = {
+      userAddress: this.props.props.match.params.address || '',
+      tweet: '',
+      hashT: '',
+      numTweets: 0,
+      dataKey: null,
+      loading: false,
+      errorMessage: '',
+    };
+  }
+  async componentDidMount() {
+    if (!this.state.userAddress) {
+      const accounts = await this.props.drizzle.web3.eth.getAccounts();
+      this.setState({ userAddress: accounts[0] });
+    }
+    this.props.drizzle.contracts.Twittor.methods.getNumTweets.cacheCall(
+      this.state.userAddress
+    );
+  }
 
+  handleInputChange = event => {
+    this.setState({
+      tweet: event.target.value,
+      hashT: this.findHashTag(event.target.value),
+    });
+  };
 
-  render() {
-      let length = 0;
-      const userAddress = this.props.accounts[0];
-      const getNumTweetsFirstKey = Object.keys(this.props.Twittor.getNumTweets)[0]
-      if (this.props.Twittor.getNumTweets[getNumTweetsFirstKey]) {
-        length = this.props.Twittor.getNumTweets[getNumTweetsFirstKey].value;
-      }
-      // console.log("Store ", this.props)
-      // console.log('length ', length)
-      let mapArray = []
-      if(length) {
-    mapArray.length = length
-    mapArray.fill(1)  
+  handleSubmit = async event => {
+    event.preventDefault();
+    this.setState({ loading: true });
+    toast.info('Processing tweet...', {
+      position: 'top-right',
+      autoClose: 10000,
+      transition: Flip,
+    });
+
+    try {
+      await this.props.drizzle.contracts.Twittor.methods
+        .addTweetStruct(this.state.tweet, this.state.hashT)
+        .send({ from: this.state.userAddress });
+    } catch (error) {
+      this.setState({ errorMessage: error.message });
+      toast.dismiss();
     }
 
-    
-    
-      
-      return (
-    <div className="App">
-      <ToastContainer />
-      
-      <div>
-        <h1>TWEETS</h1>
+    this.setState({ loading: false, tweet: '', hashT: '' });
+  };
 
-    <TweetForm contract="Twittor" method="addTweetStruct" />
-   
-  
+  getTweet = async index => {
+    const result = await this.props.drizzle.contracts.Twittor.methods
+      .getEverythingTweetStruct(this.state.userAddress, index)
+      .call();
 
-    
-    <div className = "allTweets">
-    {mapArray.map((tweet, idx) => {
-      return <div className = "singleTweet"><ContractData contract="Twittor" method="getTweetStruct" 
-      methodArgs = {[userAddress,idx]}
-      key={idx}/></div>
-    }).reverse()
-        }</div>
+    return result[0];
+  };
 
-    {/* <div>
-    <h1>FETCH USER TWEETS</h1>
-    <ContractData contract="Twittor" method="fetchUserTweets" methodArgs = {["0x42d83DC64F5DbDFd4eff8A0B36f7c64ddd24B256"]} />
+  getNum = async index => {
+    const numTweets = await this.props.drizzle.contracts.Twittor.methods
+      .getNumTweets(this.state.userAddress)
+      .call();
+    this.setState({ numTweets });
+    this.forceUpdate();
+  };
 
-    </div> */}
+  findHashTag(str) {
+    const hashTIndex = str.indexOf('#');
+    let hashT = '';
 
-<div className = "hide">
-      {<ContractData  contract="Twittor" method="getNumTweets" methodArgs = {[userAddress]}/>}
-
-   </div>
-
-   {/* <ContractForm contract="Twittor" method="getTweetStruct" /> */}
-
-
-
-      </div>
-    </div>
-    )
+    if (hashTIndex !== -1) {
+      let endOfHashT = str.indexOf(' ', hashTIndex);
+      if (endOfHashT === -1) endOfHashT = str.length;
+      hashT = str.slice(hashTIndex, endOfHashT);
+    }
+    return hashT || '';
   }
- };
+
+  render() {
+    const { drizzleState } = this.props;
+    let length = 0;
+    const key = Object.keys(drizzleState.contracts.Twittor.getNumTweets)[0];
+    //if getNumTweets has been initialized then set length to equal getNumTweets
+    if (drizzleState.contracts.Twittor.getNumTweets[key]) {
+      length = drizzleState.contracts.Twittor.getNumTweets[key].value;
+    }
+
+    let mapArray = [];
+    if (length) {
+      mapArray.length = length;
+      mapArray.fill(1);
+    }
+
+    // console.log("drizzleState>>>>", this.props.drizzle.store.getState())
+    // console.log("contractInstance>>>>>", this.contractInstance)
+    return (
+      <div className="App">
+        <ToastContainer />
+        <Button href="/UserPage">User Page</Button>
+        {/* <UserPage drizzle={this.props.drizzle} drizzleState={drizzleState} /> */}
+        {<h1>{length} </h1>}
+        <div>
+          <h1>{this.state.userAddress}'s Tweets</h1>
+          <Form onSubmit={this.handleSubmit} error={!!this.state.errorMessage}>
+            <input
+              key="tweet"
+              name="tweet"
+              value={this.state.tweet}
+              placeholder="tweet"
+              onChange={this.handleInputChange}
+            />
+            <Message error header="Oops!" content={this.state.errorMessage} />
+            <Button primary loading={this.state.loading}>
+              Tweet
+            </Button>
+          </Form>
+          <div className="allTweets">
+            {mapArray
+              .map((tweet, idx) => {
+                return (
+                  <SingleTweet
+                    address={this.state.userAddress}
+                    index={idx}
+                    key={idx}
+                    drizzle={this.props.drizzle}
+                    drizzleState={drizzleState}
+                  />
+                );
+              })
+              .reverse()}
+          </div>
+        </div>
+      </div>
+    );
+  }
+}
