@@ -21,7 +21,11 @@ contract DappChat {
 
     Channel[] public allChannels;
     mapping(address => string) public aliases;
-    mapping(address => int[]) public followedChannels;
+    mapping(address => int[]) followedChannels;
+
+
+
+
 
     //Create or set alias
     function setAlias(string memory username) public {
@@ -123,5 +127,9 @@ contract DappChat {
 
     function getChannelData(uint channelIndex) public view returns (address, string memory, string memory, uint, bool){
         return (allChannels[channelIndex].channelOwner, allChannels[channelIndex].channelName, allChannels[channelIndex].category,allChannels[channelIndex].numberOfReplies, allChannels[channelIndex].restrictedStatus);
+    }
+
+        function getFollowedChannels() public view returns (int[] memory) {
+        return followedChannels[msg.sender];
     }
 }

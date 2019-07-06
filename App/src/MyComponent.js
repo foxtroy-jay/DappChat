@@ -7,7 +7,6 @@ import UserPage from './UserPage';
 import { Link } from 'react-router-dom';
 
 const defaultState = {
-  // userAddress: this.props.props.match.params.address || '',
   channelName: '',
   category: '',
   restrictedStatus: false,
@@ -21,25 +20,28 @@ export default class tweets extends React.Component {
     this.drizzleState = context.drizzle;
     this.state = defaultState;
   }
+
   async componentDidMount() {
     if (!this.state.userAddress) {
       const accounts = await this.props.drizzle.web3.eth.getAccounts();
       this.setState({ userAddress: accounts[0] });
     }
-
-    this.props.drizzle.contracts.DappChat.methods.getAllChannelsLength.cacheCall();
-
-    // this.props.drizzle.contracts.DappChat.methods.getChannelData.cacheCall(0);
-    // await this.props.drizzle.contracts.DappChat.methods
-    //   .addChannelStruct('Channel Name', 'Channel Category', false)
-    //   .send({ from: this.state.userAddress });
+    console.log('componentdidmount', this.state.userAddress);
+    console.log('methods', this.props.drizzle.contracts.DappChat.methods);
+    // this.props.drizzle.contracts.DappChat.methods.followedChannels.cacheCall(
+    //   this.state.userAddress,
+    //   0
+    // );
+    let test = await this.props.drizzle.contracts.DappChat.methods
+      .followedChannels(this.state.userAddress)
+      .call();
+    console.log('after', test);
   }
 
   handleInputChange = event => {
     this.setState({
       [event.target.name]: event.target.value,
     });
-    // console.log(this.state);
   };
 
   handleSubmit = async event => {
@@ -99,30 +101,18 @@ export default class tweets extends React.Component {
     const { drizzleState } = this.props;
     let length = 0;
 
-    // console.log(
-    //   'PROPS'
-    // );
-
-    // console.log(drizzleState.contracts.DappChat.getChannelData, 'CHANNEL DATA');
     const key = Object.keys(
       drizzleState.contracts.DappChat.getAllChannelsLength
     )[0];
     if (drizzleState.contracts.DappChat.getAllChannelsLength[key]) {
       length = drizzleState.contracts.DappChat.getAllChannelsLength[key].value;
     }
-
-    // length = 6;
+    length = 1;
     let mapArray = [];
     if (length) {
       mapArray.length = length;
       mapArray.fill(1);
     }
-
-    // console.log(
-    //   this.props.drizzleState,
-    //   // .allChannels.call(),
-    //   ' methods'
-    // );
 
     return (
       <div className="App">
