@@ -26,7 +26,7 @@ export default class Channel extends React.Component {
     };
   }
   async componentDidMount() {
-    const channelData = await this.props.drizzle.contracts.Stealth.methods
+    const channelData = await this.props.drizzle.contracts.DappChat.methods
       .getChannelData(this.props.channelIndex)
       .call();
 
@@ -36,7 +36,7 @@ export default class Channel extends React.Component {
     //   this.props.channelIndex,
     //   'channelindex'
     // );
-    this.props.drizzle.contracts.Stealth.methods.getChannelData.cacheCall(
+    this.props.drizzle.contracts.DappChat.methods.getChannelData.cacheCall(
       this.props.channelIndex
     );
 
@@ -45,7 +45,7 @@ export default class Channel extends React.Component {
 
   getData = async (address, index) => {
     console.log(this.props.channelIndex);
-    const result = await this.props.drizzle.contracts.Stealth.methods
+    const result = await this.props.drizzle.contracts.DappChat.methods
       .getChannelData(1)
       .call();
     console.log(result);
@@ -69,7 +69,7 @@ export default class Channel extends React.Component {
     });
 
     try {
-      await this.props.drizzle.contracts.Stealth.methods
+      await this.props.drizzle.contracts.DappChat.methods
         .addMessage(this.props.channelIndex, this.state.message)
         .send({ from: this.props.address });
     } catch (error) {
@@ -93,14 +93,14 @@ export default class Channel extends React.Component {
     let identifier;
 
     // //Gets list of all single tweet keys
-    const keys = Object.keys(drizzleState.contracts.Stealth.getChannelData);
+    const keys = Object.keys(drizzleState.contracts.DappChat.getChannelData);
 
     // //Searches through the getNumReply arguments, matches the index, and saves indentifier
     if (keys.length) {
       for (let i = 0; i < keys.length; i++) {
-        // console.log(drizzleState.contracts.Stealth.getChannelData);
+        // console.log(drizzleState.contracts.DappChat.getChannelData);
         if (
-          drizzleState.contracts.Stealth.getChannelData[keys[i]].args[0] ===
+          drizzleState.contracts.DappChat.getChannelData[keys[i]].args[0] ===
           this.props.channelIndex
         ) {
           identifier = keys[i];
@@ -111,7 +111,7 @@ export default class Channel extends React.Component {
       //   //Finds the newly updated num replies
       if (identifier) {
         length =
-          drizzleState.contracts.Stealth.getChannelData[identifier].value[3];
+          drizzleState.contracts.DappChat.getChannelData[identifier].value[3];
       }
     }
 

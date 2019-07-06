@@ -2,7 +2,7 @@ pragma solidity ^0.5.8;
 pragma experimental ABIEncoderV2;
 
 
-contract Stealth {
+contract DappChat {
 
 mapping(address => string[]) private tweets;
 address[] private keyList;

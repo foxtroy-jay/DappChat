@@ -3,7 +3,7 @@ import { drizzleConnect } from 'drizzle-react';
 
 const mapStateToProps = state => ({
   accounts: state.accounts,
-  Stealth: state.contracts.Stealth,
+  DappChat: state.contracts.DappChat,
   drizzleStatus: state.drizzleStatus,
 });
 

@@ -1,5 +1,5 @@
-const Stealth = artifacts.require('Stealth');
+const DappChat = artifacts.require('DappChat');
 
 module.exports = function(deployer) {
-  deployer.deploy(Stealth);
+  deployer.deploy(DappChat);
 };
