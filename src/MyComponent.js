@@ -2,7 +2,7 @@
 // import logo from './logo.svg';
 // import './App.css';
 // import web3 from './web3';
-// import Stealth from './Stealth';
+// import DappChat from './DappChat';
 
 // class App extends React.Component {
 //   constructor() {
@@ -16,7 +16,7 @@
 //   async componentDidMount() {
 //     try {
 //       const accounts = await web3.eth.getAccounts();
-//       const tweets = await Stealth.methods.fetchUserTweets(accounts[0]).call();
+//       const tweets = await DappChat.methods.fetchUserTweets(accounts[0]).call();
 
 //       this.setState({ tweets });
 //     } catch (err) {
@@ -36,7 +36,7 @@
 //       //get current account logged in
 //       const accounts = await web3.eth.getAccounts();
 //       //send tweet out
-//       await Stealth.methods
+//       await DappChat.methods
 //         .setMessage(this.state.newTweet)
 //         .send({ from: accounts[0] });
 //     } catch (err) {
@@ -81,8 +81,8 @@ export default tweets => (
     <h1> Please just work</h1>
     <div>
       <h1>TWEETS</h1>
-      <ContractData contract="Stealth" method="getKeys" />
-      <ContractForm contract="Stealth" method="setMessage" />
+      <ContractData contract="DappChat" method="getKeys" />
+      <ContractForm contract="DappChat" method="setMessage" />
     </div>
   </div>
 );

@@ -1,5 +1,5 @@
 import Migrations from './contracts/Migrations.json';
-import Stealth from './contracts/Stealth.json';
+import DappChat from './contracts/DappChat.json';
 
 const options = {
   // web3: {
@@ -9,9 +9,9 @@ const options = {
   //     url: "ws://127.0.0.1:9545",
   //   },
   // },
-  contracts: [Migrations, Stealth],
+  contracts: [Migrations, DappChat],
   // events: {
-  //   Stealth: ["Tweet"],
+  //   DappChat: ["Tweet"],
   // },
   // polls: {
   //   // set polling interval to 30secs so we don't get buried in poll events

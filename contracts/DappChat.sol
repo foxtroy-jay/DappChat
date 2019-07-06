@@ -2,8 +2,7 @@ pragma solidity ^0.5.8;
 pragma experimental ABIEncoderV2;
 
 
-contract Stealth {
-
+contract DappChat {
     struct ReplyMessage {
         string message;
         address sender;
@@ -20,27 +19,18 @@ contract Stealth {
         mapping(uint => ReplyMessage) messages;
     }
 
-    struct User {
-        string username;
-        int[] following;
-    }
-
     Channel[] public allChannels;
-    mapping(address => User) public allUsers;
-    address[] public addressList;
+    mapping(address => string) public aliases;
+    mapping(address => int[]) public followedChannels;
 
-    //Check if user exists in javascript otherwise createUser
-    function createUser(string memory username) public {
-        allUsers[msg.sender] = User(username, new int[](0));
-        addressList.push(msg.sender);
+    //Create or set alias
+    function setAlias(string memory username) public {
+        aliases[msg.sender] = username;
     }
 
-    function changeUsername(string memory newUsername) public {
-        allUsers[msg.sender].username = newUsername;
-    }
-
-    //Feed in hashtag from javascript
+    //Create new addChannelStruct
     function addChannelStruct(string memory channelName, string memory category, bool restrictedStatus) public {
+
         Channel memory newChannel = Channel({
             channelOwner: msg.sender,
             channelName: channelName,
@@ -49,8 +39,14 @@ contract Stealth {
             restrictedStatus: restrictedStatus
         });
 
-        followChannel(int(allChannels.length));
+
+
+        //Follows your own channel
+        followedChannels[msg.sender].push(int(allChannels.length));
         allChannels.push(newChannel);
+
+        //add yourself to your own allowed members
+        allChannels[allChannels.length - 1].members[msg.sender] = true;
     }
 
     function toggleChannelRestriction(uint channelIndex) public{
@@ -93,11 +89,11 @@ contract Stealth {
 
     //Change to channels instead of user
     function followChannel(int channelIndex) public {
-        allUsers[msg.sender].following.push(channelIndex);
+        followedChannels[msg.sender].push(channelIndex);
     }
 
     function unfollowChannel(uint indexToUnfollow) public {
-        allUsers[msg.sender].following[indexToUnfollow] = -1;
+        followedChannels[msg.sender][indexToUnfollow] = -1;
     }
 
     //need to render different css if sender is different than user
@@ -127,9 +123,5 @@ contract Stealth {
 
     function getChannelData(uint channelIndex) public view returns (address, string memory, string memory, uint, bool){
         return (allChannels[channelIndex].channelOwner, allChannels[channelIndex].channelName, allChannels[channelIndex].category,allChannels[channelIndex].numberOfReplies, allChannels[channelIndex].restrictedStatus);
-    }
-
-    function getUserData(address user) public view returns (string memory, int[] memory){
-        return (allUsers[user].username, allUsers[user].following);
     }
 }

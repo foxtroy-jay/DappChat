@@ -6,18 +6,20 @@ import { Button, Form, Message } from 'semantic-ui-react';
 import UserPage from './UserPage';
 import { Link } from 'react-router-dom';
 
+const defaultState = {
+  // userAddress: this.props.props.match.params.address || '',
+  channelName: '',
+  category: '',
+  restrictedStatus: false,
+  loading: false,
+  errorMessage: '',
+};
+
 export default class tweets extends React.Component {
   constructor(props, context) {
     super(props);
     this.drizzleState = context.drizzle;
-    this.state = {
-      userAddress: this.props.props.match.params.address || '',
-      channelName: '',
-      category: '',
-      restrictedStatus: false,
-      loading: false,
-      errorMessage: '',
-    };
+    this.state = defaultState;
   }
   async componentDidMount() {
     if (!this.state.userAddress) {
@@ -25,10 +27,10 @@ export default class tweets extends React.Component {
       this.setState({ userAddress: accounts[0] });
     }
 
-    this.props.drizzle.contracts.Stealth.methods.getAllChannelsLength.cacheCall();
+    this.props.drizzle.contracts.DappChat.methods.getAllChannelsLength.cacheCall();
 
-    // this.props.drizzle.contracts.Stealth.methods.getChannelData.cacheCall(0);
-    // await this.props.drizzle.contracts.Stealth.methods
+    // this.props.drizzle.contracts.DappChat.methods.getChannelData.cacheCall(0);
+    // await this.props.drizzle.contracts.DappChat.methods
     //   .addChannelStruct('Channel Name', 'Channel Category', false)
     //   .send({ from: this.state.userAddress });
   }
@@ -50,7 +52,7 @@ export default class tweets extends React.Component {
     });
 
     try {
-      await this.props.drizzle.contracts.Stealth.methods
+      await this.props.drizzle.contracts.DappChat.methods
         .addChannelStruct(
           this.state.channelName,
           this.state.category,
@@ -62,11 +64,11 @@ export default class tweets extends React.Component {
       toast.dismiss();
     }
 
-    this.setState({ loading: false, channelName: '', hashT: '' });
+    this.setState(defaultState);
   };
 
   getTweet = async index => {
-    const result = await this.props.drizzle.contracts.Stealth.methods
+    const result = await this.props.drizzle.contracts.DappChat.methods
       .getEverythingTweetStruct(this.state.userAddress, index)
       .call();
 
@@ -74,7 +76,7 @@ export default class tweets extends React.Component {
   };
 
   getNum = async index => {
-    const numTweets = await this.props.drizzle.contracts.Stealth.methods
+    const numTweets = await this.props.drizzle.contracts.DappChat.methods
       .getNumTweets(this.state.userAddress)
       .call();
     this.setState({ numTweets });
@@ -101,11 +103,13 @@ export default class tweets extends React.Component {
     //   'PROPS'
     // );
 
-    // console.log(drizzleState.contracts.Stealth.getChannelData, 'CHANNEL DATA');
-    // const key = Object.keys(drizzleState.contracts.Stealth.getChannelData)[0];
-    // if (drizzleState.contracts.Stealth.getChannelData[key]) {
-    //   length = drizzleState.contracts.Stealth.getChannelData[key].value[3];
-    // }
+    // console.log(drizzleState.contracts.DappChat.getChannelData, 'CHANNEL DATA');
+    const key = Object.keys(
+      drizzleState.contracts.DappChat.getAllChannelsLength
+    )[0];
+    if (drizzleState.contracts.DappChat.getAllChannelsLength[key]) {
+      length = drizzleState.contracts.DappChat.getAllChannelsLength[key].value;
+    }
 
     // length = 6;
     let mapArray = [];
@@ -114,11 +118,11 @@ export default class tweets extends React.Component {
       mapArray.fill(1);
     }
 
-    console.log(
-      this.props.drizzleState,
-      // .allChannels.call(),
-      ' methods'
-    );
+    // console.log(
+    //   this.props.drizzleState,
+    //   // .allChannels.call(),
+    //   ' methods'
+    // );
 
     return (
       <div className="App">

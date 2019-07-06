@@ -6,7 +6,7 @@ export default class ChannelMessage extends React.Component {
     this.state = { messageData: '' };
   }
   async componentDidMount() {
-    const messageData = await this.props.drizzle.contracts.Stealth.methods
+    const messageData = await this.props.drizzle.contracts.DappChat.methods
       .getReplyData(this.props.channelIndex, this.props.messageIndex)
       .call();
     this.setState({ messageData: messageData[0] });
