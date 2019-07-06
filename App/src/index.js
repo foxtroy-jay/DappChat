@@ -9,14 +9,14 @@ import { DrizzleContext } from 'drizzle-react';
 import './App.css';
 
 import Migrations from './contracts/Migrations.json';
-import Twittor from './contracts/Twittor.json';
+import Stealth from './contracts/Stealth.json';
 
 import store from './middleware';
 
 import Routes from './routes';
 import { Router } from 'react-router-dom';
 import { BrowserRouter } from 'react-router-dom';
-const options = { contracts: [Migrations, Twittor] };
+const options = { contracts: [Migrations, Stealth] };
 // const drizzleStore = generateStore(options);
 const drizzle = new Drizzle(options, store);
 

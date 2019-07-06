@@ -1,5 +1,5 @@
-const Twittor = artifacts.require('Twittor');
+const Stealth = artifacts.require('Stealth');
 
 module.exports = function(deployer) {
-  deployer.deploy(Twittor);
+  deployer.deploy(Stealth);
 };

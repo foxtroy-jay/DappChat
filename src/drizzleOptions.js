@@ -1,5 +1,5 @@
-// import Twittor from './Twittor.sol';
-import Twittor from './twittor.js';
+// import Stealth from './Stealth.sol';
+import Stealth from './Stealth.js';
 
 const options = {
   web3: {
@@ -9,9 +9,9 @@ const options = {
       url: 'ws://127.0.0.1:9545',
     },
   },
-  contracts: [Twittor],
+  contracts: [Stealth],
   events: {
-    Twittor: ['Twittor'],
+    Stealth: ['Stealth'],
   },
   polls: {
     // set polling interval to 30secs so we don't get buried in poll events
