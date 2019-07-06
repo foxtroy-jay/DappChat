@@ -16,7 +16,7 @@ export default class UserPage extends React.Component {
   }
 
   fetchNumberOfTweets = async address => {
-    const numTweets = await this.props.drizzle.contracts.Twittor.methods
+    const numTweets = await this.props.drizzle.contracts.Stealth.methods
       .getNumTweets(address)
       .call();
     this.setState({ numTweets: numTweets });
@@ -26,15 +26,14 @@ export default class UserPage extends React.Component {
     const batch = [];
     for (let i = 0; i < this.state.numTweets; i++) {
       batch.push(
-        this.props.drizzle.contracts.Twittor.methods
+        this.props.drizzle.contracts.Stealth.methods
           .getNumReplies(address, i)
           .call()
       );
     }
+
     const numReplies = await Promise.all(batch);
-    const numRepliesTotal = numReplies
-      .filter(replyNum => replyNum > 0)
-      .reduce((acc, curr) => acc + +curr, 0);
+    const numRepliesTotal = numReplies.reduce((acc, curr) => acc + +curr, 0);
     this.setState({ numReplies: numRepliesTotal });
   };
 
@@ -42,7 +41,7 @@ export default class UserPage extends React.Component {
     let count = 0;
     let currFollowing;
     try {
-      currFollowing = await this.props.drizzle.contracts.Twittor.methods
+      currFollowing = await this.props.drizzle.contracts.Stealth.methods
         .viewFollowing(address, count)
         .call();
     } catch (error) {
@@ -50,7 +49,7 @@ export default class UserPage extends React.Component {
     }
     console.log(currFollowing);
     // do {
-    //   currFollowing = await this.props.drizzle.contracts.Twittor.methods.viewFollowing(
+    //   currFollowing = await this.props.drizzle.contracts.Stealth.methods.viewFollowing(
     //     address,
     //     count
     //   );
