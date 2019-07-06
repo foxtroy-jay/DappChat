@@ -32,10 +32,7 @@ export default class tweets extends React.Component {
     //   this.state.userAddress,
     //   0
     // );
-    let test = await this.props.drizzle.contracts.DappChat.methods
-      .followedChannels(this.state.userAddress)
-      .call();
-    console.log('after', test);
+    this.props.drizzle.contracts.DappChat.methods.getFollowedChannels.cacheCall();
   }
 
   handleInputChange = event => {
@@ -100,19 +97,24 @@ export default class tweets extends React.Component {
   render() {
     const { drizzleState } = this.props;
     let length = 0;
-
-    const key = Object.keys(
-      drizzleState.contracts.DappChat.getAllChannelsLength
-    )[0];
-    if (drizzleState.contracts.DappChat.getAllChannelsLength[key]) {
-      length = drizzleState.contracts.DappChat.getAllChannelsLength[key].value;
-    }
-    length = 1;
+    const contractState = this.props.drizzleState.contracts.DappChat;
+    // const key = Object.keys(
+    //   drizzleState.contracts.DappChat.getAllChannelsLength
+    // )[0];
+    // if (drizzleState.contracts.DappChat.getAllChannelsLength[key]) {
+    //   length = drizzleState.contracts.DappChat.getAllChannelsLength[key].value;
+    // }
     let mapArray = [];
-    if (length) {
-      mapArray.length = length;
-      mapArray.fill(1);
+    // if (length) {
+    //   mapArray.length = length;
+    //   mapArray.fill(1);
+    // }
+    if (contractState.getFollowedChannels['0x0']) {
+      mapArray = contractState.getFollowedChannels['0x0'].value;
+      console.log('check this out', mapArray);
     }
+
+    console.log(this.props.drizzleState);
 
     return (
       <div className="App">
@@ -153,14 +155,14 @@ export default class tweets extends React.Component {
           </Form>
           <div className="allTweets">
             {mapArray
-              .map((tweet, idx) => {
+              .map(channelIndex => {
                 return (
                   <Channel
                     address={this.state.userAddress}
-                    channelIndex={idx}
+                    channelIndex={channelIndex}
                     drizzle={this.props.drizzle}
                     drizzleState={drizzleState}
-                    key={idx}
+                    key={channelIndex}
                   />
                 );
               })
