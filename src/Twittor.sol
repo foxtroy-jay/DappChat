@@ -2,7 +2,7 @@ pragma solidity ^0.5.8;
 pragma experimental ABIEncoderV2;
 
 
-contract Twittor {
+contract Stealth {
 
 mapping(address => string[]) private tweets;
 address[] private keyList;
