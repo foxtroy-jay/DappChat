@@ -115,22 +115,22 @@ export default class Channel extends React.Component {
       }
     }
 
-    let channelMessageArray = [];
-    const { displayReply } = this.state;
+    // let channelMessageArray = [];
+    // const { displayReply } = this.state;
 
-    for (let idx = 0; idx < length; idx++) {
-      channelMessageArray.push(
-        <AccordionContent active={displayReply} key={idx}>
-          <ChannelMessage
-            userAddress={this.props.address}
-            channelIndex={this.props.channelIndex}
-            messageIndex={idx}
-            drizzle={this.props.drizzle}
-          />
-        </AccordionContent>
-      );
-    }
-    channelMessageArray.reverse();
+    // for (let idx = 0; idx < length; idx++) {
+    //   channelMessageArray.push(
+    //     <AccordionContent active={displayReply} key={idx}>
+    //       <ChannelMessage
+    //         userAddress={this.props.address}
+    //         channelIndex={this.props.channelIndex}
+    //         messageIndex={idx}
+    //         drizzle={this.props.drizzle}
+    //       />
+    //     </AccordionContent>
+    //   );
+    // }
+    // channelMessageArray.reverse();
 
     // console.log(identifier, 'IDENTIFIER');
     return (
@@ -151,7 +151,7 @@ export default class Channel extends React.Component {
         <p>Messages: {length}</p>
 
         {/* Should move to new component */}
-        <div>
+        {/* <div>
           <Accordion fluid styled>
             <div>
               <Form
@@ -195,7 +195,7 @@ export default class Channel extends React.Component {
               </div>
             </div>
           </Accordion>
-        </div>
+        </div> */}
         {/* Should move to new component */}
       </div>
     );
