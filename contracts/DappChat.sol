@@ -15,7 +15,9 @@ contract DappChat {
         string category;
         uint numberOfReplies;
         bool restrictedStatus;
-        mapping(address=>bool) members;
+        //we want a mapping because of fast lookup and slow write
+        address[] membersArray;
+        mapping(address=>bool) members; 
         mapping(uint => ReplyMessage) messages;
     }
 
@@ -36,7 +38,8 @@ contract DappChat {
             channelName: channelName,
             category: category,
             numberOfReplies:0,
-            restrictedStatus: restrictedStatus
+            restrictedStatus: restrictedStatus,
+            membersArray: new address[](0)
         });
 
 
@@ -47,6 +50,7 @@ contract DappChat {
 
         //add yourself to your own allowed members
         allChannels[allChannels.length - 1].members[msg.sender] = true;
+        allChannels[allChannels.length - 1].membersArray.push(msg.sender);
     }
 
     function toggleChannelRestriction(uint channelIndex) public{
@@ -56,15 +60,16 @@ contract DappChat {
     function addChannelMembers(uint channelIndex, address newMember) public {
         require (allChannels[channelIndex].channelOwner == msg.sender);
             allChannels[channelIndex].members[newMember] = true;
+            allChannels[channelIndex].membersArray.push(newMember);              
     }
 
-    function removeChannelMembers(uint channelIndex, address memberToRemove) public {
+    function removeChannelMembers(uint channelIndex, address memberToRemove, uint memberIndex) public {
         require (allChannels[channelIndex].channelOwner == msg.sender);
             allChannels[channelIndex].members[memberToRemove] = false;
+            delete allChannels[channelIndex].membersArray[memberIndex];
     }
 
     //While creating tweets we will add button to reply with original address and index
-    //
     function addMessage(uint channelIndex, string memory message) public {
         if(allChannels[channelIndex].restrictedStatus == true){
             require(allChannels[channelIndex].members[msg.sender]);
@@ -125,7 +130,13 @@ contract DappChat {
         return (allChannels[channelIndex].channelOwner, allChannels[channelIndex].channelName, allChannels[channelIndex].category,allChannels[channelIndex].numberOfReplies, allChannels[channelIndex].restrictedStatus);
     }
 
-        function getFollowedChannels() public view returns (int[] memory) {
+    function getFollowedChannels() public view returns (int[] memory) {
         return followedChannels[msg.sender];
     }
+    
+    function getMembersArray(uint channelIndex) public view returns (address[] memory) {
+        return allChannels[channelIndex].membersArray;
+    } 
+    
 }
+

@@ -1,16 +1,17 @@
 import React from 'react';
-import { ToastContainer, toast, Flip } from 'react-toastify';
-import { Button, Form, Message, Modal } from 'semantic-ui-react';
+import { toast, Flip } from 'react-toastify';
+import { Button, Form, Message, Modal, Icon } from 'semantic-ui-react';
 
 const defaultState = {
   Alias: '',
   loading: false,
   errorMessage: '',
   userAddress: '',
+  showModal: false,
 };
 
 export default class EditAliasForm extends React.Component {
-  constructor(props) {
+  constructor() {
     super();
     this.state = defaultState;
   }
@@ -22,13 +23,13 @@ export default class EditAliasForm extends React.Component {
     }
   }
 
-  handleInputChange = event => {
+  handleInputChange = (event) => {
     this.setState({
       [event.target.name]: event.target.value,
     });
   };
 
-  handleSubmit = async event => {
+  handleSubmit = async (event) => {
     event.preventDefault();
     this.setState({ loading: true });
     toast.info('Processing tweet...', {
@@ -48,10 +49,22 @@ export default class EditAliasForm extends React.Component {
     this.setState(defaultState);
   };
 
+  toggleModal = () => {
+    this.setState({ showModal: !this.state.showModal });
+  };
+
   render() {
     return (
-      <Modal trigger={<a className="item">Edit Alias</a>}>
+      <Modal
+        open={this.state.showModal}
+        trigger={
+          <a onClick={this.toggleModal} className="item">
+            Edit Alias
+          </a>
+        }
+      >
         <Modal.Header>Edit Alias</Modal.Header>
+        <Icon name={'close'} onClick={this.toggleModal} />
         <Form onSubmit={this.handleSubmit} error={!!this.state.errorMessage}>
           <input
             key="Alias"
