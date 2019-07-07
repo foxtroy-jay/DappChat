@@ -2,7 +2,7 @@ Instructions to have a working Twittor
 
 1. Delete contracts folder in App/src/contracts
 
-2. "npm i" on root directory (if you have permissions issues use "npm i --save -dev")
+2. "npm i" on root directory and app directory (if you have permissions issues use "npm i --save -dev")
 
 3. Download and open up Ganache (https://www.trufflesuite.com/ganache)
 
@@ -16,10 +16,10 @@ Instructions to have a working Twittor
 
 7. In Ganache, create a new workspace, and in the server section, change the port number to 8545 and save.
 
-8.cCopy and paste the 12 word mnemonic into the .secret file
+8. Copy and paste the 12 word mnemonic into the .secret file
 
 9. Download Metamask extension for your browser and log in to Metamask using the Ganache seed account
-   (12 word mnemonic from step XXX)
+   (12 word mnemonic from step 6)
 
 10. Change metamask network to localhost 8545
 
