@@ -1,6 +1,6 @@
 import React from 'react';
-import { ToastContainer, toast, Flip } from 'react-toastify';
-import { Button, Form, Message, Modal } from 'semantic-ui-react';
+import { toast, Flip } from 'react-toastify';
+import { Button, Form, Message, Modal, Icon } from 'semantic-ui-react';
 
 const defaultState = {
   channelName: '',
@@ -9,10 +9,11 @@ const defaultState = {
   loading: false,
   errorMessage: '',
   userAddress: '',
+  showModal: false,
 };
 
 export default class AddChannelForm extends React.Component {
-  constructor(props) {
+  constructor() {
     super();
     this.state = defaultState;
   }
@@ -24,13 +25,13 @@ export default class AddChannelForm extends React.Component {
     }
   }
 
-  handleInputChange = event => {
+  handleInputChange = (event) => {
     this.setState({
       [event.target.name]: event.target.value,
     });
   };
 
-  handleSubmit = async event => {
+  handleSubmit = async (event) => {
     event.preventDefault();
     this.setState({ loading: true });
     toast.info('Processing tweet...', {
@@ -38,14 +39,9 @@ export default class AddChannelForm extends React.Component {
       autoClose: 10000,
       transition: Flip,
     });
-
     try {
       await this.props.drizzle.contracts.DappChat.methods
-        .addChannelStruct(
-          this.state.channelName,
-          this.state.category,
-          this.state.restrictedStatus
-        )
+        .addChannelStruct(this.state.channelName, this.state.category, this.state.restrictedStatus)
         .send({ from: this.state.userAddress });
     } catch (error) {
       this.setState({ errorMessage: error.message });
@@ -55,11 +51,16 @@ export default class AddChannelForm extends React.Component {
     this.setState(defaultState);
   };
 
+  toggleModal = () => {
+    this.setState({ showModal: !this.state.showModal });
+  };
+
   render() {
     return (
       <div>
-        <Modal trigger={<Button>Create A New Channel</Button>}>
+        <Modal open={this.state.showModal} trigger={<Button onClick={this.toggleModal}>Create A New Channel</Button>}>
           <Modal.Header>Create A New Channel</Modal.Header>
+          <Icon name={'close'} onClick={this.toggleModal} />
           <Form onSubmit={this.handleSubmit} error={!!this.state.errorMessage}>
             <input
               key="channelName"
