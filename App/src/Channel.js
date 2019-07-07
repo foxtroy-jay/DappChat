@@ -11,6 +11,7 @@ import {
   Icon,
   Loader,
 } from 'semantic-ui-react';
+import { Link } from 'react-router-dom';
 
 export default class Channel extends React.Component {
   constructor(props) {
@@ -115,31 +116,37 @@ export default class Channel extends React.Component {
       }
     }
 
-    let channelMessageArray = [];
-    const { displayReply } = this.state;
+    // let channelMessageArray = [];
+    // const { displayReply } = this.state;
 
-    for (let idx = 0; idx < length; idx++) {
-      channelMessageArray.push(
-        <AccordionContent active={displayReply} key={idx}>
-          <ChannelMessage
-            userAddress={this.props.address}
-            channelIndex={this.props.channelIndex}
-            messageIndex={idx}
-            drizzle={this.props.drizzle}
-          />
-        </AccordionContent>
-      );
-    }
-    channelMessageArray.reverse();
+    // for (let idx = 0; idx < length; idx++) {
+    //   channelMessageArray.push(
+    //     <AccordionContent active={displayReply} key={idx}>
+    //       <ChannelMessage
+    //         userAddress={this.props.address}
+    //         channelIndex={this.props.channelIndex}
+    //         messageIndex={idx}
+    //         drizzle={this.props.drizzle}
+    //       />
+    //     </AccordionContent>
+    //   );
+    // }
+    // channelMessageArray.reverse();
 
     // console.log(identifier, 'IDENTIFIER');
+    const { channelIndex } = this.props;
     return (
       <div>
         <div>
           Channel Owner:{' '}
           {this.state[0] ? this.state[0] : <Loader size="mini" active inline />}
         </div>
-        <div>
+        <div
+          onClick={() => {
+            this.props.clickChannel(channelIndex);
+          }}
+          className="channelLink"
+        >
           Channel Name:{' '}
           {this.state[1] ? this.state[1] : <Loader size="mini" active inline />}
         </div>
@@ -148,10 +155,9 @@ export default class Channel extends React.Component {
           {this.state[2] ? this.state[2] : <Loader size="mini" active inline />}
         </div>
         <div>Restricted: {this.state[4] ? 'True' : 'False'}</div>
-        <p>Messages: {length}</p>
 
         {/* Should move to new component */}
-        <div>
+        {/* <div>
           <Accordion fluid styled>
             <div>
               <Form
@@ -195,7 +201,7 @@ export default class Channel extends React.Component {
               </div>
             </div>
           </Accordion>
-        </div>
+        </div> */}
         {/* Should move to new component */}
       </div>
     );

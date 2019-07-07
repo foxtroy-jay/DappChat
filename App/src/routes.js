@@ -1,9 +1,10 @@
 import { DrizzleContext } from 'drizzle-react';
 import React, { Component } from 'react';
 import { Route, Switch } from 'react-router-dom';
-import MyComponent from './MyComponent';
+import Home from './Home';
 
 import UserPage from './UserPage';
+import AddChannelForm from './AddChannelForm';
 
 export default class Routes extends Component {
   render() {
@@ -18,6 +19,19 @@ export default class Routes extends Component {
           return (
             <div>
               <Switch>
+                <Route
+                  exact
+                  path="/addChannel"
+                  render={props => {
+                    return (
+                      <AddChannelForm
+                        drizzle={drizzle}
+                        drizzleState={drizzleState}
+                        props={props}
+                      />
+                    );
+                  }}
+                />
                 <Route
                   exact
                   path="/userpage"
@@ -38,7 +52,7 @@ export default class Routes extends Component {
                   render={props => {
                     // console.log('/ ran');
                     return (
-                      <MyComponent
+                      <Home
                         drizzle={drizzle}
                         drizzleState={drizzleState}
                         props={props}
@@ -50,7 +64,7 @@ export default class Routes extends Component {
                   exact
                   path="/:address"
                   render={props => (
-                    <MyComponent
+                    <Home
                       drizzle={drizzle}
                       drizzleState={drizzleState}
                       props={props}

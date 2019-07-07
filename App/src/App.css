@@ -58,6 +58,9 @@
 
 .pure-button {
   color: blue;
-  
 }
 
+.channelLink {
+  color: blue;
+  cursor: pointer;
+}
