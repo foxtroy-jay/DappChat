@@ -1,4 +1,4 @@
-import MyComponent from './MyComponent';
+import Home from './Home';
 import React from 'react';
 import { DrizzleContext } from 'drizzle-react';
 
@@ -12,7 +12,7 @@ export default () => (
       }
       return (
         <div>
-          <MyComponent drizzle={drizzle} drizzleState={drizzleState} />
+          <Home drizzle={drizzle} drizzleState={drizzleState} />
         </div>
       );
     }}
