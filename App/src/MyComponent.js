@@ -26,25 +26,23 @@ export default class tweets extends React.Component {
       const accounts = await this.props.drizzle.web3.eth.getAccounts();
       this.setState({ userAddress: accounts[0] });
     }
-    console.log('componentdidmount', this.state.userAddress);
-    console.log('methods', this.props.drizzle.contracts.DappChat.methods);
+    // console.log('componentdidmount', this.state.userAddress);
+    // console.log('methods', this.props.drizzle.contracts.DappChat.methods);
     // this.props.drizzle.contracts.DappChat.methods.followedChannels.cacheCall(
     //   this.state.userAddress,
     //   0
     // );
-    let test = await this.props.drizzle.contracts.DappChat.methods
-      .followedChannels(this.state.userAddress)
-      .call();
-    console.log('after', test);
+    // let test = await this.props.drizzle.contracts.DappChat.methods.followedChannels(this.state.userAddress).call();
+    // console.log('after', test);
   }
 
-  handleInputChange = event => {
+  handleInputChange = (event) => {
     this.setState({
       [event.target.name]: event.target.value,
     });
   };
 
-  handleSubmit = async event => {
+  handleSubmit = async (event) => {
     event.preventDefault();
     this.setState({ loading: true });
     toast.info('Processing tweet...', {
@@ -55,11 +53,7 @@ export default class tweets extends React.Component {
 
     try {
       await this.props.drizzle.contracts.DappChat.methods
-        .addChannelStruct(
-          this.state.channelName,
-          this.state.category,
-          this.state.restrictedStatus
-        )
+        .addChannelStruct(this.state.channelName, this.state.category, this.state.restrictedStatus)
         .send({ from: this.state.userAddress });
     } catch (error) {
       this.setState({ errorMessage: error.message });
@@ -69,7 +63,7 @@ export default class tweets extends React.Component {
     this.setState(defaultState);
   };
 
-  getTweet = async index => {
+  getTweet = async (index) => {
     const result = await this.props.drizzle.contracts.DappChat.methods
       .getEverythingTweetStruct(this.state.userAddress, index)
       .call();
@@ -77,10 +71,8 @@ export default class tweets extends React.Component {
     return result[0];
   };
 
-  getNum = async index => {
-    const numTweets = await this.props.drizzle.contracts.DappChat.methods
-      .getNumTweets(this.state.userAddress)
-      .call();
+  getNum = async (index) => {
+    const numTweets = await this.props.drizzle.contracts.DappChat.methods.getNumTweets(this.state.userAddress).call();
     this.setState({ numTweets });
     this.forceUpdate();
   };
@@ -101,13 +93,11 @@ export default class tweets extends React.Component {
     const { drizzleState } = this.props;
     let length = 0;
 
-    const key = Object.keys(
-      drizzleState.contracts.DappChat.getAllChannelsLength
-    )[0];
+    const key = Object.keys(drizzleState.contracts.DappChat.getAllChannelsLength)[0];
     if (drizzleState.contracts.DappChat.getAllChannelsLength[key]) {
       length = drizzleState.contracts.DappChat.getAllChannelsLength[key].value;
     }
-    length = 1;
+    length = 2;
     let mapArray = [];
     if (length) {
       mapArray.length = length;
