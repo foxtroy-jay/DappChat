@@ -6,8 +6,9 @@ const defaultState = {
   channelName: '',
   category: '',
   restrictedStatus: false,
-  //loading: false,
-  //errorMessage: '',
+  loading: false,
+  errorMessage: '',
+  userAddress: '',
 };
 
 export default class AddChannelForm extends React.Component {
@@ -21,13 +22,6 @@ export default class AddChannelForm extends React.Component {
       const accounts = await this.props.drizzle.web3.eth.getAccounts();
       this.setState({ userAddress: accounts[0] });
     }
-    console.log('componentdidmount', this.state.userAddress);
-    console.log('methods', this.props.drizzle.contracts.DappChat.methods);
-    // this.props.drizzle.contracts.DappChat.methods.followedChannels.cacheCall(
-    //   this.state.userAddress,
-    //   0
-    // );
-    this.props.drizzle.contracts.DappChat.methods.getFollowedChannels.cacheCall();
   }
 
   handleInputChange = event => {
@@ -70,7 +64,7 @@ export default class AddChannelForm extends React.Component {
             key="channelName"
             name="channelName"
             value={this.state.channelName}
-            placeholder="Channel Name"
+            placeholder="Channel test"
             onChange={this.handleInputChange}
           />
           <input
