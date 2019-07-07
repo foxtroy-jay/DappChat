@@ -16,6 +16,7 @@ import store from './middleware';
 import Routes from './routes';
 import { Router } from 'react-router-dom';
 import { BrowserRouter } from 'react-router-dom';
+import Navbar from './Navbar';
 const options = { contracts: [Migrations, DappChat] };
 // const drizzleStore = generateStore(options);
 const drizzle = new Drizzle(options, store);
@@ -23,6 +24,7 @@ const drizzle = new Drizzle(options, store);
 ReactDOM.render(
   <DrizzleContext.Provider drizzle={drizzle}>
     <BrowserRouter>
+      <Navbar />
       <Routes drizzle={drizzle} />
     </BrowserRouter>
     {/* <App /> */}
