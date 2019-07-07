@@ -18,8 +18,6 @@ export default class EditAliasForm extends React.Component {
   async componentDidMount() {
     if (!this.state.userAddress) {
       const accounts = await this.props.drizzle.web3.eth.getAccounts();
-      //const alias = await this.props.drizzle.web3.eth.
-      //console.log('LOOOKHERE', this.state.drizzle.web3.eth);
       this.setState({ userAddress: accounts[0] });
     }
   }

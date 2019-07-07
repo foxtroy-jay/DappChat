@@ -8,14 +8,18 @@ export default class Navbar extends React.Component {
     super();
   }
 
+  async componentDidMount () {
+      const accounts = await this.props.drizzle.web3.eth.getAccounts();
+    }
+
   render() {
     return (
       <div className="ui secondary  menu">
-        <a className="item">
+        <div className="item">
           <Link to="/home">Home </Link>
-        </a>
+        </div>
         <a className="item">Explore</a>
-        <EditAlias />
+        <EditAlias drizzle = {this.props.drizzle}/>
         <div className="right menu">
           <div className="item">
             <div className="ui icon input">

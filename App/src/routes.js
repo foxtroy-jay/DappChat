@@ -5,6 +5,8 @@ import Home from './Home';
 
 import UserPage from './UserPage';
 import AddChannelForm from './AddChannelForm';
+import Navbar from './Navbar';
+
 
 export default class Routes extends Component {
   render() {
@@ -18,6 +20,11 @@ export default class Routes extends Component {
           }
           return (
             <div>
+                     <Navbar 
+      drizzle = {drizzle}
+      drizzleState={drizzleState}
+      /> 
+
               <Switch>
                 <Route
                   exact
@@ -36,7 +43,6 @@ export default class Routes extends Component {
                   exact
                   path="/userpage"
                   render={props => {
-                    // console.log('/userpage ran');
                     return (
                       <UserPage
                         drizzle={drizzle}
@@ -50,7 +56,6 @@ export default class Routes extends Component {
                   exact
                   path="/"
                   render={props => {
-                    // console.log('/ ran');
                     return (
                       <Home
                         drizzle={drizzle}

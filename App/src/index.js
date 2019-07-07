@@ -24,7 +24,10 @@ const drizzle = new Drizzle(options, store);
 ReactDOM.render(
   <DrizzleContext.Provider drizzle={drizzle}>
     <BrowserRouter>
-      <Navbar />
+
+
+    
+
       <Routes drizzle={drizzle} />
     </BrowserRouter>
     {/* <App /> */}

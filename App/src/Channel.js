@@ -4,6 +4,7 @@ import SingleChannelView from './SingleChannelView';
 
 export default class Channel extends React.Component {
   render() {
+    console.log('is this loading?')
     return (
       <div>
         <SingleChannelView

@@ -26,14 +26,6 @@ export default class tweets extends React.Component {
       const accounts = await this.props.drizzle.web3.eth.getAccounts();
       this.setState({ userAddress: accounts[0] });
     }
-    // console.log('componentdidmount', this.state.userAddress);
-    // console.log('methods', this.props.drizzle.contracts.DappChat.methods);
-    // this.props.drizzle.contracts.DappChat.methods.followedChannels.cacheCall(
-    //   this.state.userAddress,
-    //   0
-    // );
-    // let test = await this.props.drizzle.contracts.DappChat.methods.followedChannels(this.state.userAddress).call();
-    // console.log('after', test);
   }
 
   handleInputChange = (event) => {

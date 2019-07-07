@@ -55,7 +55,6 @@ export default class SingleChannelView extends Component {
   };
 
   render() {
-    console.log('props in singleChannelView', this.props);
     let length = this.updateMessageCount();
 
     let channelMessageArray = [];
