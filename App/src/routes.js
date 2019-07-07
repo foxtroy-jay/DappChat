@@ -6,7 +6,8 @@ import Home from './Home';
 import UserPage from './UserPage';
 import AddChannelForm from './AddChannelForm';
 import Navbar from './Navbar';
-
+import SearchResults from './SearchResults';
+import Channel from './Channel';
 
 export default class Routes extends Component {
   render() {
@@ -20,12 +21,35 @@ export default class Routes extends Component {
           }
           return (
             <div>
-                     <Navbar 
-      drizzle = {drizzle}
-      drizzleState={drizzleState}
-      /> 
+              <Navbar drizzle={drizzle} drizzleState={drizzleState} />
 
               <Switch>
+                <Route
+                  exact
+                  path="/searchresults"
+                  render={props => {
+                    return (
+                      <SearchResults
+                        drizzle={drizzle}
+                        drizzleState={drizzleState}
+                        props={props}
+                      />
+                    );
+                  }}
+                />
+                <Route
+                  exact
+                  path="/channel"
+                  render={props => {
+                    return (
+                      <Channel
+                        drizzle={drizzle}
+                        drizzleState={drizzleState}
+                        props={props}
+                      />
+                    );
+                  }}
+                />
                 <Route
                   exact
                   path="/addChannel"
