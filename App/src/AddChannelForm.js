@@ -1,6 +1,6 @@
 import React from 'react';
 import { ToastContainer, toast, Flip } from 'react-toastify';
-import { Button, Form, Message } from 'semantic-ui-react';
+import { Button, Form, Message, Modal } from 'semantic-ui-react';
 
 const defaultState = {
   channelName: '',
@@ -59,36 +59,39 @@ export default class AddChannelForm extends React.Component {
     console.log('did this render');
     return (
       <div>
-        <Form onSubmit={this.handleSubmit} error={!!this.state.errorMessage}>
-          <input
-            key="channelName"
-            name="channelName"
-            value={this.state.channelName}
-            placeholder="Channel test"
-            onChange={this.handleInputChange}
-          />
-          <input
-            key="category"
-            name="category"
-            value={this.state.category}
-            placeholder="Channel Category"
-            onChange={this.handleInputChange}
-          />
-          <select
-            key="restrictedStatus"
-            name="restrictedStatus"
-            value={this.state.restrictedStatus}
-            placeholder="Select"
-            onChange={this.handleInputChange}
-          >
-            <option value={true}>True</option>
-            <option value={false}>False</option>
-          </select>
-          <Message error header="Oops!" content={this.state.errorMessage} />
-          <Button primary loading={this.state.loading}>
-            Create New Channel
-          </Button>
-        </Form>
+        <Modal trigger={<Button>Create A New Channel</Button>}>
+          <Modal.Header>Create A New Channel</Modal.Header>
+          <Form onSubmit={this.handleSubmit} error={!!this.state.errorMessage}>
+            <input
+              key="channelName"
+              name="channelName"
+              value={this.state.channelName}
+              placeholder="Channel Name"
+              onChange={this.handleInputChange}
+            />
+            <input
+              key="category"
+              name="category"
+              value={this.state.category}
+              placeholder="Channel Category"
+              onChange={this.handleInputChange}
+            />
+            <select
+              key="restrictedStatus"
+              name="restrictedStatus"
+              value={this.state.restrictedStatus}
+              placeholder="Select"
+              onChange={this.handleInputChange}
+            >
+              <option value={true}>True</option>
+              <option value={false}>False</option>
+            </select>
+            <Message error header="Oops!" content={this.state.errorMessage} />
+            <Button primary loading={this.state.loading}>
+              Create New Channel
+            </Button>
+          </Form>
+        </Modal>
       </div>
     );
   }
