@@ -1,7 +1,7 @@
 import React from 'react';
 import { ToastContainer, toast, Flip } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import Channel from './Channel';
+import Channel from './ChannelsInHome';
 import { Button, Form, Message } from 'semantic-ui-react';
 import UserPage from './UserPage';
 import { Link } from 'react-router-dom';
@@ -97,17 +97,10 @@ export default class Home extends React.Component {
         <div>
           <h1>{this.state.userAddress}'s Channels</h1>
 
-          <Popup
-            trigger={<button>Create New Channel</button>}
-            modal
-            closeOnDocumentClick
-            closeOnEscape
-          >
-            <AddChannelForm
-              drizzle={this.props.drizzle}
-              drizzleState={this.props.drizzleState}
-            />
-          </Popup>
+          <AddChannelForm
+            drizzle={this.props.drizzle}
+            drizzleState={this.props.drizzleState}
+          />
           <div className="allTweets">
             {mapArray
               .map(channelIndex => {
