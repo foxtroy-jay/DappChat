@@ -13,7 +13,7 @@ import {
 } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 
-export default class Channel extends React.Component {
+export default class ChannelsInHome extends React.Component {
   constructor(props) {
     super();
 
@@ -27,6 +27,7 @@ export default class Channel extends React.Component {
     };
   }
   async componentDidMount() {
+
     const channelData = await this.props.drizzle.contracts.DappChat.methods
       .getChannelData(this.props.channelIndex)
       .call();
@@ -39,7 +40,6 @@ export default class Channel extends React.Component {
   }
 
   getData = async (address, index) => {
-    console.log(this.props.channelIndex);
     const result = await this.props.drizzle.contracts.DappChat.methods
       .getChannelData(1)
       .call();
@@ -92,7 +92,6 @@ export default class Channel extends React.Component {
     // //Searches through the getNumReply arguments, matches the index, and saves indentifier
     if (keys.length) {
       for (let i = 0; i < keys.length; i++) {
-        // console.log(drizzleState.contracts.DappChat.getChannelData);
         if (
           drizzleState.contracts.DappChat.getChannelData[keys[i]].args[0] ===
           this.props.channelIndex
@@ -108,7 +107,7 @@ export default class Channel extends React.Component {
           drizzleState.contracts.DappChat.getChannelData[identifier].value[3];
       }
     }
-
+    console.log('channels in home is loading?')
     const { channelIndex } = this.props;
     return (
       <div>

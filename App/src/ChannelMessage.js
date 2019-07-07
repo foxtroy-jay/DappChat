@@ -16,7 +16,6 @@ export default class ChannelMessage extends React.Component {
   }
 
   render() {
-    console.log('this.props', this.props);
     return (
       <div style={{ border: 'solid' }}>
         <h1>Reply</h1>

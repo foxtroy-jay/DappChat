@@ -56,7 +56,6 @@ export default class AddChannelForm extends React.Component {
   };
 
   render() {
-    console.log('did this render');
     return (
       <div>
         <Modal trigger={<Button>Create A New Channel</Button>}>

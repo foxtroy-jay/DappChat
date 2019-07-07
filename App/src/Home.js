@@ -1,12 +1,12 @@
 import React from 'react';
 import { ToastContainer, toast, Flip } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import Channel from './ChannelsInHome';
+import Channel from './Channel';
 import { Button, Form, Message } from 'semantic-ui-react';
 import UserPage from './UserPage';
 import { Link } from 'react-router-dom';
 import AddChannelForm from './AddChannelForm';
-import Popup from 'reactjs-popup';
+import ChannelsInHome from './ChannelsInHome'
 
 const defaultState = {
   channelName: '',
@@ -31,6 +31,7 @@ export default class Home extends React.Component {
       this.setState({ userAddress: accounts[0] });
     }
     this.props.drizzle.contracts.DappChat.methods.getFollowedChannels.cacheCall();
+    this.setState({alias: await this.props.drizzle.contracts.DappChat.methods.aliases(this.state.userAddress).call()})
   }
 
   getTweet = async index => {
@@ -69,46 +70,38 @@ export default class Home extends React.Component {
   };
 
   render() {
-    const { drizzleState } = this.props;
+    const { drizzle, drizzleState } = this.props;
     let length = 0;
     const contractState = this.props.drizzleState.contracts.DappChat;
-    // const key = Object.keys(
-    //   drizzleState.contracts.DappChat.getAllChannelsLength
-    // )[0];
-    // if (drizzleState.contracts.DappChat.getAllChannelsLength[key]) {
-    //   length = drizzleState.contracts.DappChat.getAllChannelsLength[key].value;
-    // }
     let mapArray = [];
-    // if (length) {
-    //   mapArray.length = length;
-    //   mapArray.fill(1);
-    // }
+
     if (contractState.getFollowedChannels['0x0']) {
       mapArray = contractState.getFollowedChannels['0x0'].value;
     }
 
     return this.state.channelClicked ? (
-      <AddChannelForm />
+      <Channel channelIndex = {this.state.singleChannelIndex} drizzle = {this.props.drizzle} drizzleState= {this.props.drizzleState} />
     ) : (
       <div className="App">
         <ToastContainer />
         <Button href="/UserPage">User Page</Button>
         {<h1>{length} </h1>}
         <div>
-          <h1>{this.state.userAddress}'s Channels</h1>
+          <h1>Address: {this.state.userAddress}</h1>
+          <h1>{this.state.alias ? `${this.state.alias}'s Channels` : ''}</h1>
 
           <AddChannelForm
-            drizzle={this.props.drizzle}
-            drizzleState={this.props.drizzleState}
+            drizzle={drizzle}
+            drizzleState={drizzleState}
           />
           <div className="allTweets">
             {mapArray
               .map(channelIndex => {
                 return (
-                  <Channel
+                  <ChannelsInHome
                     address={this.state.userAddress}
                     channelIndex={channelIndex}
-                    drizzle={this.props.drizzle}
+                    drizzle={drizzle}
                     drizzleState={drizzleState}
                     clickChannel={this.clickChannel}
                     key={channelIndex}
