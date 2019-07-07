@@ -24,8 +24,5 @@
     "redux": "^4.0.1",
     "semantic-ui-react": "^0.87.2"
   },
-  "dependencies": {
-    "react-popup": "^0.10.0",
-    "reactjs-popup": "^1.4.1"
-  }
+  "dependencies": {}
 }

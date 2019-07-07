@@ -1,19 +1,26 @@
-1. delete App/src/contracts
+Instructions to have a working Twittor
 
-2. npm i on root
+1. Delete contracts folder in App/src/contracts
 
-3. open up ganache
+2. "npm i" on root directory (if you have permissions issues use "npm i --save -dev")
 
-4. truffle compile
+3. Download and open up Ganache (https://www.trufflesuite.com/ganache)
 
-5. truffle migrate
+4. Compile contracts using command "truffle compile" (If you do not have truffle installed globally
+   use "./node_modules/.bin/truffle compile")
 
-6. create a .secret and enter your 12 word nemonic copied from ganache
+5. Migrate using command "truffle migrage" (If you do not have truffle installed globally
+   use "./node_modules/.bin/truffle migrate")
 
-7 make sure ganache port is 8545
+6. Create a .secret file in your root directory.
 
-log in to metamask with ganache seed account
+7. In Ganache, create a new workspace, and in the server section, change the port number to 8545 and save.
 
-change metamask network to localhost 8545
+8.cCopy and paste the 12 word mnemonic into the .secret file
 
-8. npm run start in App folder
+9. Download Metamask extension for your browser and log in to Metamask using the Ganache seed account
+   (12 word mnemonic from step XXX)
+
+10. Change metamask network to localhost 8545
+
+11. "npm run start" in App folder
