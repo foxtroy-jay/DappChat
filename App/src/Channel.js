@@ -4,15 +4,15 @@ import SingleChannelView from './SingleChannelView';
 
 export default class Channel extends React.Component {
   render() {
-    console.log('is this loading?')
+    let { channelIndex } = this.props.props.location.state;
     return (
       <div>
         <SingleChannelView
-          channelIndex={this.props.channelIndex}
+          channelIndex={channelIndex}
           drizzle={this.props.drizzle}
           drizzleState={this.props.drizzleState}
         />
-        <MessageForm channelIndex={this.props.channelIndex} drizzle={this.props.drizzle} />
+        <MessageForm channelIndex={channelIndex} drizzle={this.props.drizzle} />
       </div>
     );
   }

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import ChannelMessage from './ChannelMessage';
 import { Loader } from 'semantic-ui-react';
+import ChannelDetails from './ChannelDetails';
 
 export default class SingleChannelView extends Component {
   // renders a single channel
@@ -19,7 +20,9 @@ export default class SingleChannelView extends Component {
     const channelData = await this.props.drizzle.contracts.DappChat.methods
       .getChannelData(this.props.channelIndex)
       .call();
-    this.props.drizzle.contracts.DappChat.methods.getChannelData.cacheCall(this.props.channelIndex);
+    this.props.drizzle.contracts.DappChat.methods.getChannelData.cacheCall(
+      this.props.channelIndex
+    );
 
     this.setState({
       channelOwner: channelData[0],
@@ -40,7 +43,10 @@ export default class SingleChannelView extends Component {
     let identifier;
     if (keys.length) {
       for (let i = 0; i < keys.length; i++) {
-        if (drizzleState.contracts.DappChat.getChannelData[keys[i]].args[0] === this.props.channelIndex) {
+        if (
+          drizzleState.contracts.DappChat.getChannelData[keys[i]].args[0] ===
+          this.props.channelIndex
+        ) {
           identifier = keys[i];
           break;
         }
@@ -48,7 +54,8 @@ export default class SingleChannelView extends Component {
 
       //   //Finds the newly updated num replies
       if (identifier) {
-        return drizzleState.contracts.DappChat.getChannelData[identifier].value[3];
+        return drizzleState.contracts.DappChat.getChannelData[identifier]
+          .value[3];
       }
       return 0;
     }
@@ -66,24 +73,22 @@ export default class SingleChannelView extends Component {
           messageIndex={idx}
           drizzle={this.props.drizzle}
           key={idx}
-        />,
+        />
       );
     }
     return (
       <div>
-        <div>
-          Channel Owner: {this.state.channelOwner ? this.state.channelOwner : <Loader size="mini" active inline />}
-        </div>
-        <div>
-          Channel Name: {this.state.channelName ? this.state.channelName : <Loader size="mini" active inline />}
-        </div>
-        <div>
-          Channel Category:{' '}
-          {this.state.channelCategory ? this.state.channelCategory : <Loader size="mini" active inline />}
-        </div>
-        <div>Restricted: {this.state.channelRestrictedStatus ? 'True' : 'False'}</div>
+        <ChannelDetails
+          drizzle={this.props.drizzle}
+          drizzleState={this.props.drizzleState}
+          channelIndex={this.props.channelIndex}
+        />
         <p>Messages: {length}</p>
-        {channelMessageArray.length === 0 ? <h2>No messages yet!</h2> : channelMessageArray}
+        {channelMessageArray.length === 0 ? (
+          <h2>No messages yet!</h2>
+        ) : (
+          channelMessageArray
+        )}
       </div>
     );
   }
