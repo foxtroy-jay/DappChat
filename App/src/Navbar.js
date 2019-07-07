@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Menu } from 'semantic-ui-react';
+import EditAlias from './EditAlias';
 
 export default class Navbar extends React.Component {
   constructor() {
@@ -10,11 +11,11 @@ export default class Navbar extends React.Component {
   render() {
     return (
       <div className="ui secondary  menu">
-        <Link to="/home">
-          <a className="active item">Home</a>
-        </Link>
+        <a className="item">
+          <Link to="/home">Home </Link>
+        </a>
         <a className="item">Explore</a>
-        <a className="item"> Edit Alias</a>
+        <EditAlias />
         <div className="right menu">
           <div className="item">
             <div className="ui icon input">
