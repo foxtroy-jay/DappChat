@@ -1,4 +1,4 @@
-Instructions to have a working Twittor
+Instructions to have a working DappChat
 
 1. Delete contracts folder in App/src/contracts
 
