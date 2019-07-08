@@ -47,7 +47,7 @@ export default class SearchResult extends React.Component {
       channel = await this.props.drizzle.contracts.DappChat.methods
         .getChannelData(i)
         .call();
-      let channelName = channel[1];
+      let channelName = channel[1].toLowerCase();
 
       let doWeInclude = searchWords.every(word => {
         return channelName.includes(word);
