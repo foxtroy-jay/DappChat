@@ -1,5 +1,5 @@
 import React from 'react';
-import ChannelDetails from './ChannelDetails';
+// import ChannelDetails from './ChannelDetails';
 import ChannelsInHome from './ChannelsInHome';
 
 const wordsToIgnore = [

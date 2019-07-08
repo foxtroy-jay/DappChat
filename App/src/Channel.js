@@ -2,24 +2,42 @@ import React from 'react';
 import MessageForm from './MessageForm';
 import SingleChannelView from './SingleChannelView';
 import ChannelAdminView from './ChannelAdminView';
+import { toast, Flip } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
 
 export default class Channel extends React.Component {
-  render() {
+  openToast = () => {
+    toast.info('Processing change...', {
+      position: 'top-right',
+      autoClose: 10000,
+      transition: Flip,
+    });
+  };
 
-    let { channelIndex } = this.props.props.location.state;
+  closeToast = () => {
+    toast.dismiss();
+  };
+
+  render() {
+    const { channelIndex } = this.props.props.location.state;
+    const { drizzle, drizzleState } = this.props;
     return (
       <div>
+        <ToastContainer />
+
         <ChannelAdminView
-          channelIndex={this.props.channelIndex}
-          drizzle={this.props.drizzle}
-          drizzleState={this.props.drizzleState}
+          channelIndex={channelIndex}
+          drizzle={drizzle}
+          drizzleState={drizzleState}
+          openToast={this.openToast}
+          closeToast={this.closeToast}
         />
         <SingleChannelView
           channelIndex={channelIndex}
-          drizzle={this.props.drizzle}
-          drizzleState={this.props.drizzleState}
+          drizzle={drizzle}
+          drizzleState={drizzleState}
         />
-        <MessageForm channelIndex={channelIndex} drizzle={this.props.drizzle} />
+        <MessageForm channelIndex={channelIndex} drizzle={drizzle} />
       </div>
     );
   }

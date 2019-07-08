@@ -7,15 +7,13 @@ const defaultState = {
   category: '',
   restrictedStatus: false,
   loading: false,
-  errorMessage: '',
   userAddress: '',
-  showModal: false,
 };
 
 export default class AddChannelForm extends React.Component {
   constructor() {
     super();
-    this.state = defaultState;
+    this.state = { ...defaultState, errorMessage: '', showModal: false };
   }
 
   async componentDidMount() {
@@ -25,24 +23,29 @@ export default class AddChannelForm extends React.Component {
     }
   }
 
-  handleInputChange = (event) => {
+  handleInputChange = event => {
     this.setState({
       [event.target.name]: event.target.value,
     });
   };
 
-  handleSubmit = async (event) => {
+  handleSubmit = async event => {
     event.preventDefault();
     this.setState({ loading: true });
-    toast.info('Processing tweet...', {
+    toast.info('Processing change...', {
       position: 'top-right',
       autoClose: 10000,
       transition: Flip,
     });
     try {
       await this.props.drizzle.contracts.DappChat.methods
-        .addChannelStruct(this.state.channelName, this.state.category, this.state.restrictedStatus)
+        .addChannelStruct(
+          this.state.channelName,
+          this.state.category,
+          this.state.restrictedStatus
+        )
         .send({ from: this.state.userAddress });
+      this.toggleModal();
     } catch (error) {
       this.setState({ errorMessage: error.message });
       toast.dismiss();
@@ -52,13 +55,18 @@ export default class AddChannelForm extends React.Component {
   };
 
   toggleModal = () => {
-    this.setState({ showModal: !this.state.showModal });
+    this.setState({ showModal: !this.state.showModal, errorMessage: '' });
   };
 
   render() {
     return (
       <div>
-        <Modal open={this.state.showModal} trigger={<Button onClick={this.toggleModal}>Create A New Channel</Button>}>
+        <Modal
+          open={this.state.showModal}
+          trigger={
+            <Button onClick={this.toggleModal}>Create A New Channel</Button>
+          }
+        >
           <Modal.Header>Create A New Channel</Modal.Header>
           <Icon name={'close'} onClick={this.toggleModal} />
           <Form onSubmit={this.handleSubmit} error={!!this.state.errorMessage}>
@@ -87,7 +95,11 @@ export default class AddChannelForm extends React.Component {
               <option value={false}>False</option>
             </select>
             <Message error header="Oops!" content={this.state.errorMessage} />
-            <Button primary loading={this.state.loading}>
+            <Button
+              primary
+              loading={this.state.loading}
+              disabled={this.state.loading}
+            >
               Create New Channel
             </Button>
           </Form>

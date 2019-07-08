@@ -1,5 +1,5 @@
 import React from 'react';
-import { Dimmer, Loader, Image, Segment, Statistic } from 'semantic-ui-react';
+import { Loader, Statistic } from 'semantic-ui-react';
 
 export default class UserPage extends React.Component {
   constructor(props, context) {

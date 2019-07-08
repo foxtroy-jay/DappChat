@@ -1,10 +1,6 @@
 import React from 'react';
-import { ToastContainer, toast, Flip } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import Channel from './Channel';
-import { Button, Form, Message } from 'semantic-ui-react';
-import UserPage from './UserPage';
-import { Link } from 'react-router-dom';
 import AddChannelForm from './AddChannelForm';
 import ChannelsInHome from './ChannelsInHome';
 

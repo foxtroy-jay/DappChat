@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import App from './App';
+// import App from './App';
 import * as serviceWorker from './serviceWorker';
 
 import { Drizzle } from 'drizzle';
@@ -14,9 +14,9 @@ import DappChat from './contracts/DappChat.json';
 import store from './middleware';
 
 import Routes from './routes';
-import { Router } from 'react-router-dom';
+// import { Router } from 'react-router-dom';
 import { BrowserRouter } from 'react-router-dom';
-import Navbar from './Navbar';
+// import Navbar from './Navbar';
 const options = { contracts: [Migrations, DappChat] };
 // const drizzleStore = generateStore(options);
 const drizzle = new Drizzle(options, store);
@@ -24,10 +24,6 @@ const drizzle = new Drizzle(options, store);
 ReactDOM.render(
   <DrizzleContext.Provider drizzle={drizzle}>
     <BrowserRouter>
-
-
-    
-
       <Routes drizzle={drizzle} />
     </BrowserRouter>
     {/* <App /> */}
