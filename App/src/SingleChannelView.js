@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import ChannelMessage from './ChannelMessage';
-import { Loader } from 'semantic-ui-react';
 import ChannelDetails from './ChannelDetails';
 
 export default class SingleChannelView extends Component {

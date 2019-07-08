@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { toast, Flip } from 'react-toastify';
-import { Button, Form, Message, Accordion, AccordionContent, AccordionTitle, Icon, Loader } from 'semantic-ui-react';
+import { Button, Form, Message } from 'semantic-ui-react';
 
 export default class MessageForm extends Component {
   constructor(props) {
@@ -22,13 +22,13 @@ export default class MessageForm extends Component {
     });
   }
 
-  handleInputChange = (event) => {
+  handleInputChange = event => {
     this.setState({
       [event.target.name]: event.target.value,
     });
   };
 
-  handleSubmit = async (event) => {
+  handleSubmit = async event => {
     event.preventDefault();
     this.setState({ loading: true });
 
@@ -62,7 +62,9 @@ export default class MessageForm extends Component {
           />
           <Message error header="Oops!" content={this.state.errorMessage} />
 
-          <Button loading={this.state.loading}>Message</Button>
+          <Button loading={this.state.loading} disabled={this.state.loading}>
+            Message
+          </Button>
         </Form>
       </div>
     );

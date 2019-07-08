@@ -1,8 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Menu, SearchResult, SearchResults, Search } from 'semantic-ui-react';
+// import { Menu, SearchResult, SearchResults, Search } from 'semantic-ui-react';
 import EditAlias from './EditAlias';
-import SearchPage from './SearchResults';
+// import SearchPage from './SearchResults';
+import { toast, Flip } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
 
 export default class Navbar extends React.Component {
   constructor() {
@@ -10,24 +12,40 @@ export default class Navbar extends React.Component {
     this.state = { search: '' };
   }
 
-  async componentDidMount() {
-    const accounts = await this.props.drizzle.web3.eth.getAccounts();
-  }
+  // async componentDidMount() {
+  //   const accounts = await this.props.drizzle.web3.eth.getAccounts();
+  // }
 
   handleInputChange = event => {
     this.setState({ search: event.target.value });
   };
 
-  handle;
+  openToast = () => {
+    toast.info('Processing change...', {
+      position: 'top-right',
+      autoClose: 10000,
+      transition: Flip,
+    });
+  };
+
+  closeToast = () => {
+    toast.dismiss();
+  };
 
   render() {
     return (
       <div className="ui secondary  menu">
+        <ToastContainer />
+
         <div className="item">
           <Link to="/home">Home </Link>
         </div>
-        <a className="item">Explore</a>
-        <EditAlias drizzle={this.props.drizzle} />
+        <div className="item">Explore</div>
+        <EditAlias
+          drizzle={this.props.drizzle}
+          openToast={this.openToast}
+          closeToast={this.closeToast}
+        />
         <div className="right menu">
           <div className="item">
             <div className="ui icon input">

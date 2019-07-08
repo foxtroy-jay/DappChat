@@ -6,7 +6,7 @@ const contractEventNotifier = store => next => action => {
   //BLOCK_RECEIVED
   if (action.type === 'CONTRACT_SYNCED') {
     toast.dismiss();
-    toast.success('Tweet sent! ✔️', {
+    toast.success('Success! ✔️', {
       autoclose: 5000,
     });
   }
