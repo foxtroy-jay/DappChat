@@ -1,5 +1,6 @@
 import React from 'react';
 import { Loader } from 'semantic-ui-react';
+import { Link } from 'react-router-dom';
 
 export default class ChannelDetails extends React.Component {
   constructor() {
@@ -36,7 +37,7 @@ export default class ChannelDetails extends React.Component {
       channelCategory,
       channelRestrictedStatus,
     } = this.state;
-
+    const { renderLink, channelIndex } = this.props;
     return (
       <div>
         <div>
@@ -44,8 +45,17 @@ export default class ChannelDetails extends React.Component {
           {channelOwner ? channelOwner : <Loader size="mini" active inline />}
         </div>
         <div>
-          Channel Name:{' '}
-          {channelName ? channelName : <Loader size="mini" active inline />}
+          {renderLink ? (
+            <Link to={{ pathname: '/channel', state: { channelIndex } }}>
+              Channel Name:{' '}
+              {channelName ? channelName : <Loader size="mini" active inline />}
+            </Link>
+          ) : (
+            <div>
+              Channel Name:{' '}
+              {channelName ? channelName : <Loader size="mini" active inline />}
+            </div>
+          )}
         </div>
         <div>
           Channel Category:{' '}

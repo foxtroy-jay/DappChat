@@ -2,7 +2,7 @@ import React from 'react';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import AddChannelForm from './AddChannelForm';
-import ChannelsInHome from './ChannelsInHome';
+import ChannelDetails from './ChannelDetails';
 
 const defaultState = {
   channelName: '',
@@ -54,12 +54,12 @@ export default class Home extends React.Component {
             {mapArray
               .map(channelIndex => {
                 return (
-                  <ChannelsInHome
+                  <ChannelDetails
                     channelIndex={channelIndex}
                     drizzle={drizzle}
                     drizzleState={drizzleState}
-                    clickChannel={this.clickChannel}
                     key={channelIndex}
+                    renderLink={true}
                   />
                 );
               })

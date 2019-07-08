@@ -1,5 +1,5 @@
 import React from 'react';
-import ChannelsInHome from './ChannelsInHome';
+import ChannelDetails from './ChannelDetails';
 
 const wordsToIgnore = [
   'at',
@@ -66,11 +66,12 @@ export default class SearchResult extends React.Component {
       <div>
         {results.map(idx => {
           return (
-            <ChannelsInHome
+            <ChannelDetails
               channelIndex={idx}
               drizzle={drizzle}
               drizzleState={drizzleState}
               key={idx}
+              renderLink={true}
             />
           );
         })}
