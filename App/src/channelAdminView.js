@@ -5,7 +5,7 @@ const defaultState = {
   addressToAdd: '',
   loading: false,
 };
-export default class channelAdminView extends Component {
+export default class ChannelAdminView extends Component {
   constructor() {
     super();
     this.state = { ...defaultState, membersArray: [], showModal: false };
@@ -87,10 +87,11 @@ export default class channelAdminView extends Component {
 
   render() {
     const currentMembersArray = this.updateMembersArray();
+    const { showModal, errorMessage, addressToAdd, loading } = this.state;
     return (
       <div>
         <Modal
-          open={this.state.showModal}
+          open={showModal}
           trigger={
             <Button primary onClick={this.toggleModal} className="item">
               Edit Members
@@ -99,17 +100,17 @@ export default class channelAdminView extends Component {
         >
           <Modal.Header>Admin</Modal.Header>
           <Icon name={'close'} onClick={this.toggleModal} />
-          <Form onSubmit={this.addMember} error={!!this.state.errorMessage}>
+          <Form onSubmit={this.addMember} error={!!errorMessage}>
             <input
               key="addressToAdd"
               name="addressToAdd"
-              value={this.state.addressToAdd}
+              value={addressToAdd}
               placeholder="Address to Add"
               onChange={this.handleInputChange}
             />
-            <Message error header="Oops!" content={this.state.errorMessage} />
+            <Message error header="Oops!" content={errorMessage} />
 
-            <Button loading={this.state.loading} disabled={this.state.loading}>
+            <Button loading={loading} disabled={loading}>
               Submit
             </Button>
           </Form>

@@ -12,10 +12,6 @@ export default class Navbar extends React.Component {
     this.state = { search: '' };
   }
 
-  // async componentDidMount() {
-  //   const accounts = await this.props.drizzle.web3.eth.getAccounts();
-  // }
-
   handleInputChange = event => {
     this.setState({ search: event.target.value });
   };
@@ -33,6 +29,7 @@ export default class Navbar extends React.Component {
   };
 
   render() {
+    const { search } = this.state;
     return (
       <div className="ui secondary  menu">
         <ToastContainer />
@@ -53,12 +50,12 @@ export default class Navbar extends React.Component {
                 type="text"
                 placeholder="Search..."
                 onChange={this.handleInputChange}
-                value={this.state.search}
+                value={search}
               />
               <Link
                 to={{
                   pathname: '/searchresults',
-                  state: { search: this.state.search },
+                  state: { search },
                 }}
               >
                 <i className="search link icon" />

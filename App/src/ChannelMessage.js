@@ -16,11 +16,12 @@ export default class ChannelMessage extends React.Component {
   }
 
   render() {
+    const { senderAddress, messageData } = this.state;
     return (
       <div style={{ border: 'solid' }}>
         <h1>Reply</h1>
-        <p>From: {this.state.senderAddress}</p>
-        <p>Reply: {this.state.messageData}</p>
+        <p>From: {senderAddress}</p>
+        <p>Reply: {messageData}</p>
       </div>
     );
   }

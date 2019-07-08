@@ -62,15 +62,15 @@ export default class SingleChannelView extends Component {
 
   render() {
     let length = this.updateMessageCount();
-
+    const { userAddress, channelIndex, drizzle, drizzleState } = this.props;
     let channelMessageArray = [];
     for (let idx = 0; idx < length; idx++) {
       channelMessageArray.push(
         <ChannelMessage
-          userAddress={this.props.userAddress}
-          channelIndex={this.props.channelIndex}
+          userAddress={userAddress}
+          channelIndex={channelIndex}
           messageIndex={idx}
-          drizzle={this.props.drizzle}
+          drizzle={drizzle}
           key={idx}
         />
       );
@@ -78,9 +78,9 @@ export default class SingleChannelView extends Component {
     return (
       <div>
         <ChannelDetails
-          drizzle={this.props.drizzle}
-          drizzleState={this.props.drizzleState}
-          channelIndex={this.props.channelIndex}
+          drizzle={drizzle}
+          drizzleState={drizzleState}
+          channelIndex={channelIndex}
         />
         <p>Messages: {length}</p>
         {channelMessageArray.length === 0 ? (

@@ -30,35 +30,32 @@ export default class ChannelDetails extends React.Component {
     });
   }
   render() {
+    const {
+      channelOwner,
+      channelName,
+      channelCategory,
+      channelRestrictedStatus,
+    } = this.state;
+
     return (
       <div>
         <div>
           Channel Owner:{' '}
-          {this.state.channelOwner ? (
-            this.state.channelOwner
-          ) : (
-            <Loader size="mini" active inline />
-          )}
+          {channelOwner ? channelOwner : <Loader size="mini" active inline />}
         </div>
         <div>
           Channel Name:{' '}
-          {this.state.channelName ? (
-            this.state.channelName
-          ) : (
-            <Loader size="mini" active inline />
-          )}
+          {channelName ? channelName : <Loader size="mini" active inline />}
         </div>
         <div>
           Channel Category:{' '}
-          {this.state.channelCategory ? (
-            this.state.channelCategory
+          {channelCategory ? (
+            channelCategory
           ) : (
             <Loader size="mini" active inline />
           )}
         </div>
-        <div>
-          Restricted: {this.state.channelRestrictedStatus ? 'True' : 'False'}
-        </div>
+        <div>Restricted: {channelRestrictedStatus ? 'True' : 'False'}</div>
       </div>
     );
   }

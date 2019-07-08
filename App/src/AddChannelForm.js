@@ -59,47 +59,51 @@ export default class AddChannelForm extends React.Component {
   };
 
   render() {
+    const {
+      showModal,
+      errorMessage,
+      channelName,
+      category,
+      restrictedStatus,
+      loading,
+    } = this.state;
     return (
       <div>
         <Modal
-          open={this.state.showModal}
+          open={showModal}
           trigger={
             <Button onClick={this.toggleModal}>Create A New Channel</Button>
           }
         >
           <Modal.Header>Create A New Channel</Modal.Header>
           <Icon name={'close'} onClick={this.toggleModal} />
-          <Form onSubmit={this.handleSubmit} error={!!this.state.errorMessage}>
+          <Form onSubmit={this.handleSubmit} error={!!errorMessage}>
             <input
               key="channelName"
               name="channelName"
-              value={this.state.channelName}
+              value={channelName}
               placeholder="Channel Name"
               onChange={this.handleInputChange}
             />
             <input
               key="category"
               name="category"
-              value={this.state.category}
+              value={category}
               placeholder="Channel Category"
               onChange={this.handleInputChange}
             />
             <select
               key="restrictedStatus"
               name="restrictedStatus"
-              value={this.state.restrictedStatus}
+              value={restrictedStatus}
               placeholder="Select"
               onChange={this.handleInputChange}
             >
               <option value={true}>True</option>
               <option value={false}>False</option>
             </select>
-            <Message error header="Oops!" content={this.state.errorMessage} />
-            <Button
-              primary
-              loading={this.state.loading}
-              disabled={this.state.loading}
-            >
+            <Message error header="Oops!" content={errorMessage} />
+            <Button primary loading={loading} disabled={loading}>
               Create New Channel
             </Button>
           </Form>

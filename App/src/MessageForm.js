@@ -50,19 +50,20 @@ export default class MessageForm extends Component {
   };
 
   render() {
+    const { message, errorMessage, loading } = this.state;
     return (
       <div>
-        <Form onSubmit={this.handleSubmit} error={!!this.state.errorMessage}>
+        <Form onSubmit={this.handleSubmit} error={!!errorMessage}>
           <input
             key="message"
             name="message"
-            value={this.state.message}
+            value={message}
             placeholder="Message"
             onChange={this.handleInputChange}
           />
-          <Message error header="Oops!" content={this.state.errorMessage} />
+          <Message error header="Oops!" content={errorMessage} />
 
-          <Button loading={this.state.loading} disabled={this.state.loading}>
+          <Button loading={loading} disabled={loading}>
             Message
           </Button>
         </Form>

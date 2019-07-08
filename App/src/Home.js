@@ -35,6 +35,7 @@ export default class Home extends React.Component {
 
   render() {
     const { drizzle, drizzleState } = this.props;
+    const { userAddress, alias } = this.state;
     const contractState = this.props.drizzleState.contracts.DappChat;
     let mapArray = [];
 
@@ -45,8 +46,8 @@ export default class Home extends React.Component {
       <div className="App">
         <ToastContainer />
         <div>
-          <h1>Address: {this.state.userAddress}</h1>
-          <h1>{this.state.alias ? `${this.state.alias}'s Channels` : ''}</h1>
+          <h1>Address: {userAddress}</h1>
+          <h1>{alias ? `${alias}'s Channels` : ''}</h1>
 
           <AddChannelForm drizzle={drizzle} drizzleState={drizzleState} />
           <div className="allChannels">

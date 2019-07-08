@@ -1,5 +1,4 @@
 import React from 'react';
-// import ChannelDetails from './ChannelDetails';
 import ChannelsInHome from './ChannelsInHome';
 
 const wordsToIgnore = [
@@ -62,14 +61,15 @@ export default class SearchResult extends React.Component {
 
   render() {
     const { results } = this.state;
+    const { drizzle, drizzleState } = this.props;
     return (
       <div>
         {results.map(idx => {
           return (
             <ChannelsInHome
               channelIndex={idx}
-              drizzle={this.props.drizzle}
-              drizzleState={this.props.drizzleState}
+              drizzle={drizzle}
+              drizzleState={drizzleState}
               key={idx}
             />
           );

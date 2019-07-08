@@ -53,9 +53,10 @@ export default class EditAliasForm extends React.Component {
   };
 
   render() {
+    const { showModal, errorMessage, Alias, loading } = this.state;
     return (
       <Modal
-        open={this.state.showModal}
+        open={showModal}
         trigger={
           <div onClick={this.toggleModal} className="item">
             Edit Alias
@@ -64,21 +65,17 @@ export default class EditAliasForm extends React.Component {
       >
         <Modal.Header>Edit Alias</Modal.Header>
         <Icon name={'close'} onClick={this.toggleModal} />
-        <Form onSubmit={this.handleSubmit} error={!!this.state.errorMessage}>
+        <Form onSubmit={this.handleSubmit} error={!!errorMessage}>
           <input
             key="Alias"
             name="Alias"
-            value={this.state.Alias}
+            value={Alias}
             placeholder="Alias"
             onChange={this.handleInputChange}
           />
 
-          <Message error header="Oops!" content={this.state.errorMessage} />
-          <Button
-            primary
-            loading={this.state.loading}
-            disabled={this.state.loading}
-          >
+          <Message error header="Oops!" content={errorMessage} />
+          <Button primary loading={loading} disabled={loading}>
             Change Alias
           </Button>
         </Form>
