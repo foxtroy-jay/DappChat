@@ -67,7 +67,6 @@ export default class UserPage extends React.Component {
     const { userAddress } = this.state;
     await this.fetchNumberOfTweets(userAddress);
     await this.fetchNumberOfReplies(userAddress);
-    // await this.fetchNumberOfFollowing(userAddress);
     this.setState({ loading: false });
   }
 
