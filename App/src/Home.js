@@ -54,7 +54,6 @@ export default class Home extends React.Component {
           <div className="allChannels">
             {mapArray
               .map((channelIndex) => {
-                console.log("CHANNEL ", channelIndex)
                 if(channelIndex > -1){
                   return (
                     <ChannelsInHome

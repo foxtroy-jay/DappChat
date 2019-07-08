@@ -5,6 +5,7 @@ export default class FollowButton extends React.Component {
     constructor(){
         super();
         this.state = {
+            channelIndex: null,
             followedStatus: false,
             loading: false
         }
@@ -20,10 +21,19 @@ export default class FollowButton extends React.Component {
         const followedStatus = followedChannels.includes(this.props.channelIndex.toString());
         
         this.setState({followedStatus:followedStatus});
+        const index = followedChannels.indexOf(this.props.channelIndex);
+        if(index > -1) {
+            this.setState({channelIndex: index})
+        }
+
+        console.log("follow channels ", followedChannels)
+        console.log("follow index ", this.props.channelIndex)
+
     }
 
     follow = async () => {
-        const {drizzle, drizzleState, channelIndex} = this.props;
+        const {drizzle, drizzleState} = this.props;
+        const {channelIndex} = this.state
        try {
         this.setState({loading: true});
 
