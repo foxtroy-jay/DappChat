@@ -116,6 +116,7 @@ export default class ChannelsInHome extends React.Component {
         > */}
         Channel Name:{' '}
         {this.state[1] ? this.state[1] : <Loader size="mini" active inline />}
+
         <div>
           Channel Owner:{' '}
           {this.state[0] ? this.state[0] : <Loader size="mini" active inline />}
@@ -134,10 +135,12 @@ export default class ChannelsInHome extends React.Component {
           Channel Category:{' '}
           {this.state[2] ? this.state[2] : <Loader size="mini" active inline />}
         </div>
+
         <div>
           Channel Category:{' '}
           {this.state[2] ? this.state[2] : <Loader size="mini" active inline />}
         </div>
+
         <div>Restricted: {this.state[4] ? 'True' : 'False'}</div>
       </div>
     );
