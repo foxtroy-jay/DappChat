@@ -4,6 +4,7 @@ import SingleChannelView from './SingleChannelView';
 import ChannelAdminView from './ChannelAdminView';
 import { toast, Flip } from 'react-toastify';
 import { ToastContainer } from 'react-toastify';
+import FollowButton from './FollowButton';
 
 export default class Channel extends React.Component {
   openToast = () => {
@@ -24,7 +25,11 @@ export default class Channel extends React.Component {
     return (
       <div>
         <ToastContainer />
-
+        <FollowButton 
+          drizzle={drizzle}
+          drizzleState={drizzleState}
+          channelIndex = {channelIndex}
+          />
         <ChannelAdminView
           channelIndex={channelIndex}
           drizzle={drizzle}

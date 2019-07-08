@@ -125,12 +125,12 @@ export default class channelAdminView extends Component {
                     <li key={idx}>
                       Member Address: {member}
                       <Icon
-                        name={'delete'}
+                        name={'close'}
                         onClick={() => this.removeMember(member, idx)}
                       />
                     </li>
                   );
-                } else return <div />;
+                } else return "";
               })
             )}
           </ul>
