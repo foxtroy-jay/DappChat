@@ -38,14 +38,14 @@ export default class ChannelsInHome extends React.Component {
           {this.state[0] ? this.state[0] : <Loader size="mini" active inline />}
         </div>
         <div>
-          <Link to={{ pathname: '/channel', state: { channelIndex } }}>
+          {/* <Link to={{ pathname: '/channel', state: { channelIndex } }}>
             Channel Name:{' '}
             {this.state[1] ? (
               this.state[1]
             ) : (
               <Loader size="mini" active inline />
             )}
-          </Link>
+          </Link> */}
         </div>
         <div>
           Channel Category:{' '}
