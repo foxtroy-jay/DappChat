@@ -19,15 +19,14 @@ export default class Channel extends React.Component {
     const channelData = await this.props.drizzle.contracts.DappChat.methods
       .getChannelData(this.props.props.location.state.channelIndex)
       .call();
+    const members = await this.props.drizzle.contracts.DappChat.methods
+        .getMembersArray(this.props.props.location.state.channelIndex)
+        .call()
     this.setState({
       channelOwner: channelData[0],
       restricted: channelData[4],
       userAddress: this.props.drizzleState.accounts[0],
-    });
-    this.setState({
-      members: await this.props.drizzle.contracts.DappChat.methods
-        .getMembersArray(this.props.props.location.state.channelIndex)
-        .call(),
+      members
     });
   };
 
