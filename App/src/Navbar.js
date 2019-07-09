@@ -47,7 +47,7 @@ export default class Navbar extends React.Component {
           openToast={this.openToast}
           closeToast={this.closeToast}
         />
-        <div className="right menu">
+        {/* <div className="right menu">
           <div className="item">
             <div className="ui icon input">
               <i
@@ -57,7 +57,7 @@ export default class Navbar extends React.Component {
               />
             </div>
           </div>
-        </div>
+        </div> */}
       </div>
     );
   }

@@ -4,7 +4,7 @@ import SearchSideBar from './SearchSideBar';
 import Home from './Home';
 
 let defaultState = {
-  hideSideBar: false,
+  hideSideBar: true,
 };
 
 export default class HomePage extends React.Component {
@@ -24,9 +24,9 @@ export default class HomePage extends React.Component {
         <Navbar
           drizzle={drizzle}
           drizzleState={drizzleState}
-          toggleSidebar={this.toggleSidebar}
+          /* toggleSidebar={this.toggleSidebar} */
         />
-        <Home drizzle={drizzle} drizzleState={drizzleState} />
+        {/*         <Home drizzle={drizzle} drizzleState={drizzleState} /> */}
         {/* <AllChannels Component> */}
         {/* <ChatSection Component> */}
         <SearchSideBar

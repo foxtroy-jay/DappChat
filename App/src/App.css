@@ -64,3 +64,9 @@
   color: blue;
   cursor: pointer;
 }
+
+.channelDisplay {
+  height: calc(100vh - 55.52px);
+  width: 80vw;
+  left: 20%;
+}

@@ -4,9 +4,11 @@ import {
   Header,
   Icon,
   Image,
+  Search,
   Menu,
   Segment,
   Sidebar,
+  MenuItem,
 } from 'semantic-ui-react';
 import Dummy from './dummy';
 import { toast, Flip, ToastContainer } from 'react-toastify';
@@ -31,7 +33,7 @@ const wordsToIgnore = [
 export default class SidebarExampleSidebar extends React.Component {
   constructor() {
     super();
-    this.state = { search: '', results: [] };
+    this.state = { search: '', results: [], showSearch: true };
   }
 
   componentDidMount() {
@@ -108,17 +110,19 @@ export default class SidebarExampleSidebar extends React.Component {
             onHide={this.handleSidebarHide}
             vertical
             visible={status}
-            width="thin"
-            direction="right"
+            width="wide"
+            direction="left"
           >
             <Menu.Item>
-              <input
-                type="text"
-                placeholder="Search..."
-                onChange={this.handleInputChange}
-                value={this.state.search}
-                onKeyPress={this.search}
-              />
+              <div className="ui input focus">
+                <input
+                  type="text"
+                  placeholder="Search Channels"
+                  onChange={this.handleInputChange}
+                  value={this.state.search}
+                  onKeyPress={this.search}
+                />
+              </div>
             </Menu.Item>
             {results.map(idx => {
               return (
@@ -144,10 +148,12 @@ export default class SidebarExampleSidebar extends React.Component {
           </Sidebar>
 
           <Sidebar.Pusher>
-            <Segment basic>
+            {/*             <Segment basic>
               <Header as="h3">Application Content</Header>
               <Image src="https://react.semantic-ui.com/images/wireframe/paragraph.png" />
-            </Segment>
+            </Segment> */}
+            {/* <Channel Messages rendered here /> */}
+            <div className="channelDisplay"> YO LOOK HERE</div>
           </Sidebar.Pusher>
         </Sidebar.Pushable>
       </div>
