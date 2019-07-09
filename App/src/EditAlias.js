@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Button, Form, Message, Modal, Icon } from 'semantic-ui-react';
+import { Button, Form, Message, Modal, Icon, Input } from 'semantic-ui-react';
 
 const defaultState = {
   Alias: '',
@@ -65,7 +65,7 @@ export default class EditAliasForm extends React.Component {
         <Modal.Header>Edit Alias</Modal.Header>
         <Icon name={'close'} onClick={this.toggleModal} />
         <Form onSubmit={this.handleSubmit} error={!!this.state.errorMessage}>
-          <input
+          <Input
             key="Alias"
             name="Alias"
             value={this.state.Alias}
