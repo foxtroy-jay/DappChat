@@ -1,4 +1,5 @@
 import React from 'react';
+import { Loader, Menu } from 'semantic-ui-react';
 // import ChannelMessage from './ChannelMessage';
 // import { toast, Flip } from 'react-toastify';
 import {
@@ -75,6 +76,29 @@ export default class ChannelsInHome extends React.Component {
     const {lastMessageInChannel} = this.state;
 
     return (
+      <Menu.Item>
+        Channel Name:{' '}
+        {this.state[1] ? this.state[1] : <Loader size="mini" active inline />}
+        <div>
+          Channel Owner:{' '}
+          {this.state[0] ? this.state[0] : <Loader size="mini" active inline />}
+        </div>
+        <div>
+          {/* <Link to={{ pathname: '/channel', state: { channelIndex } }}>
+            Channel Name:{' '}
+            {this.state[1] ? (
+              this.state[1]
+            ) : (
+              <Loader size="mini" active inline />
+            )}
+          </Link> */}
+        </div>
+        <div>
+          Channel Category:{' '}
+          {this.state[2] ? this.state[2] : <Loader size="mini" active inline />}
+        </div>
+        <div>Restricted: {this.state[4] ? 'True' : 'False'}</div>
+      </Menu.Item>
       <div className = "singleChannel">
 
         <div className = "profilePhoto">

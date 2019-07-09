@@ -1,6 +1,7 @@
 import Home from './Home';
 import React from 'react';
 import { DrizzleContext } from 'drizzle-react';
+import HomePage from './HomePage';
 
 export default () => (
   <DrizzleContext.Consumer>
@@ -12,7 +13,7 @@ export default () => (
       }
       return (
         <div>
-          <Home drizzle={drizzle} drizzleState={drizzleState} />
+          <HomePage drizzle={drizzle} drizzleState={drizzleState} />
         </div>
       );
     }}

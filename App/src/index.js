@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-// import App from './App';
+import App from './App';
 import * as serviceWorker from './serviceWorker';
 
 import { Drizzle } from 'drizzle';
@@ -12,7 +12,7 @@ import Migrations from './contracts/Migrations.json';
 import DappChat from './contracts/DappChat.json';
 
 import store from './middleware';
-
+import HomePage from './HomePage';
 import Routes from './routes';
 // import { Router } from 'react-router-dom';
 import { BrowserRouter } from 'react-router-dom';
@@ -23,10 +23,10 @@ const drizzle = new Drizzle(options, store);
 
 ReactDOM.render(
   <DrizzleContext.Provider drizzle={drizzle}>
-    <BrowserRouter>
+    {/*     <BrowserRouter>
       <Routes />
-    </BrowserRouter>
-    {/* <App /> */}
+    </BrowserRouter> */}
+    <App />
   </DrizzleContext.Provider>,
 
   document.getElementById('root')

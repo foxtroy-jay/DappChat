@@ -1,5 +1,4 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 // import { Menu, SearchResult, SearchResults, Search } from 'semantic-ui-react';
 import { Input } from 'semantic-ui-react';
 import EditAlias from './EditAlias';
@@ -31,14 +30,14 @@ export default class Navbar extends React.Component {
   };
 
   render() {
+    const { toggleSidebar } = this.props;
+
     return (
       <div className="ui secondary  menu">
         <ToastContainer />
         <div className="item">
-          <Link to="/home">
-            {' '}
-            <img src={logo} alt="dappChat logo" className="logo" />{' '}
-          </Link>
+          <div> Home</div>
+
         </div>
         <div className="item">Explore</div>
         <EditAlias
@@ -46,27 +45,6 @@ export default class Navbar extends React.Component {
           openToast={this.openToast}
           closeToast={this.closeToast}
         />
-
-        <div className="right menu">
-          <div className="item">
-            <div className="ui icon input">
-              <Input
-                type="text"
-                placeholder="Search..."
-                onChange={this.handleInputChange}
-                value={this.state.search}
-              />
-              <Link
-                to={{
-                  pathname: '/searchresults',
-                  state: { search: this.state.search },
-                }}
-              >
-                <i className="search link icon" />
-              </Link>
-            </div>
-          </div>
-        </div>
       </div>
     );
   }
