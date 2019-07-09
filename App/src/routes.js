@@ -3,7 +3,6 @@ import React, { Component } from 'react';
 import { Route, Switch } from 'react-router-dom';
 import Home from './Home';
 
-import UserPage from './UserPage';
 import AddChannelForm from './AddChannelForm';
 import Navbar from './Navbar';
 import SearchResults from './SearchResults';
@@ -56,19 +55,6 @@ export default class Routes extends Component {
                   render={props => {
                     return (
                       <AddChannelForm
-                        drizzle={drizzle}
-                        drizzleState={drizzleState}
-                        props={props}
-                      />
-                    );
-                  }}
-                />
-                <Route
-                  exact
-                  path="/userpage"
-                  render={props => {
-                    return (
-                      <UserPage
                         drizzle={drizzle}
                         drizzleState={drizzleState}
                         props={props}

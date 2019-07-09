@@ -27,7 +27,6 @@ export default class MessageForm extends Component {
     this.setState({
       [event.target.name]: event.target.value,
     });
-    console.log(this.state);
   };
 
   handleSubmit = async event => {
@@ -54,15 +53,25 @@ export default class MessageForm extends Component {
   render() {
     return (
       <div>
-        <Form onSubmit={this.handleSubmit} error={!!this.state.errorMessage}>
+        <Form
+          onSubmit={this.handleSubmit}
+          error={!!this.state.errorMessage}
+          warning={this.props.disabled}
+        >
+          <Message warning header="Oops!" content="This chat is restricted" />
           <Input
+            disabled={this.props.disabled}
             key="message"
             name="message"
             value={this.state.message}
             placeholder="Message"
             onChange={this.handleInputChange}
             icon={
-              <Popup trigger={<Icon name="smile outline" link />} on="click">
+              <Popup
+                disabled={this.props.disabled}
+                trigger={<Icon name="smile outline" link />}
+                on="click"
+              >
                 <EmojiPicker
                   onEmojiClick={code => {
                     let emoji = String.fromCodePoint(`0x${code}`);
@@ -76,9 +85,11 @@ export default class MessageForm extends Component {
             content="is this working?"
             position="bottom center"
           />
-
           <Message error header="Oops!" content={this.state.errorMessage} />
-          <Button loading={this.state.loading} disabled={this.state.loading}>
+          <Button
+            disabled={this.props.disabled || this.state.loading}
+            loading={this.state.loading}
+          >
             Message
           </Button>
         </Form>
