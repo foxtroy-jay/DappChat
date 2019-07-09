@@ -12,7 +12,6 @@ export default class MessageForm extends Component {
       message: '',
       errorMessage: '',
       loading: false, // disables button upon submission
-      emojiWindow: true,
     };
   }
 
@@ -63,20 +62,7 @@ export default class MessageForm extends Component {
             placeholder="Message"
             onChange={this.handleInputChange}
             icon={
-              <Popup
-                trigger={
-                  <Icon
-                    name="smile outline"
-                    link
-                    onClick={() =>
-                      this.setState({
-                        emojiWindow: !this.state.emojiWindow,
-                      })
-                    }
-                  />
-                }
-                on="click"
-              >
+              <Popup trigger={<Icon name="smile outline" link />} on="click">
                 <EmojiPicker
                   onEmojiClick={code => {
                     let emoji = String.fromCodePoint(`0x${code}`);
