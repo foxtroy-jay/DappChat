@@ -64,3 +64,10 @@
   color: blue;
   cursor: pointer;
 }
+
+.logo{
+  height: 40px;
+  width: 119px;
+  border-radius: 10px;
+  margin-left: 10px;
+}
