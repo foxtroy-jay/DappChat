@@ -41,6 +41,8 @@ export default class Home extends React.Component {
     if (contractState.getFollowedChannels['0x0']) {
       mapArray = contractState.getFollowedChannels['0x0'].value;
     }
+
+    console.log("MAP ARRAY ", mapArray)
     return (
       <div className="App">
         <ToastContainer />
@@ -51,16 +53,18 @@ export default class Home extends React.Component {
           <AddChannelForm drizzle={drizzle} drizzleState={drizzleState} />
           <div className="allChannels">
             {mapArray
-              .map(channelIndex => {
-                return (
-                  <ChannelsInHome
-                    channelIndex={channelIndex}
-                    drizzle={drizzle}
-                    drizzleState={drizzleState}
-                    clickChannel={this.clickChannel}
-                    key={channelIndex}
-                  />
-                );
+              .map((channelIndex) => {
+                if(channelIndex > -1){
+                  return (
+                    <ChannelsInHome
+                      channelIndex={channelIndex}
+                      drizzle={drizzle}
+                      drizzleState={drizzleState}
+                      clickChannel={this.clickChannel}
+                      key={channelIndex}
+                    />
+                  );
+                }
               })
               .reverse()}
           </div>
