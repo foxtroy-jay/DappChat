@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { toast, Flip } from 'react-toastify';
-import { Button, Form, Message } from 'semantic-ui-react';
+import { Button, Form, Message, Input, Icon, Popup } from 'semantic-ui-react';
+import EmojiPicker from 'emoji-picker-react';
 
 export default class MessageForm extends Component {
   constructor(props) {
@@ -11,6 +12,7 @@ export default class MessageForm extends Component {
       message: '',
       errorMessage: '',
       loading: false, // disables button upon submission
+      emojiWindow: true,
     };
   }
 
@@ -26,6 +28,7 @@ export default class MessageForm extends Component {
     this.setState({
       [event.target.name]: event.target.value,
     });
+    console.log(this.state);
   };
 
   handleSubmit = async event => {
@@ -53,15 +56,42 @@ export default class MessageForm extends Component {
     return (
       <div>
         <Form onSubmit={this.handleSubmit} error={!!this.state.errorMessage}>
-          <input
+          <Input
             key="message"
             name="message"
             value={this.state.message}
             placeholder="Message"
             onChange={this.handleInputChange}
+            icon={
+              <Popup
+                trigger={
+                  <Icon
+                    name="smile outline"
+                    link
+                    onClick={() =>
+                      this.setState({
+                        emojiWindow: !this.state.emojiWindow,
+                      })
+                    }
+                  />
+                }
+                on="click"
+              >
+                <EmojiPicker
+                  onEmojiClick={code => {
+                    let emoji = String.fromCodePoint(`0x${code}`);
+                    this.setState({
+                      message: `${this.state.message}${emoji}`,
+                    });
+                  }}
+                />
+              </Popup>
+            }
+            content="is this working?"
+            position="bottom center"
           />
-          <Message error header="Oops!" content={this.state.errorMessage} />
 
+          <Message error header="Oops!" content={this.state.errorMessage} />
           <Button loading={this.state.loading} disabled={this.state.loading}>
             Message
           </Button>
