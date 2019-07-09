@@ -1,7 +1,5 @@
 import React from 'react';
-import {
-  Loader,
-} from 'semantic-ui-react';
+import { Loader, Menu } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 
 export default class ChannelsInHome extends React.Component {
@@ -32,10 +30,9 @@ export default class ChannelsInHome extends React.Component {
   render() {
     const { channelIndex } = this.props;
     return (
-      <div>
+      <Menu.Item>
         Channel Name:{' '}
         {this.state[1] ? this.state[1] : <Loader size="mini" active inline />}
-
         <div>
           Channel Owner:{' '}
           {this.state[0] ? this.state[0] : <Loader size="mini" active inline />}
@@ -54,9 +51,8 @@ export default class ChannelsInHome extends React.Component {
           Channel Category:{' '}
           {this.state[2] ? this.state[2] : <Loader size="mini" active inline />}
         </div>
-
         <div>Restricted: {this.state[4] ? 'True' : 'False'}</div>
-      </div>
+      </Menu.Item>
     );
   }
 }
