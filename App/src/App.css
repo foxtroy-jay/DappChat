@@ -1,6 +1,7 @@
 .App {
-  text-align: center;
+  /* text-align: center; */
 }
+
 
 .App-logo {
   animation: App-logo-spin infinite 20s linear;
@@ -65,9 +66,62 @@
   cursor: pointer;
 }
 
-.logo{
+.logo {
   height: 40px;
   width: 119px;
   border-radius: 10px;
   margin-left: 10px;
 }
+
+
+.userChannels {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  flex-direction: column;
+}
+
+
+.singleChannel {
+  border: 1px solid black;
+  border-radius: 10px;
+  margin-bottom: 1px;
+  align-self: center;
+  padding: 10px;
+  width: 400px;
+  height: 80px;
+  flex: wrap;
+  flex-direction: row;
+}
+
+.Home {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.createChannelBtn {
+  margin-top: 10px;
+}
+
+.channelNameAndMessage {
+  flex-direction: column;
+  flex:2;
+}
+
+.profilePhoto{
+  background-color: black;
+  flex: 1;
+}
+
+.blockies {
+  display: inline-block;
+  width: 40px;
+  height: 40px;
+  background-size: cover;
+  background-repeat: no-repeat;
+  border-radius: 10px;
+  margin: 0 5px 0 5px;
+  border: solid black 3px;
+}
+
