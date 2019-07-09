@@ -46,12 +46,11 @@ export default class Home extends React.Component {
     return (
       <div className="App">
         <ToastContainer />
-        <div>
+        <div className = "Home">
           <h1>Address: {this.state.userAddress}</h1>
           <h1>{this.state.alias ? `${this.state.alias}'s Channels` : ''}</h1>
 
-          <AddChannelForm drizzle={drizzle} drizzleState={drizzleState} />
-          <div className="allChannels">
+          <div className = "userChannels">
             {mapArray
               .map((channelIndex) => {
                 if(channelIndex > -1){
@@ -68,6 +67,11 @@ export default class Home extends React.Component {
               })
               .reverse()}
           </div>
+              <div className = "createChannelBtn">
+              
+              <AddChannelForm drizzle={drizzle} drizzleState={drizzleState} />
+
+              </div>
         </div>
       </div>
     );
