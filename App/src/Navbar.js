@@ -5,6 +5,7 @@ import EditAlias from './EditAlias';
 // import SearchPage from './SearchResults';
 import { toast, Flip } from 'react-toastify';
 import { ToastContainer } from 'react-toastify';
+import logo from './assets/dappChat.jpg'
 
 export default class Navbar extends React.Component {
   constructor() {
@@ -36,9 +37,11 @@ export default class Navbar extends React.Component {
     return (
       <div className="ui secondary  menu">
         <ToastContainer />
-
+        {/* <div className = "left menu">
+          <img src = {logo} className = "logo"/>
+        </div> */}
         <div className="item">
-          <Link to="/home">Home </Link>
+          <Link to="/home"> <img src = {logo} className = "logo"/> </Link>
         </div>
         <div className="item">Explore</div>
         <EditAlias
@@ -46,6 +49,7 @@ export default class Navbar extends React.Component {
           openToast={this.openToast}
           closeToast={this.closeToast}
         />
+
         <div className="right menu">
           <div className="item">
             <div className="ui icon input">
