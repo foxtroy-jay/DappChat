@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, Form, Message, Modal, Icon } from 'semantic-ui-react';
+import { Button, Form, Message, Modal, Icon, Input } from 'semantic-ui-react';
 
 const defaultState = {
   addressToAdd: '',
@@ -100,7 +100,7 @@ export default class channelAdminView extends Component {
           <Modal.Header>Admin</Modal.Header>
           <Icon name={'close'} onClick={this.toggleModal} />
           <Form onSubmit={this.addMember} error={!!this.state.errorMessage}>
-            <input
+            <Input
               key="addressToAdd"
               name="addressToAdd"
               value={this.state.addressToAdd}
@@ -130,7 +130,7 @@ export default class channelAdminView extends Component {
                       />
                     </li>
                   );
-                } else return "";
+                } else return '';
               })
             )}
           </ul>

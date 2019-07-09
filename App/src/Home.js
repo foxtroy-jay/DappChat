@@ -40,7 +40,7 @@ export default class Home extends React.Component {
     if (contractState.getFollowedChannels['0x0']) {
       mapArray = contractState.getFollowedChannels['0x0'].value;
     }
-
+    
     return (
       <div className="App">
         <ToastContainer />
@@ -51,7 +51,8 @@ export default class Home extends React.Component {
 
           <div className = "userChannels">
             {mapArray
-              .map((channelIndex) => {
+              .map(channelIndex => {
+
                 if (channelIndex > -1) {
                   return (
                     <ChannelsInHome
@@ -63,6 +64,7 @@ export default class Home extends React.Component {
                     />
                   );
                 }
+                return '';
               })
               .reverse()}
           </div>

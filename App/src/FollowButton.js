@@ -12,7 +12,7 @@ export default class FollowButton extends React.Component {
   }
 
   async componentDidMount() {
-    const { drizzle, drizzleState } = this.props;
+    const { drizzle } = this.props;
     const followedChannels = await drizzle.contracts.DappChat.methods
       .getFollowedChannels()
       .call();
