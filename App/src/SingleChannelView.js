@@ -71,6 +71,7 @@ export default class SingleChannelView extends Component {
           channelIndex={this.props.channelIndex}
           messageIndex={idx}
           drizzle={this.props.drizzle}
+          drizzleState = {this.props.drizzleState}
           key={idx}
         />
       );

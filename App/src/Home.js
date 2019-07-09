@@ -3,7 +3,7 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import AddChannelForm from './AddChannelForm';
 import ChannelsInHome from './ChannelsInHome';
-import Dummy from './dummy';
+import makeBlockie from 'ethereum-blockies-base64';
 
 const defaultState = {
   channelName: '',
@@ -27,9 +27,7 @@ export default class Home extends React.Component {
     }
     this.props.drizzle.contracts.DappChat.methods.getFollowedChannels.cacheCall();
     this.setState({
-      alias: await this.props.drizzle.contracts.DappChat.methods
-        .aliases(this.state.userAddress)
-        .call(),
+      alias: await this.props.drizzle.contracts.DappChat.methods.aliases(this.state.userAddress).call(),
     });
     this.props.drizzle.contracts.DappChat.methods.getAllChannelsLength.cacheCall();
   }
@@ -42,17 +40,15 @@ export default class Home extends React.Component {
     if (contractState.getFollowedChannels['0x0']) {
       mapArray = contractState.getFollowedChannels['0x0'].value;
     }
-
-    console.log('MAP ARRAY ', mapArray);
     return (
       <div className="App">
         <ToastContainer />
-        <div>
-          <h1>Address: {this.state.userAddress}</h1>
+
+        <div className = "Home">
+          <h1>Address: {this.state.userAddress}{this.state.userAddress ? <img className="blockies" src={makeBlockie(this.state.userAddress)} /> : ''}</h1>
           <h1>{this.state.alias ? `${this.state.alias}'s Channels` : ''}</h1>
 
-          <AddChannelForm drizzle={drizzle} drizzleState={drizzleState} />
-          <div className="allChannels">
+          <div className = "userChannels">
             {mapArray
               .map(channelIndex => {
                 if (channelIndex > -1) {
@@ -66,9 +62,15 @@ export default class Home extends React.Component {
                     />
                   );
                 }
+                return '';
               })
               .reverse()}
           </div>
+              <div className = "createChannelBtn">
+              
+              <AddChannelForm drizzle={drizzle} drizzleState={drizzleState} />
+
+              </div>
         </div>
       </div>
     );

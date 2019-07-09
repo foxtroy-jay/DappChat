@@ -1,19 +1,17 @@
 import React from 'react';
 // import { Menu, SearchResult, SearchResults, Search } from 'semantic-ui-react';
+import { Input } from 'semantic-ui-react';
 import EditAlias from './EditAlias';
 // import SearchPage from './SearchResults';
 import { toast, Flip } from 'react-toastify';
 import { ToastContainer } from 'react-toastify';
+import logo from './assets/dappChat.jpg';
 
 export default class Navbar extends React.Component {
   constructor() {
     super();
     this.state = { search: '' };
   }
-
-  // async componentDidMount() {
-  //   const accounts = await this.props.drizzle.web3.eth.getAccounts();
-  // }
 
   handleInputChange = event => {
     this.setState({ search: event.target.value });
@@ -37,9 +35,9 @@ export default class Navbar extends React.Component {
     return (
       <div className="ui secondary  menu">
         <ToastContainer />
-
         <div className="item">
           <div> Home</div>
+
         </div>
         <div className="item">Explore</div>
         <EditAlias
@@ -47,17 +45,6 @@ export default class Navbar extends React.Component {
           openToast={this.openToast}
           closeToast={this.closeToast}
         />
-        {/* <div className="right menu">
-          <div className="item">
-            <div className="ui icon input">
-              <i
-                // onClick={() => console.log('thisworking?')}
-                onClick={toggleSidebar}
-                className="search link icon"
-              />
-            </div>
-          </div>
-        </div> */}
       </div>
     );
   }

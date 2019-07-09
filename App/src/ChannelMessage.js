@@ -13,6 +13,11 @@ export default class ChannelMessage extends React.Component {
       messageData: messageData[0],
       senderAddress: messageData[1],
     });
+    const { channelIndex, messageIndex } = this.props;
+    this.props.drizzle.contracts.DappChat.methods.getMessage.cacheCall(
+      channelIndex,
+      messageIndex
+    );
   }
 
   render() {
