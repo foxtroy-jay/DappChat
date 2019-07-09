@@ -65,9 +65,20 @@
   cursor: pointer;
 }
 
-.logo{
+.logo {
   height: 40px;
   width: 119px;
   border-radius: 10px;
   margin-left: 10px;
+}
+
+.blockies {
+  display: inline-block;
+  width: 40px;
+  height: 40px;
+  background-size: cover;
+  background-repeat: no-repeat;
+  border-radius: 10px;
+  margin: 0 5px 0 5px;
+  border: solid black 3px;
 }
