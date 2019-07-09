@@ -7,6 +7,7 @@ contract DappChat {
         string message;
         address sender;
         string quotedReply;
+        uint blockTimestamp;
     }
 
     struct Channel {
@@ -17,7 +18,7 @@ contract DappChat {
         bool restrictedStatus;
         //we want a mapping because of fast lookup and slow write
         address[] membersArray;
-        mapping(address=>bool) members; 
+        mapping(address=>bool) members;
         mapping(uint => ReplyMessage) messages;
     }
 
@@ -60,7 +61,7 @@ contract DappChat {
     function addChannelMembers(uint channelIndex, address newMember) public {
         require (allChannels[channelIndex].channelOwner == msg.sender);
             allChannels[channelIndex].members[newMember] = true;
-            allChannels[channelIndex].membersArray.push(newMember);              
+            allChannels[channelIndex].membersArray.push(newMember);
     }
 
     function removeChannelMembers(uint channelIndex, address memberToRemove, uint memberIndex) public {
@@ -78,7 +79,8 @@ contract DappChat {
          ReplyMessage memory newMessage = ReplyMessage({
              message: message,
              sender:msg.sender,
-             quotedReply: ''
+             quotedReply: '',
+             blockTimestamp: block.timestamp
          });
 
         //Fetch number of replies to current tweet
@@ -108,7 +110,8 @@ contract DappChat {
         ReplyMessage memory newReplyMessage = ReplyMessage({
             message: message,
             sender: currentChannel.messages[messageIndex].sender,
-            quotedReply: currentChannel.messages[messageIndex]. message
+            quotedReply: currentChannel.messages[messageIndex]. message,
+            blockTimestamp: block.timestamp
         });
 
         currentChannel.messages[currentChannel.numberOfReplies] = newReplyMessage;
@@ -122,8 +125,8 @@ contract DappChat {
         return allChannels[channelIndex].messages[messageIndex].message;
     }
 
-    function getReplyData(uint channelIndex, uint messageIndex) public view returns (string memory, address, string memory){
-        return (allChannels[channelIndex].messages[messageIndex].message, allChannels[channelIndex].messages[messageIndex].sender,allChannels[channelIndex].messages[messageIndex].quotedReply );
+    function getReplyData(uint channelIndex, uint messageIndex) public view returns (string memory, address, string memory, uint){
+        return (allChannels[channelIndex].messages[messageIndex].message, allChannels[channelIndex].messages[messageIndex].sender,allChannels[channelIndex].messages[messageIndex].quotedReply, allChannels[channelIndex].messages[messageIndex].blockTimestamp );
     }
 
     function getChannelData(uint channelIndex) public view returns (address, string memory, string memory, uint, bool){
@@ -133,10 +136,10 @@ contract DappChat {
     function getFollowedChannels() public view returns (int[] memory) {
         return followedChannels[msg.sender];
     }
-    
+
     function getMembersArray(uint channelIndex) public view returns (address[] memory) {
         return allChannels[channelIndex].membersArray;
-    } 
-    
+    }
+
 }
 
