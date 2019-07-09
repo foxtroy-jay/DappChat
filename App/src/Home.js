@@ -41,11 +41,6 @@ export default class Home extends React.Component {
       mapArray = contractState.getFollowedChannels['0x0'].value;
     }
 
-    // console.log('MAP ARRAY ', mapArray);
-    // let blockie = '';
-    // if (this.state.userAddress) {
-    //   blockie = <img src={makeBlockie(this.state.userAddress)} />;
-    // }
     return (
       <div className="App">
         <ToastContainer />

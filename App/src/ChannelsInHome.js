@@ -12,8 +12,10 @@ import {
   Loader,
 } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
+import makeBlockie from 'ethereum-blockies-base64';
 
-const msgLength = 50;
+
+const msgLength = 45;
 
 export default class ChannelsInHome extends React.Component {
   constructor(props) {
@@ -23,6 +25,8 @@ export default class ChannelsInHome extends React.Component {
       channel: '',
       numOfMessagesInChannel: '',
       lastMessageInChannel: '',
+      lastMessageSender: '',
+      lastMessageTime: '',
       activeIndex: false,
 
       loading: false,
@@ -41,9 +45,26 @@ export default class ChannelsInHome extends React.Component {
     );
 
     const lastMessage = await this.props.drizzle.contracts.DappChat.methods
-                        .getMessage(this.props.channelIndex, (channelData[3] -1))
+                        .getReplyData(this.props.channelIndex, (channelData[3] -1))
                         .call();
-    this.setState({channel: channelData[1], numOfMessagesInChannel: channelData[3], lastMessageInChannel: lastMessage});
+    console.log("last message", lastMessage[3])
+    let time = "";
+    if(lastMessage[3] != 0) {
+      const date = new Date(lastMessage[3] * 1000);
+      // time = `${date.getFullYear()} ${date.getMonth()} ${date.getDay()} ${date.getHours()}:${date.getMinutes()}`;
+
+      time = `${date.getHours()}:${date.getMinutes()}`;
+      console.log("time", time)
+
+    }
+
+
+    this.setState({channel: channelData[1], 
+                numOfMessagesInChannel: channelData[3], 
+                lastMessageInChannel: lastMessage[0], 
+                lastMessageSender: lastMessage[1], 
+                lastMessageTime: time
+    });
     
   }
 
@@ -56,39 +77,38 @@ export default class ChannelsInHome extends React.Component {
     return (
       <div className = "singleChannel">
 
-        {/* <div>
-          Channel Owner:{' '}
-          {this.state[0] ? this.state[0] : <Loader size="mini" active inline />}
-        </div> */}
         <div className = "profilePhoto">
-        HI
-        </div>
+          {this.state.lastMessageSender ? <img className="blockies" src={makeBlockie(this.state.lastMessageSender)} /> : ''}
+        </div> 
 
         <div className = "channelNameAndMessage">
+
+        <div className = "channelNameAndTime">
+
           <Link to={{ pathname: '/channel', state: { channelIndex } }}>
             {/* Channel Name:{' '} */}
-            {this.state.channel ? (
-              this.state.channel
-            ) : (
-              <Loader size="mini" active inline />
-            )}
+            {/* {this.state.channel ? ( */}
+
+              <div>
+                {this.state.channel}
+              </div>
+
+            {/* // ) : (
+            //   <Loader size="mini" active inline />
+            // )} */}
           </Link>
 
-         
-            {lastMessageInChannel.length > msgLength ? lastMessageInChannel.slice(0,msgLength) + "..." : lastMessageInChannel}
+          <div>
+                    {this.state.lastMessageTime}
+                  </div>
           </div>
-        
-        {/* <div>
-          Channel Category:{' '}
-          {this.state[2] ? this.state[2] : <Loader size="mini" active inline />}
-        </div> */}
 
-        {/* <div>
-          Channel Category:{' '}
-          {this.state[2] ? this.state[2] : <Loader size="mini" active inline />}
-        </div> */}
-
-        {/* <div>Restricted: {this.state[4] ? 'True' : 'False'}</div> */}
+   
+            {lastMessageInChannel.length > msgLength ? lastMessageInChannel.slice(0,msgLength) + "..." : lastMessageInChannel
+              
+            }
+          </div>
+  
       </div>
     );
   }
