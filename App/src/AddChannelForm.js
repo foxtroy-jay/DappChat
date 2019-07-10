@@ -28,7 +28,7 @@ export default class AddChannelForm extends React.Component {
     if (!this.state.userAddress) {
       const accounts = await this.props.drizzle.web3.eth.getAccounts();
       this.setState({ userAddress: accounts[0] });
-    } 
+    }
   }
 
   handleInputChange = event => {
@@ -57,7 +57,7 @@ export default class AddChannelForm extends React.Component {
           this.state.restrictedStatus
         )
         .send({ from: this.state.userAddress });
-      this.toggleModal();
+      this.setState({ showModal: false });
     } catch (error) {
       this.setState({ errorMessage: error.message });
       toast.dismiss();
@@ -76,7 +76,9 @@ export default class AddChannelForm extends React.Component {
         <Modal
           open={this.state.showModal}
           trigger={
-            <Button className = "createChannelBtn" onClick={this.toggleModal}>Create A New Channel</Button>
+            <Button className="createChannelBtn" onClick={this.toggleModal}>
+              Create A New Channel
+            </Button>
           }
         >
           <Modal.Header>Create A New Channel</Modal.Header>

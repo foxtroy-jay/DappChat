@@ -1,6 +1,5 @@
 import React from 'react';
 // import { Menu, SearchResult, SearchResults, Search } from 'semantic-ui-react';
-import { Input } from 'semantic-ui-react';
 import EditAlias from './EditAlias';
 // import SearchPage from './SearchResults';
 import { toast, Flip } from 'react-toastify';
@@ -30,14 +29,13 @@ export default class Navbar extends React.Component {
   };
 
   render() {
-    const { toggleSidebar } = this.props;
-
     return (
       <div className="ui secondary  menu">
         <ToastContainer />
         <div className="item">
-          <div> Home</div>
-
+          <div>
+            <img className="logo" alt="dappChat" src={logo} />
+          </div>
         </div>
         <div className="item">Explore</div>
         <EditAlias

@@ -1,19 +1,9 @@
 import React from 'react';
-import {
-  Button,
-  Header,
-  Icon,
-  Image,
-  Search,
-  Menu,
-  Segment,
-  Sidebar,
-  MenuItem,
-} from 'semantic-ui-react';
-import Dummy from './dummy';
-import { toast, Flip, ToastContainer } from 'react-toastify';
+import { Menu, Segment, Sidebar } from 'semantic-ui-react';
+import { toast, Flip } from 'react-toastify';
 
 import ChannelsInHome from './ChannelsInHome';
+import Home from './Home';
 
 const wordsToIgnore = [
   'at',
@@ -42,7 +32,6 @@ export default class SidebarExampleSidebar extends React.Component {
 
   search = async event => {
     if (event.key === 'Enter') {
-      console.log('big success');
       let channelsLength = this.props.drizzleState.contracts.DappChat
         .getAllChannelsLength['0x0'].value;
 
@@ -70,7 +59,6 @@ export default class SidebarExampleSidebar extends React.Component {
       }
 
       this.setState({ results });
-      console.log(this.state.results);
     }
   };
 
@@ -91,14 +79,9 @@ export default class SidebarExampleSidebar extends React.Component {
   };
 
   render() {
-    // const { visible } = this.state;
-    // const { hideSidebar } = this.props;
-    // console.log('SEARCHSIDEBAR', this.props);
-    // console.log('keys', Object.keys(this.props)[2]);
-    // console.log('status', this.props[Object.keys(this.props)[2]]);
-    // console.log('test', this.props['hideSidebar']);
     let status = this.props[Object.keys(this.props)[2]];
     const { results } = this.state;
+    const { drizzle, drizzleState, props } = this.props;
     return (
       <div>
         <Sidebar.Pushable as={Segment}>
@@ -109,8 +92,8 @@ export default class SidebarExampleSidebar extends React.Component {
             inverted
             onHide={this.handleSidebarHide}
             vertical
-            visible={status}
-            width="wide"
+            visible={true}
+            width="very wide"
             direction="left"
           >
             <Menu.Item>
@@ -124,7 +107,7 @@ export default class SidebarExampleSidebar extends React.Component {
                 />
               </div>
             </Menu.Item>
-            {results.map(idx => {
+            {/* {results.map(idx => {
               return (
                 <ChannelsInHome
                   channelIndex={idx}
@@ -133,26 +116,17 @@ export default class SidebarExampleSidebar extends React.Component {
                   key={idx}
                 />
               );
-            })}
-            {/* <Menu.Item as="a">
-              <Icon name="home" />
-              <Dummy />
+            })} */}
+            <Menu.Item>
+              <Home
+                drizzle={drizzle}
+                drizzleState={drizzleState}
+                props={props}
+              />
             </Menu.Item>
-            <Menu.Item as="a">
-              <Dummy />
-            </Menu.Item>
-            <Menu.Item as="a">
-              <Icon name="camera" />
-              Channels
-            </Menu.Item> */}
           </Sidebar>
 
           <Sidebar.Pusher>
-            {/*             <Segment basic>
-              <Header as="h3">Application Content</Header>
-              <Image src="https://react.semantic-ui.com/images/wireframe/paragraph.png" />
-            </Segment> */}
-            {/* <Channel Messages rendered here /> */}
             <div className="channelDisplay"> YO LOOK HERE</div>
           </Sidebar.Pusher>
         </Sidebar.Pushable>

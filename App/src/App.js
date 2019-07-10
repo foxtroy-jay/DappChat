@@ -1,4 +1,3 @@
-import Home from './Home';
 import React from 'react';
 import { DrizzleContext } from 'drizzle-react';
 import HomePage from './HomePage';
