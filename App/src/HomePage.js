@@ -1,0 +1,34 @@
+import React from 'react';
+import Navbar from './Navbar';
+import SearchSideBar from './SearchSideBar';
+
+let defaultState = {
+  hideSideBar: true,
+};
+
+export default class HomePage extends React.Component {
+  constructor(props, context) {
+    super();
+    this.drizzleState = context.drizzle;
+    this.state = defaultState;
+  }
+  toggleSidebar = () => {
+    this.setState({ hideSideBar: !this.state.hideSideBar });
+  };
+  render() {
+    const { drizzle, drizzleState } = this.props;
+    return (
+      <div>
+        <Navbar
+          drizzle={drizzle}
+          drizzleState={drizzleState}
+          /* toggleSidebar={this.toggleSidebar} */
+        />
+        {/*         <Home drizzle={drizzle} drizzleState={drizzleState} /> */}
+        {/* <AllChannels Component> */}
+        {/* <ChatSection Component> */}
+        <SearchSideBar drizzle={drizzle} drizzleState={drizzleState} />
+      </div>
+    );
+  }
+}

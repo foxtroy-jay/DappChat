@@ -65,6 +65,11 @@
   cursor: pointer;
 }
 
+.channelDisplay {
+  height: calc(100vh - 55.52px);
+  width: 80vw;
+  left: 20%;
+}
 .logo {
   height: 40px;
   width: 119px;
@@ -87,8 +92,10 @@
   padding: 10px;
   width: 400px;
   height: 80px;
+  display: flex;
   flex: wrap;
   flex-direction: row;
+  align-items: center;
 }
 
 .Home {
@@ -102,13 +109,15 @@
 }
 
 .channelNameAndMessage {
+  display: flex;
   flex-direction: column;
-  flex: 2;
+  width: 100%;
+
 }
 
-.profilePhoto {
-  background-color: black;
-  flex: 1;
+.profilePhoto{
+  display: flex;
+  margin-right: 10px;
 }
 
 .blockies {
@@ -125,3 +134,10 @@
 .closeBtn {
   cursor: pointer;
 }
+.channelNameAndTime {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+

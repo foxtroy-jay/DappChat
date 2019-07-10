@@ -1,19 +1,7 @@
 import React from 'react';
-// import ChannelMessage from './ChannelMessage';
-// import { toast, Flip } from 'react-toastify';
-import {
-  // Button,
-  // Form,
-  // Message,
-  // Accordion,
-  // AccordionContent,
-  // AccordionTitle,
-  // Icon,
-  Loader,
-} from 'semantic-ui-react';
-import { Link } from 'react-router-dom';
+import makeBlockie from 'ethereum-blockies-base64';
 
-const msgLength = 50;
+const msgLength = 45;
 
 export default class ChannelsInHome extends React.Component {
   constructor(props) {
@@ -23,6 +11,8 @@ export default class ChannelsInHome extends React.Component {
       channel: '',
       numOfMessagesInChannel: '',
       lastMessageInChannel: '',
+      lastMessageSender: '',
+      lastMessageTime: '',
       activeIndex: false,
 
       loading: false,
@@ -35,60 +25,58 @@ export default class ChannelsInHome extends React.Component {
     const channelData = await this.props.drizzle.contracts.DappChat.methods
       .getChannelData(this.props.channelIndex)
       .call();
-
     this.props.drizzle.contracts.DappChat.methods.getChannelData.cacheCall(
       this.props.channelIndex
     );
 
     const lastMessage = await this.props.drizzle.contracts.DappChat.methods
-                        .getMessage(this.props.channelIndex, (channelData[3] -1))
-                        .call();
-    this.setState({channel: channelData[1], numOfMessagesInChannel: channelData[3], lastMessageInChannel: lastMessage});
-    
+      .getReplyData(this.props.channelIndex, channelData[3] - 1)
+      .call();
+    let time = '';
+    if (lastMessage[3] !== '0') {
+      const date = new Date(lastMessage[3] * 1000);
+      // time = `${date.getFullYear()} ${date.getMonth()} ${date.getDay()} ${date.getHours()}:${date.getMinutes()}`;
+
+      time = `${date.getHours()}:${date.getMinutes()}`;
+    }
+
+    this.setState({
+      channel: channelData[1],
+      numOfMessagesInChannel: channelData[3],
+      lastMessageInChannel: lastMessage[0],
+      lastMessageSender: lastMessage[1],
+      lastMessageTime: time,
+    });
   }
 
-
   render() {
-
-    const { channelIndex } = this.props;
-    const {lastMessageInChannel} = this.state;
-
+    const { lastMessageInChannel } = this.state;
     return (
-      <div className = "singleChannel">
-
-        {/* <div>
-          Channel Owner:{' '}
-          {this.state[0] ? this.state[0] : <Loader size="mini" active inline />}
-        </div> */}
-        <div className = "profilePhoto">
-        HI
-        </div>
-
-        <div className = "channelNameAndMessage">
-          <Link to={{ pathname: '/channel', state: { channelIndex } }}>
-            {/* Channel Name:{' '} */}
-            {this.state.channel ? (
-              this.state.channel
+      <div>
+        <div className="singleChannel">
+          <div className="profilePhoto">
+            {this.state.lastMessageSender ? (
+              <img
+                alt="blockie"
+                className="blockies"
+                src={makeBlockie(this.state.lastMessageSender)}
+              />
             ) : (
-              <Loader size="mini" active inline />
+              ''
             )}
-          </Link>
-
-         
-            {lastMessageInChannel.length > msgLength ? lastMessageInChannel.slice(0,msgLength) + "..." : lastMessageInChannel}
           </div>
-        
-        {/* <div>
-          Channel Category:{' '}
-          {this.state[2] ? this.state[2] : <Loader size="mini" active inline />}
-        </div> */}
 
-        {/* <div>
-          Channel Category:{' '}
-          {this.state[2] ? this.state[2] : <Loader size="mini" active inline />}
-        </div> */}
+          <div className="channelNameAndMessage">
+            <div className="channelNameAndTime">
+              <div>{this.state.channel}</div>
+              <div>{this.state.lastMessageTime}</div>
+            </div>
 
-        {/* <div>Restricted: {this.state[4] ? 'True' : 'False'}</div> */}
+            {lastMessageInChannel.length > msgLength
+              ? lastMessageInChannel.slice(0, msgLength) + '...'
+              : lastMessageInChannel}
+          </div>
+        </div>
       </div>
     );
   }

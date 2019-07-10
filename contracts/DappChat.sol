@@ -26,7 +26,7 @@ contract DappChat {
     mapping(address => string) public aliases;
     mapping(address => int[]) followedChannels;
 
-    //Create or set alias
+    //Create or set alias 
     function setAlias(string memory username) public {
         aliases[msg.sender] = username;
     }
