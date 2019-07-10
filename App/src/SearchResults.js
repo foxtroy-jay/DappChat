@@ -1,21 +1,6 @@
 import React from 'react';
-// import ChannelDetails from './ChannelDetails';
 import ChannelsInHome from './ChannelsInHome';
-
-const wordsToIgnore = [
-  'at',
-  'for',
-  'in',
-  'off',
-  'on',
-  'over',
-  'and',
-  'under',
-  'of',
-  'the',
-  'is',
-  'a',
-];
+import makeBlockie from 'ethereum-blockies-base64';
 
 export default class SearchResult extends React.Component {
   constructor() {
@@ -34,12 +19,7 @@ export default class SearchResult extends React.Component {
     let channelsLength = this.props.drizzleState.contracts.DappChat
       .getAllChannelsLength['0x0'].value;
 
-    const searchWords = this.props.props.location.state.search
-      .toLowerCase()
-      .split(' ')
-      .filter(word => {
-        return !wordsToIgnore.includes(word);
-      });
+    const searchWords = this.props.searchWords;
 
     let results = [];
     let channel;
@@ -62,18 +42,44 @@ export default class SearchResult extends React.Component {
 
   render() {
     const { results } = this.state;
+    const { drizzle, drizzleState } = this.props;
+
     return (
-      <div>
-        {results.map(idx => {
-          return (
-            <ChannelsInHome
-              channelIndex={idx}
-              drizzle={this.props.drizzle}
-              drizzleState={this.props.drizzleState}
-              key={idx}
-            />
-          );
-        })}
+      <div className="App">
+        <div className="Home">
+          <h1>
+            Address: {this.state.userAddress}
+            {this.state.userAddress ? (
+              <img
+                alt="blockies"
+                className="blockies"
+                src={makeBlockie(this.state.userAddress)}
+              />
+            ) : (
+              ''
+            )}
+          </h1>
+          <h1>{this.state.alias ? `${this.state.alias}'s Channels` : ''}</h1>
+
+          <div className="userChannels">
+            {results
+              .map(channelIndex => {
+                if (channelIndex > -1) {
+                  return (
+                    <ChannelsInHome
+                      channelIndex={channelIndex}
+                      drizzle={drizzle}
+                      drizzleState={drizzleState}
+                      clickChannel={this.clickChannel}
+                      key={channelIndex}
+                    />
+                  );
+                }
+                return '';
+              })
+              .reverse()}
+          </div>
+        </div>
       </div>
     );
   }

@@ -112,10 +112,9 @@
   display: flex;
   flex-direction: column;
   width: 100%;
-
 }
 
-.profilePhoto{
+.profilePhoto {
   display: flex;
   margin-right: 10px;
 }
@@ -140,4 +139,11 @@
   justify-content: space-between;
 }
 
+.own-color {
+  color: white;
+}
 
+.flex {
+  display: flex;
+  align-items: center;
+}
