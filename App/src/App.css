@@ -112,10 +112,9 @@
   display: flex;
   flex-direction: column;
   width: 100%;
-
 }
 
-.profilePhoto{
+.profilePhoto {
   display: flex;
   margin-right: 10px;
 }
@@ -140,4 +139,18 @@
   justify-content: space-between;
 }
 
+.main {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
 
+.left {
+  display: flex;
+  flex: 1;
+}
+
+.right {
+  display: flex;
+  flex: 2;
+}

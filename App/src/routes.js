@@ -1,12 +1,13 @@
-import { DrizzleContext } from 'drizzle-react';
-import React, { Component } from 'react';
-import { Route, Switch } from 'react-router-dom';
-import Home from './Home';
+import { DrizzleContext } from "drizzle-react";
+import React, { Component } from "react";
+import { Route, Switch } from "react-router-dom";
+import Home from "./Home";
 
-import AddChannelForm from './AddChannelForm';
-import Navbar from './Navbar';
-import SearchResults from './SearchResults';
-import Channel from './Channel';
+import AddChannelForm from "./AddChannelForm";
+import Navbar from "./Navbar";
+import SearchResults from "./SearchResults";
+import Channel from "./Channel";
+import HomePage from "./HomePage";
 
 export default class Routes extends Component {
   render() {
@@ -67,7 +68,7 @@ export default class Routes extends Component {
                   path="/"
                   render={props => {
                     return (
-                      <Home
+                      <HomePage
                         drizzle={drizzle}
                         drizzleState={drizzleState}
                         props={props}

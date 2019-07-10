@@ -1,29 +1,29 @@
-import React from 'react';
-import { Menu, Segment, Sidebar } from 'semantic-ui-react';
-import { toast, Flip } from 'react-toastify';
+import React from "react";
+import { Menu, Segment, Sidebar } from "semantic-ui-react";
+import { toast, Flip } from "react-toastify";
 
-import ChannelsInHome from './ChannelsInHome';
-import Home from './Home';
+import ChannelsInHome from "./ChannelsInHome";
+import Home from "./Home";
 
 const wordsToIgnore = [
-  'at',
-  'for',
-  'in',
-  'off',
-  'on',
-  'over',
-  'and',
-  'under',
-  'of',
-  'the',
-  'is',
-  'a',
+  "at",
+  "for",
+  "in",
+  "off",
+  "on",
+  "over",
+  "and",
+  "under",
+  "of",
+  "the",
+  "is",
+  "a"
 ];
 
 export default class SidebarExampleSidebar extends React.Component {
   constructor() {
     super();
-    this.state = { search: '', results: [], showSearch: true };
+    this.state = { search: "", results: [], showSearch: true };
   }
 
   componentDidMount() {
@@ -31,13 +31,13 @@ export default class SidebarExampleSidebar extends React.Component {
   }
 
   search = async event => {
-    if (event.key === 'Enter') {
+    if (event.key === "Enter") {
       let channelsLength = this.props.drizzleState.contracts.DappChat
-        .getAllChannelsLength['0x0'].value;
+        .getAllChannelsLength["0x0"].value;
 
       const searchWords = this.state.search
         .toLowerCase()
-        .split(' ')
+        .split(" ")
         .filter(word => {
           return !wordsToIgnore.includes(word);
         });
@@ -67,10 +67,10 @@ export default class SidebarExampleSidebar extends React.Component {
   };
 
   openToast = () => {
-    toast.info('Processing change...', {
-      position: 'top-right',
+    toast.info("Processing change...", {
+      position: "top-right",
       autoClose: 10000,
-      transition: Flip,
+      transition: Flip
     });
   };
 
@@ -122,12 +122,15 @@ export default class SidebarExampleSidebar extends React.Component {
                 drizzle={drizzle}
                 drizzleState={drizzleState}
                 props={props}
+                clickChannel={this.props.clickChannel}
               />
             </Menu.Item>
           </Sidebar>
 
           <Sidebar.Pusher>
-            <div className="channelDisplay"> YO LOOK HERE</div>
+            <div className="channelDisplay" style={{ width: "475px" }}>
+              YO LOOK HERE
+            </div>
           </Sidebar.Pusher>
         </Sidebar.Pushable>
       </div>
