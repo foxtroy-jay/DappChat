@@ -43,7 +43,6 @@ export default class SearchResult extends React.Component {
   render() {
     const { results } = this.state;
     const { drizzle, drizzleState } = this.props;
-    console.log(this.state.userAddress);
     return (
       <div className="App">
         <div className="Home">

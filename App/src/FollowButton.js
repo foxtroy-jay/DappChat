@@ -11,7 +11,7 @@ export default class FollowButton extends React.Component {
     };
   }
 
-  async componentDidMount() {
+  forceUpdate = async () => {
     const { drizzle } = this.props;
     const followedChannels = await drizzle.contracts.DappChat.methods
       .getFollowedChannels()
@@ -28,7 +28,7 @@ export default class FollowButton extends React.Component {
     if (index > -1) {
       this.setState({ channelIndex: index });
     }
-  }
+  };
 
   follow = async () => {
     const { drizzle, drizzleState } = this.props;
@@ -37,11 +37,15 @@ export default class FollowButton extends React.Component {
       this.setState({ loading: true });
 
       if (!this.state.followedStatus) {
+        console.log("follow clicked");
+
         await drizzle.contracts.DappChat.methods
           .followChannel(channelIndex)
           .send({ from: drizzleState.accounts[0] });
         this.setState({ followedStatus: true });
       } else {
+        console.log("unfollow clicked");
+
         await drizzle.contracts.DappChat.methods
           .unfollowChannel(channelIndex)
           .send({ from: drizzleState.accounts[0] });
@@ -52,6 +56,9 @@ export default class FollowButton extends React.Component {
   };
 
   render() {
+    if (this.props.channelIndex !== this.state.channelIndex) {
+      this.forceUpdate();
+    }
     return this.state.followedStatus ? (
       <Button
         loading={this.state.loading}

@@ -1,6 +1,7 @@
-import React from 'react';
-import { DrizzleContext } from 'drizzle-react';
-import HomePage from './HomePage';
+import React from "react";
+import { DrizzleContext } from "drizzle-react";
+import { Loader } from "semantic-ui-react";
+import HomePage from "./HomePage";
 
 export default () => (
   <DrizzleContext.Consumer>
@@ -8,7 +9,12 @@ export default () => (
       const { drizzle, drizzleState, initialized } = drizzleContext;
 
       if (!initialized) {
-        return <h1>'Loading...'</h1>;
+        return (
+          <div>
+            <h1 align="center">Loading...</h1>
+            <Loader active inline="centered" size="massive" />
+          </div>
+        );
       }
       return (
         <div>
