@@ -1,15 +1,15 @@
-import React from 'react';
-import 'react-toastify/dist/ReactToastify.css';
-import ChannelsInHome from './ChannelsInHome';
-import makeBlockie from 'ethereum-blockies-base64';
-import { Popup } from 'semantic-ui-react';
+import React from "react";
+import "react-toastify/dist/ReactToastify.css";
+import ChannelsInHome from "./ChannelsInHome";
+import makeBlockie from "ethereum-blockies-base64";
+import { Popup } from "semantic-ui-react";
 
 const defaultState = {
-  channelName: '',
-  category: '',
+  channelName: "",
+  category: "",
   restrictedStatus: false,
   loading: false,
-  errorMessage: '',
+  errorMessage: ""
 };
 
 export default class Home extends React.Component {
@@ -26,7 +26,9 @@ export default class Home extends React.Component {
     }
     this.props.drizzle.contracts.DappChat.methods.getFollowedChannels.cacheCall();
     this.setState({
-      alias: await this.props.drizzle.contracts.DappChat.methods.aliases(this.state.userAddress).call(),
+      alias: await this.props.drizzle.contracts.DappChat.methods
+        .aliases(this.state.userAddress)
+        .call()
     });
     this.props.drizzle.contracts.DappChat.methods.getAllChannelsLength.cacheCall();
   }
@@ -36,30 +38,35 @@ export default class Home extends React.Component {
     const contractState = this.props.drizzleState.contracts.DappChat;
     let mapArray = [];
 
-    if (contractState.getFollowedChannels['0x0']) {
-      mapArray = contractState.getFollowedChannels['0x0'].value;
+    if (contractState.getFollowedChannels["0x0"]) {
+      mapArray = contractState.getFollowedChannels["0x0"].value;
     }
     return (
       <div className="App">
         <div className="Home">
           <h1>
-            {/* Address: {this.state.userAddress} */}
             {this.state.userAddress ? (
               <Popup
                 content={this.state.userAddress}
                 flowing
                 hoverable
-                trigger={<img alt="blockies" className="blockies" src={makeBlockie(this.state.userAddress)} />}
+                trigger={
+                  <img
+                    alt="blockies"
+                    className="blockies"
+                    src={makeBlockie(this.state.userAddress)}
+                  />
+                }
               />
             ) : (
-              ''
+              ""
             )}
           </h1>
-          <h1>{this.state.alias ? `${this.state.alias}'s Channels` : ''}</h1>
+          <h1>{this.state.alias ? `${this.state.alias}'s Channels` : ""}</h1>
 
           <div className="userChannels">
             {mapArray
-              .map((channelIndex) => {
+              .map(channelIndex => {
                 if (channelIndex > -1) {
                   return (
                     <ChannelsInHome
@@ -71,13 +78,10 @@ export default class Home extends React.Component {
                     />
                   );
                 }
-                return '';
+                return "";
               })
               .reverse()}
           </div>
-          {/* <div className="createChannelBtn">
-            <AddChannelForm drizzle={drizzle} drizzleState={drizzleState} />
-          </div> */}
         </div>
       </div>
     );

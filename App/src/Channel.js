@@ -5,7 +5,6 @@ import ChannelAdminView from "./ChannelAdminView";
 import { toast, Flip } from "react-toastify";
 import { ToastContainer } from "react-toastify";
 import FollowButton from "./FollowButton";
-import { channel } from "redux-saga";
 
 export default class Channel extends React.Component {
   constructor(props) {
@@ -21,7 +20,6 @@ export default class Channel extends React.Component {
     const channelData = await this.props.drizzle.contracts.DappChat.methods
       .getChannelData(this.props.channelIndex)
       .call();
-    // console.log(channelData, "CHANNEL");
     const members = await this.props.drizzle.contracts.DappChat.methods
       .getMembersArray(this.props.channelIndex)
       .call();
