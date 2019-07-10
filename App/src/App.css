@@ -66,6 +66,7 @@
 }
 
 .channelDisplay {
+  /* height: 100vh; */
   height: calc(100vh - 55.52px);
   width: 80vw;
   left: 20%;
@@ -85,8 +86,10 @@
 }
 
 .singleChannel {
-  border: 1px solid black;
-  border-radius: 10px;
+  /* border: 1px solid black; */
+  border-top: 1px solid black;
+  border-bottom: 1px solid black;
+  /* border-radius: 10px; */
   margin-bottom: 1px;
   align-self: center;
   padding: 10px;
@@ -162,4 +165,29 @@
 .flex {
   display: flex;
   align-items: center;
+}
+
+.navbarStyle {
+  background-color: #111d4a;
+}
+
+#navbarStyle {
+  margin-bottom: 0;
+}
+
+#sidebarStyle {
+  background-color: #8789c0;
+  /* background-color: #c2cae8; */
+}
+
+.messageFormStyle {
+  position: fixed;
+  bottom: 10px;
+  width: 65vw;
+}
+
+#messageFormStyle {
+  /* position: fixed; */
+  /* bottom: 10px; */
+  width: 50vw;
 }

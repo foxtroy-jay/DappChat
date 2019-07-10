@@ -12,7 +12,7 @@ export default class Navbar extends React.Component {
     this.state = { search: '' };
   }
 
-  handleInputChange = event => {
+  handleInputChange = (event) => {
     this.setState({ search: event.target.value });
   };
 
@@ -30,7 +30,7 @@ export default class Navbar extends React.Component {
 
   render() {
     return (
-      <div className="ui secondary  menu">
+      <div id="navbarStyle" className="ui navbarStyle three item inverted menu">
         <ToastContainer />
         <div className="item">
           <div>
@@ -38,11 +38,7 @@ export default class Navbar extends React.Component {
           </div>
         </div>
         <div className="item">Explore</div>
-        <EditAlias
-          drizzle={this.props.drizzle}
-          openToast={this.openToast}
-          closeToast={this.closeToast}
-        />
+        <EditAlias drizzle={this.props.drizzle} openToast={this.openToast} closeToast={this.closeToast} />
       </div>
     );
   }
