@@ -1,39 +1,43 @@
-import React from 'react';
-import { Loader } from 'semantic-ui-react';
+import React from "react";
+import { Loader } from "semantic-ui-react";
 
 export default class ChannelDetails extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
-      channelOwner: '',
-      channelName: '',
-      channelCategory: '',
+      channelIndex: null,
+      channelOwner: "",
+      channelName: "",
+      channelCategory: "",
       channelMessages: 0,
-      channelRestrictedStatus: true,
+      channelRestrictedStatus: true
     };
   }
 
-  async componentDidMount() {
+  forceUpdate = async channelIndex => {
     const channelData = await this.props.drizzle.contracts.DappChat.methods
-      .getChannelData(this.props.channelIndex)
+      .getChannelData(channelIndex)
       .call();
     this.props.drizzle.contracts.DappChat.methods.getChannelData.cacheCall(
-      this.props.channelIndex
+      channelIndex
     );
-
+    console.log("CHANNEL DATA ", channelData);
     this.setState({
       channelOwner: channelData[0],
       channelName: channelData[1],
       channelCategory: channelData[2],
       channelMessages: channelData[3],
-      channelRestrictedStatus: channelData[4],
+      channelRestrictedStatus: channelData[4]
     });
-  }
+  };
   render() {
+    if (this.props.channelIndex !== this.state.channelIndex) {
+      this.forceUpdate(this.props.channelIndex);
+    }
     return (
       <div>
         <div>
-          Channel Owner:{' '}
+          Channel Owner:{" "}
           {this.state.channelOwner ? (
             this.state.channelOwner
           ) : (
@@ -41,7 +45,7 @@ export default class ChannelDetails extends React.Component {
           )}
         </div>
         <div>
-          Channel Name:{' '}
+          Channel Name:{" "}
           {this.state.channelName ? (
             this.state.channelName
           ) : (
@@ -49,7 +53,7 @@ export default class ChannelDetails extends React.Component {
           )}
         </div>
         <div>
-          Channel Category:{' '}
+          Channel Category:{" "}
           {this.state.channelCategory ? (
             this.state.channelCategory
           ) : (
@@ -57,7 +61,7 @@ export default class ChannelDetails extends React.Component {
           )}
         </div>
         <div>
-          Restricted: {this.state.channelRestrictedStatus ? 'True' : 'False'}
+          Restricted: {this.state.channelRestrictedStatus ? "True" : "False"}
         </div>
       </div>
     );

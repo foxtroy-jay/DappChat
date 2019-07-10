@@ -1,17 +1,17 @@
-import React, { Component } from 'react';
-import ChannelMessage from './ChannelMessage';
-import ChannelDetails from './ChannelDetails';
+import React, { Component } from "react";
+import ChannelMessage from "./ChannelMessage";
+import ChannelDetails from "./ChannelDetails";
 
 export default class SingleChannelView extends Component {
   // renders a single channel
   constructor(props) {
     super();
     this.state = {
-      channelOwner: '',
-      channelName: '',
-      channelCategory: '',
+      channelOwner: "",
+      channelName: "",
+      channelCategory: "",
       channelMessages: 0,
-      channelRestrictedStatus: true,
+      channelRestrictedStatus: true
     };
   }
 
@@ -26,7 +26,7 @@ export default class SingleChannelView extends Component {
       channelName: channelData[1],
       channelCategory: channelData[2],
       channelMessages: channelData[3],
-      channelRestrictedStatus: channelData[4],
+      channelRestrictedStatus: channelData[4]
     });
   }
 
@@ -70,6 +70,7 @@ export default class SingleChannelView extends Component {
         />,
       );
     }
+
     return (
       <div>
         <ChannelDetails

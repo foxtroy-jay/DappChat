@@ -1,15 +1,15 @@
-import React from 'react';
-import 'react-toastify/dist/ReactToastify.css';
-import AddChannelForm from './AddChannelForm';
-import ChannelsInHome from './ChannelsInHome';
-import makeBlockie from 'ethereum-blockies-base64';
+import React from "react";
+import "react-toastify/dist/ReactToastify.css";
+import AddChannelForm from "./AddChannelForm";
+import ChannelsInHome from "./ChannelsInHome";
+import makeBlockie from "ethereum-blockies-base64";
 
 const defaultState = {
-  channelName: '',
-  category: '',
+  channelName: "",
+  category: "",
   restrictedStatus: false,
   loading: false,
-  errorMessage: '',
+  errorMessage: ""
 };
 
 export default class Home extends React.Component {
@@ -28,7 +28,7 @@ export default class Home extends React.Component {
     this.setState({
       alias: await this.props.drizzle.contracts.DappChat.methods
         .aliases(this.state.userAddress)
-        .call(),
+        .call()
     });
     this.props.drizzle.contracts.DappChat.methods.getAllChannelsLength.cacheCall();
   }
@@ -38,14 +38,14 @@ export default class Home extends React.Component {
     const contractState = this.props.drizzleState.contracts.DappChat;
     let mapArray = [];
 
-    if (contractState.getFollowedChannels['0x0']) {
-      mapArray = contractState.getFollowedChannels['0x0'].value;
+    if (contractState.getFollowedChannels["0x0"]) {
+      mapArray = contractState.getFollowedChannels["0x0"].value;
     }
     return (
       <div className="App">
         <div className="Home">
           <h1>
-            Address: {this.state.userAddress}
+            {/* Address: {this.state.userAddress} */}
             {this.state.userAddress ? (
               <img
                 alt="blockies"
@@ -53,10 +53,10 @@ export default class Home extends React.Component {
                 src={makeBlockie(this.state.userAddress)}
               />
             ) : (
-              ''
+              ""
             )}
           </h1>
-          <h1>{this.state.alias ? `${this.state.alias}'s Channels` : ''}</h1>
+          <h1>{this.state.alias ? `${this.state.alias}'s Channels` : ""}</h1>
 
           <div className="userChannels">
             {mapArray
@@ -67,12 +67,12 @@ export default class Home extends React.Component {
                       channelIndex={channelIndex}
                       drizzle={drizzle}
                       drizzleState={drizzleState}
-                      clickChannel={this.clickChannel}
+                      clickChannel={this.props.clickChannel}
                       key={channelIndex}
                     />
                   );
                 }
-                return '';
+                return "";
               })
               .reverse()}
           </div>

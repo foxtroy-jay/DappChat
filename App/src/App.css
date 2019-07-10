@@ -139,6 +139,20 @@
   justify-content: space-between;
 }
 
+.main {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.left {
+  display: flex;
+  flex: 1;
+}
+
+.right {
+  display: flex;
+  flex: 2;
 .own-color {
   color: white;
 }
