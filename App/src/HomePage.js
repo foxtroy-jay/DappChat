@@ -1,7 +1,6 @@
 import React from 'react';
 import Navbar from './Navbar';
 import SearchSideBar from './SearchSideBar';
-import Home from './Home';
 
 let defaultState = {
   hideSideBar: true,
@@ -18,7 +17,6 @@ export default class HomePage extends React.Component {
   };
   render() {
     const { drizzle, drizzleState } = this.props;
-    const { hideSideBar } = this.state;
     return (
       <div>
         <Navbar
@@ -29,11 +27,7 @@ export default class HomePage extends React.Component {
         {/*         <Home drizzle={drizzle} drizzleState={drizzleState} /> */}
         {/* <AllChannels Component> */}
         {/* <ChatSection Component> */}
-        <SearchSideBar
-          drizzle={drizzle}
-          drizzleState={drizzleState}
-          hideSideBar={hideSideBar}
-        />
+        <SearchSideBar drizzle={drizzle} drizzleState={drizzleState} />
       </div>
     );
   }
