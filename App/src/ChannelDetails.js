@@ -21,13 +21,13 @@ export default class ChannelDetails extends React.Component {
     this.props.drizzle.contracts.DappChat.methods.getChannelData.cacheCall(
       channelIndex
     );
-    console.log("CHANNEL DATA ", channelData);
     this.setState({
       channelOwner: channelData[0],
       channelName: channelData[1],
       channelCategory: channelData[2],
       channelMessages: channelData[3],
-      channelRestrictedStatus: channelData[4]
+      channelRestrictedStatus: channelData[4],
+      channelIndex: this.props.channelIndex
     });
   };
   render() {

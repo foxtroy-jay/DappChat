@@ -18,7 +18,8 @@ export default class ChannelsInHome extends React.Component {
       loading: false,
       errorMessage: "",
       displayReply: false,
-      loadingData: true
+      loadingData: true,
+      channelIndex: 0
     };
   }
   async componentDidMount() {
@@ -39,8 +40,6 @@ export default class ChannelsInHome extends React.Component {
 
       time = `${date.getHours()}:${date.getMinutes()}`;
     }
-
-    console.log("CHANNELS IN HOME ", this.props.ChannelsInHome);
 
     this.setState({
       channel: channelData[1],
