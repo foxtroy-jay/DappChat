@@ -1,12 +1,12 @@
-import React from 'react';
-import ChannelsInHome from './ChannelsInHome';
-import makeBlockie from 'ethereum-blockies-base64';
+import React from "react";
+import ChannelsInHome from "./ChannelsInHome";
+import makeBlockie from "ethereum-blockies-base64";
 
 export default class SearchResult extends React.Component {
   constructor() {
     super();
     this.state = {
-      results: [],
+      results: []
     };
   }
 
@@ -17,7 +17,7 @@ export default class SearchResult extends React.Component {
 
   search = async () => {
     let channelsLength = this.props.drizzleState.contracts.DappChat
-      .getAllChannelsLength['0x0'].value;
+      .getAllChannelsLength["0x0"].value;
 
     const searchWords = this.props.searchWords;
 
@@ -56,10 +56,10 @@ export default class SearchResult extends React.Component {
                 src={makeBlockie(this.state.userAddress)}
               />
             ) : (
-              ''
+              ""
             )}
           </h1>
-          <h1>{this.state.alias ? `${this.state.alias}'s Channels` : ''}</h1>
+          <h1>{this.state.alias ? `${this.state.alias}'s Channels` : ""}</h1>
 
           <div className="userChannels">
             {results
@@ -70,12 +70,12 @@ export default class SearchResult extends React.Component {
                       channelIndex={channelIndex}
                       drizzle={drizzle}
                       drizzleState={drizzleState}
-                      clickChannel={this.clickChannel}
+                      clickChannel={this.props.clickChannel}
                       key={channelIndex}
                     />
                   );
                 }
-                return '';
+                return "";
               })
               .reverse()}
           </div>

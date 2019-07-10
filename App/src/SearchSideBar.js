@@ -1,14 +1,8 @@
 import React from "react";
 import { Menu, Segment, Sidebar } from "semantic-ui-react";
 import { toast, Flip } from "react-toastify";
-
-import ChannelsInHome from "./ChannelsInHome";
 import Home from "./Home";
-import React from 'react';
-import { Menu, Segment, Sidebar } from 'semantic-ui-react';
-import { toast, Flip } from 'react-toastify';
-import Home from './Home';
-import SearchResults from './SearchResults';
+import SearchResults from "./SearchResults";
 
 const wordsToIgnore = [
   "at",
@@ -29,10 +23,10 @@ export default class SidebarExampleSidebar extends React.Component {
   constructor() {
     super();
     this.state = {
-      search: '',
+      search: "",
       results: [],
       showSearch: false,
-      searchWords: [],
+      searchWords: []
     };
   }
 
@@ -41,11 +35,11 @@ export default class SidebarExampleSidebar extends React.Component {
   }
 
   search = async event => {
-//     if (event.key === "Enter") {
-//       let channelsLength = this.props.drizzleState.contracts.DappChat
-//         .getAllChannelsLength["0x0"].value;
+    //     if (event.key === "Enter") {
+    //       let channelsLength = this.props.drizzleState.contracts.DappChat
+    //         .getAllChannelsLength["0x0"].value;
 
-    if (event.key === 'Enter') {
+    if (event.key === "Enter") {
       const searchWords = this.state.search
         .toLowerCase()
         .split(" ")
@@ -108,7 +102,7 @@ export default class SidebarExampleSidebar extends React.Component {
                   value={this.state.search}
                   onKeyPress={this.search}
                 />
-                <i class="search icon" />
+                <i className="search icon" />
               </div>
             </Menu.Item>
             <Menu.Item>
@@ -117,14 +111,14 @@ export default class SidebarExampleSidebar extends React.Component {
                   drizzle={drizzle}
                   drizzleState={drizzleState}
                   searchWords={searchWords}
+                  clickChannel={this.props.clickChannel}
                 />
               ) : (
                 <Home
                   drizzle={drizzle}
                   drizzleState={drizzleState}
                   props={props}
-                                clickChannel={this.props.clickChannel}
-
+                  clickChannel={this.props.clickChannel}
                 />
               )}
             </Menu.Item>

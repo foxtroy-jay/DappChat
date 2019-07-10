@@ -1,5 +1,5 @@
-import React from 'react';
-import { Button } from 'semantic-ui-react';
+import React from "react";
+import { Button } from "semantic-ui-react";
 
 export default class FollowButton extends React.Component {
   constructor() {
@@ -7,7 +7,7 @@ export default class FollowButton extends React.Component {
     this.state = {
       channelIndex: null,
       followedStatus: false,
-      loading: false,
+      loading: false
     };
   }
 
@@ -58,8 +58,8 @@ export default class FollowButton extends React.Component {
         disabled={this.state.loading}
         onClick={this.follow}
       >
-        {' '}
-        Unfollow{' '}
+        {" "}
+        Unfollow{" "}
       </Button>
     ) : (
       <Button
@@ -68,8 +68,8 @@ export default class FollowButton extends React.Component {
         disabled={this.state.loading}
         onClick={this.follow}
       >
-        {' '}
-        Follow{' '}
+        {" "}
+        Follow{" "}
       </Button>
     );
   }

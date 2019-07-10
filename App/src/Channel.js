@@ -5,6 +5,7 @@ import ChannelAdminView from "./ChannelAdminView";
 import { toast, Flip } from "react-toastify";
 import { ToastContainer } from "react-toastify";
 import FollowButton from "./FollowButton";
+import { channel } from "redux-saga";
 
 export default class Channel extends React.Component {
   constructor(props) {
@@ -12,13 +13,15 @@ export default class Channel extends React.Component {
 
     this.state = {
       restricted: false,
-      members: []
+      members: [],
+      channelIndex: null
     };
   }
-  componentDidMount = async () => {
+  forceUpdate = async () => {
     const channelData = await this.props.drizzle.contracts.DappChat.methods
       .getChannelData(this.props.channelIndex)
       .call();
+    // console.log(channelData, "CHANNEL");
     const members = await this.props.drizzle.contracts.DappChat.methods
       .getMembersArray(this.props.channelIndex)
       .call();
@@ -26,7 +29,8 @@ export default class Channel extends React.Component {
       channelOwner: channelData[0],
       restricted: channelData[4],
       userAddress: this.props.drizzleState.accounts[0],
-      members
+      members,
+      channelIndex: this.props.channelIndex
     });
   };
 
@@ -44,26 +48,31 @@ export default class Channel extends React.Component {
 
   checkMember = () => {
     if (this.state.restricted) {
-      return this.state.members.includes(this.state.userAddress);
+      return !this.state.members.includes(this.state.userAddress);
     }
-
     return false;
   };
 
   render() {
     const { channelIndex } = this.props;
     const { drizzle, drizzleState } = this.props;
+    const disabled = this.checkMember();
+
+    if (this.props.channelIndex !== this.state.channelIndex) {
+      this.forceUpdate();
+    }
+
     return (
       <div>
         <ToastContainer />
         <FollowButton
           drizzle={drizzle}
           drizzleState={drizzleState}
-          channelIndex={this.props.channelIndex}
+          channelIndex={channelIndex}
         />
         {this.state.channelOwner === this.state.userAddress ? (
           <ChannelAdminView
-            channelIndex={this.props.channelIndex}
+            channelIndex={channelIndex}
             drizzle={drizzle}
             drizzleState={drizzleState}
             openToast={this.openToast}
@@ -73,14 +82,14 @@ export default class Channel extends React.Component {
           ""
         )}
         <SingleChannelView
-          channelIndex={this.props.channelIndex}
+          channelIndex={channelIndex}
           drizzle={drizzle}
           drizzleState={drizzleState}
         />
         <MessageForm
-          channelIndex={this.props.channelIndex}
+          channelIndex={channelIndex}
           drizzle={drizzle}
-          disabled={!this.checkMember()}
+          disabled={disabled}
         />
       </div>
     );

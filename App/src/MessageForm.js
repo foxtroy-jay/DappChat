@@ -1,17 +1,17 @@
-import React, { Component } from 'react';
-import { toast, Flip } from 'react-toastify';
-import { Button, Form, Message, Input, Icon, Popup } from 'semantic-ui-react';
-import EmojiPicker from 'emoji-picker-react';
+import React, { Component } from "react";
+import { toast, Flip } from "react-toastify";
+import { Button, Form, Message, Input, Icon, Popup } from "semantic-ui-react";
+import EmojiPicker from "emoji-picker-react";
 
 export default class MessageForm extends Component {
   constructor(props) {
     super();
 
     this.state = {
-      currentAddress: '',
-      message: '',
-      errorMessage: '',
-      loading: false, // disables button upon submission
+      currentAddress: "",
+      message: "",
+      errorMessage: "",
+      loading: false // disables button upon submission
     };
   }
 
@@ -19,13 +19,13 @@ export default class MessageForm extends Component {
     const { drizzle } = this.props;
     const currentAddress = await drizzle.web3.eth.getAccounts();
     this.setState({
-      currentAddress: currentAddress[0],
+      currentAddress: currentAddress[0]
     });
   }
 
   handleInputChange = event => {
     this.setState({
-      [event.target.name]: event.target.value,
+      [event.target.name]: event.target.value
     });
   };
 
@@ -33,10 +33,10 @@ export default class MessageForm extends Component {
     event.preventDefault();
     this.setState({ loading: true });
 
-    toast.info('Processing message...', {
-      position: 'top-right',
+    toast.info("Processing message...", {
+      position: "top-right",
       autoClose: 10000,
-      transition: Flip,
+      transition: Flip
     });
     try {
       // sends message to K
@@ -47,7 +47,7 @@ export default class MessageForm extends Component {
       toast.dismiss();
       this.setState({ errorMessage: error.message });
     }
-    this.setState({ loading: false, message: '', errorMessage: '' });
+    this.setState({ loading: false, message: "", errorMessage: "" });
   };
 
   render() {
@@ -76,7 +76,7 @@ export default class MessageForm extends Component {
                   onEmojiClick={code => {
                     let emoji = String.fromCodePoint(`0x${code}`);
                     this.setState({
-                      message: `${this.state.message}${emoji}`,
+                      message: `${this.state.message}${emoji}`
                     });
                   }}
                 />
