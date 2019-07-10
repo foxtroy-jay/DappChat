@@ -1,11 +1,11 @@
-import React from "react";
-import Navbar from "./Navbar";
-import SearchSideBar from "./SearchSideBar";
-import Channel from "./Channel";
+import React from 'react';
+import Navbar from './Navbar';
+import SearchSideBar from './SearchSideBar';
+import Channel from './Channel';
 
 const defaultState = {
   hideSideBar: true,
-  channelIndex: null
+  channelIndex: null,
 };
 
 export default class HomePage extends React.Component {
@@ -19,23 +19,19 @@ export default class HomePage extends React.Component {
     this.setState({ hideSideBar: !this.state.hideSideBar });
   };
 
-  clickChannel = channelIndex => {
+  clickChannel = (channelIndex) => {
     this.setState({ channelIndex });
   };
 
   render() {
     const { drizzle, drizzleState } = this.props;
     return (
-      <div>
+      <div id="bigger">
         <Navbar drizzle={drizzle} drizzleState={drizzleState} />
 
-        <div className="main" style={{ display: "flex" }}>
+        <div className="main" style={{ display: 'flex' }}>
           <div className="left">
-            <SearchSideBar
-              drizzle={drizzle}
-              drizzleState={drizzleState}
-              clickChannel={this.clickChannel}
-            />
+            <SearchSideBar drizzle={drizzle} drizzleState={drizzleState} clickChannel={this.clickChannel} />
           </div>
           {this.state.channelIndex ? (
             <div className="right">
