@@ -43,12 +43,12 @@ export default class SearchResult extends React.Component {
   render() {
     const { results } = this.state;
     const { drizzle, drizzleState } = this.props;
-
+    console.log(this.state.userAddress);
     return (
       <div className="App">
         <div className="Home">
           <h1>
-            Address: {this.state.userAddress}
+            Search
             {this.state.userAddress ? (
               <img
                 alt="blockies"
@@ -62,22 +62,26 @@ export default class SearchResult extends React.Component {
           <h1>{this.state.alias ? `${this.state.alias}'s Channels` : ""}</h1>
 
           <div className="userChannels">
-            {results
-              .map(channelIndex => {
-                if (channelIndex > -1) {
-                  return (
-                    <ChannelsInHome
-                      channelIndex={channelIndex}
-                      drizzle={drizzle}
-                      drizzleState={drizzleState}
-                      clickChannel={this.props.clickChannel}
-                      key={channelIndex}
-                    />
-                  );
-                }
-                return "";
-              })
-              .reverse()}
+            {results.length !== 0 ? (
+              results
+                .map(channelIndex => {
+                  if (channelIndex > -1) {
+                    return (
+                      <ChannelsInHome
+                        channelIndex={channelIndex}
+                        drizzle={drizzle}
+                        drizzleState={drizzleState}
+                        clickChannel={this.props.clickChannel}
+                        key={channelIndex}
+                      />
+                    );
+                  }
+                  return "";
+                })
+                .reverse()
+            ) : (
+              <div>No Search Results!</div>
+            )}
           </div>
         </div>
       </div>

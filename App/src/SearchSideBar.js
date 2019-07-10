@@ -1,5 +1,5 @@
 import React from "react";
-import { Menu, Segment, Sidebar } from "semantic-ui-react";
+import { Menu, Segment, Sidebar, Icon, Input } from "semantic-ui-react";
 import { toast, Flip } from "react-toastify";
 import Home from "./Home";
 import SearchResults from "./SearchResults";
@@ -35,11 +35,9 @@ export default class SidebarExampleSidebar extends React.Component {
   }
 
   search = async event => {
-    //     if (event.key === "Enter") {
-    //       let channelsLength = this.props.drizzleState.contracts.DappChat
-    //         .getAllChannelsLength["0x0"].value;
-
-    if (event.key === "Enter") {
+    this.setState({ showSearch: false });
+    if (event.key === "Enter" || event.key === undefined) {
+      this.setState({ loading: true });
       const searchWords = this.state.search
         .toLowerCase()
         .split(" ")
@@ -87,22 +85,24 @@ export default class SidebarExampleSidebar extends React.Component {
             <Menu.Item>
               <div className="ui input focus flex">
                 {showSearch ? (
-                  <i
-                    className="angle left icon own-color"
+                  <Icon
+                    name="arrow left"
+                    link
+                    inverted
                     onClick={() => this.setState({ showSearch: false })}
                   />
                 ) : (
-                  <i className="search icon own-color" />
+                  ""
                 )}
 
-                <input
+                <Input
                   type="text"
                   placeholder="Search Channels"
                   onChange={this.handleInputChange}
                   value={this.state.search}
                   onKeyPress={this.search}
+                  icon={<Icon name="search" link onClick={this.search} />}
                 />
-                <i className="search icon" />
               </div>
             </Menu.Item>
             <Menu.Item>
