@@ -1,9 +1,10 @@
 import React from 'react';
 import makeBlockie from 'ethereum-blockies-base64';
 import { Popup } from 'semantic-ui-react';
+import { send } from 'q';
 
 export default class ChannelMessage extends React.Component {
-  constructor() {
+  constructor(props) {
     super();
     this.state = {
       messageData: '',
@@ -18,7 +19,7 @@ export default class ChannelMessage extends React.Component {
       .call();
 
     const messageAuthorAlias = await this.props.drizzle.contracts.DappChat.methods.aliases(messageData[1]);
-
+    console.log(messageData[1]);
     this.setState({
       messageData: messageData[0],
       senderAddress: messageData[1],
@@ -32,6 +33,15 @@ export default class ChannelMessage extends React.Component {
   }
 
   render() {
+    let timeStamp;
+    if (this.state.timeStamp) {
+      const date = new Date(this.state.timeStamp * 1000);
+      timeStamp = (
+        <p className="timeStamp">
+          {date.getHours()}:{date.getMinutes()}
+        </p>
+      );
+    }
     let blockie;
     if (this.state.senderAddress) {
       blockie = (
@@ -43,16 +53,36 @@ export default class ChannelMessage extends React.Component {
         />
       );
     }
+    const { userAddress } = this.props;
+    const { senderAddress } = this.state;
+    const speechBubbleSide = userAddress === senderAddress ? 'speech-bubble-right' : 'speech-bubble-left';
+    console.log('user', userAddress, 'sender', senderAddress);
+    console.log(this.props);
     return (
-      <div style={{ border: 'solid' }}>
-        <div>
-          {blockie}
-          <p>{this.state.messageAuthorAlias}</p>
-        </div>
-        <div>
-          <p>{this.state.messageData}</p>
-          <p>{this.state.timeStamp ? this.state.timeStamp : ''}</p>
-        </div>
+      <div>
+        {userAddress === senderAddress ? (
+          <div className="messageContainerRight">
+            <div>
+              {blockie}
+              <p>{this.state.messageAuthorAlias}</p>
+            </div>
+            <div className={speechBubbleSide}>
+              <p>{this.state.messageData}</p>
+              <p>{timeStamp ? timeStamp : ''}</p>
+            </div>
+          </div>
+        ) : (
+          <div className="messageContainerLeft">
+            <div>
+              {blockie}
+              <p>{this.state.messageAuthorAlias}</p>
+            </div>
+            <div className={speechBubbleSide}>
+              <p>{this.state.messageData}</p>
+              <p>{timeStamp ? timeStamp : ''}</p>
+            </div>{' '}
+          </div>
+        )}
       </div>
     );
   }

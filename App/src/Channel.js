@@ -1,11 +1,11 @@
-import React from "react";
-import MessageForm from "./MessageForm";
-import SingleChannelView from "./SingleChannelView";
-import ChannelAdminView from "./ChannelAdminView";
-import { toast, Flip } from "react-toastify";
-import { ToastContainer } from "react-toastify";
-import FollowButton from "./FollowButton";
-import { channel } from "redux-saga";
+import React from 'react';
+import MessageForm from './MessageForm';
+import SingleChannelView from './SingleChannelView';
+import ChannelAdminView from './ChannelAdminView';
+import { toast, Flip } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
+import FollowButton from './FollowButton';
+import { channel } from 'redux-saga';
 
 export default class Channel extends React.Component {
   constructor(props) {
@@ -14,7 +14,7 @@ export default class Channel extends React.Component {
     this.state = {
       restricted: false,
       members: [],
-      channelIndex: null
+      channelIndex: null,
     };
   }
   forceUpdate = async () => {
@@ -22,23 +22,21 @@ export default class Channel extends React.Component {
       .getChannelData(this.props.channelIndex)
       .call();
     // console.log(channelData, "CHANNEL");
-    const members = await this.props.drizzle.contracts.DappChat.methods
-      .getMembersArray(this.props.channelIndex)
-      .call();
+    const members = await this.props.drizzle.contracts.DappChat.methods.getMembersArray(this.props.channelIndex).call();
     this.setState({
       channelOwner: channelData[0],
       restricted: channelData[4],
       userAddress: this.props.drizzleState.accounts[0],
       members,
-      channelIndex: this.props.channelIndex
+      channelIndex: this.props.channelIndex,
     });
   };
 
   openToast = () => {
-    toast.info("Processing change...", {
-      position: "top-right",
+    toast.info('Processing change...', {
+      position: 'top-right',
       autoClose: 10000,
-      transition: Flip
+      transition: Flip,
     });
   };
 
@@ -63,13 +61,9 @@ export default class Channel extends React.Component {
     }
 
     return (
-      <div>
+      <div id="test">
         <ToastContainer />
-        <FollowButton
-          drizzle={drizzle}
-          drizzleState={drizzleState}
-          channelIndex={channelIndex}
-        />
+        <FollowButton drizzle={drizzle} drizzleState={drizzleState} channelIndex={channelIndex} />
         {this.state.channelOwner === this.state.userAddress ? (
           <ChannelAdminView
             channelIndex={channelIndex}
@@ -79,18 +73,15 @@ export default class Channel extends React.Component {
             closeToast={this.closeToast}
           />
         ) : (
-          ""
+          ''
         )}
         <SingleChannelView
           channelIndex={channelIndex}
           drizzle={drizzle}
           drizzleState={drizzleState}
+          userAddress={this.state.userAddress}
         />
-        <MessageForm
-          channelIndex={channelIndex}
-          drizzle={drizzle}
-          disabled={disabled}
-        />
+        <MessageForm channelIndex={channelIndex} drizzle={drizzle} disabled={disabled} />
       </div>
     );
   }
