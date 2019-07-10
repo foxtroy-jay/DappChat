@@ -2,7 +2,6 @@
   /* text-align: center; */
 }
 
-
 .App-logo {
   animation: App-logo-spin infinite 20s linear;
   height: 40vmin;
@@ -78,14 +77,12 @@
   margin-left: 10px;
 }
 
-
 .userChannels {
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
   flex-direction: column;
 }
-
 
 .singleChannel {
   border: 1px solid black;
@@ -134,6 +131,9 @@
   border: solid black 3px;
 }
 
+.closeBtn {
+  cursor: pointer;
+}
 .channelNameAndTime {
   display: flex;
   flex-direction: row;
