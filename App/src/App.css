@@ -153,4 +153,11 @@
 .right {
   display: flex;
   flex: 2;
+.own-color {
+  color: white;
+}
+
+.flex {
+  display: flex;
+  align-items: center;
 }

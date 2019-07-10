@@ -4,6 +4,11 @@ import { toast, Flip } from "react-toastify";
 
 import ChannelsInHome from "./ChannelsInHome";
 import Home from "./Home";
+import React from 'react';
+import { Menu, Segment, Sidebar } from 'semantic-ui-react';
+import { toast, Flip } from 'react-toastify';
+import Home from './Home';
+import SearchResults from './SearchResults';
 
 const wordsToIgnore = [
   "at",
@@ -23,7 +28,12 @@ const wordsToIgnore = [
 export default class SidebarExampleSidebar extends React.Component {
   constructor() {
     super();
-    this.state = { search: "", results: [], showSearch: true };
+    this.state = {
+      search: '',
+      results: [],
+      showSearch: false,
+      searchWords: [],
+    };
   }
 
   componentDidMount() {
@@ -31,10 +41,11 @@ export default class SidebarExampleSidebar extends React.Component {
   }
 
   search = async event => {
-    if (event.key === "Enter") {
-      let channelsLength = this.props.drizzleState.contracts.DappChat
-        .getAllChannelsLength["0x0"].value;
+//     if (event.key === "Enter") {
+//       let channelsLength = this.props.drizzleState.contracts.DappChat
+//         .getAllChannelsLength["0x0"].value;
 
+    if (event.key === 'Enter') {
       const searchWords = this.state.search
         .toLowerCase()
         .split(" ")
@@ -42,23 +53,7 @@ export default class SidebarExampleSidebar extends React.Component {
           return !wordsToIgnore.includes(word);
         });
 
-      let results = [];
-      let channel;
-      for (let i = 0; i < channelsLength; i++) {
-        channel = await this.props.drizzle.contracts.DappChat.methods
-          .getChannelData(i)
-          .call();
-        let channelName = channel[1].toLowerCase();
-
-        let doWeInclude = searchWords.every(word => {
-          return channelName.includes(word);
-        });
-        if (doWeInclude) {
-          results.push(i);
-        }
-      }
-
-      this.setState({ results });
+      this.setState({ searchWords, showSearch: true });
     }
   };
 
@@ -79,9 +74,8 @@ export default class SidebarExampleSidebar extends React.Component {
   };
 
   render() {
-    let status = this.props[Object.keys(this.props)[2]];
-    const { results } = this.state;
     const { drizzle, drizzleState, props } = this.props;
+    const { searchWords, showSearch } = this.state;
     return (
       <div>
         <Sidebar.Pushable as={Segment}>
@@ -97,7 +91,16 @@ export default class SidebarExampleSidebar extends React.Component {
             direction="left"
           >
             <Menu.Item>
-              <div className="ui input focus">
+              <div className="ui input focus flex">
+                {showSearch ? (
+                  <i
+                    className="angle left icon own-color"
+                    onClick={() => this.setState({ showSearch: false })}
+                  />
+                ) : (
+                  <i className="search icon own-color" />
+                )}
+
                 <input
                   type="text"
                   placeholder="Search Channels"
@@ -105,25 +108,25 @@ export default class SidebarExampleSidebar extends React.Component {
                   value={this.state.search}
                   onKeyPress={this.search}
                 />
+                <i class="search icon" />
               </div>
             </Menu.Item>
-            {/* {results.map(idx => {
-              return (
-                <ChannelsInHome
-                  channelIndex={idx}
-                  drizzle={this.props.drizzle}
-                  drizzleState={this.props.drizzleState}
-                  key={idx}
-                />
-              );
-            })} */}
             <Menu.Item>
-              <Home
-                drizzle={drizzle}
-                drizzleState={drizzleState}
-                props={props}
-                clickChannel={this.props.clickChannel}
-              />
+              {showSearch ? (
+                <SearchResults
+                  drizzle={drizzle}
+                  drizzleState={drizzleState}
+                  searchWords={searchWords}
+                />
+              ) : (
+                <Home
+                  drizzle={drizzle}
+                  drizzleState={drizzleState}
+                  props={props}
+                                clickChannel={this.props.clickChannel}
+
+                />
+              )}
             </Menu.Item>
           </Sidebar>
 
