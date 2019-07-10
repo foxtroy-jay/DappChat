@@ -1,6 +1,6 @@
-import React from 'react';
-import makeBlockie from 'ethereum-blockies-base64';
-import { Popup } from 'semantic-ui-react';
+import React from "react";
+import makeBlockie from "ethereum-blockies-base64";
+import { Popup } from "semantic-ui-react";
 
 const msgLength = 45;
 
@@ -9,31 +9,33 @@ export default class ChannelsInHome extends React.Component {
     super(props);
 
     this.state = {
-      channel: '',
-      numOfMessagesInChannel: '',
-      lastMessageInChannel: '',
-      lastMessageSender: '',
-      lastMessageTime: '',
+      channel: "",
+      numOfMessagesInChannel: "",
+      lastMessageInChannel: "",
+      lastMessageSender: "",
+      lastMessageTime: "",
       activeIndex: false,
 
       loading: false,
-      errorMessage: '',
+      errorMessage: "",
       displayReply: false,
       loadingData: true,
-      channelIndex: 0,
+      channelIndex: null
     };
   }
   async componentDidMount() {
     const channelData = await this.props.drizzle.contracts.DappChat.methods
       .getChannelData(this.props.channelIndex)
       .call();
-    this.props.drizzle.contracts.DappChat.methods.getChannelData.cacheCall(this.props.channelIndex);
+    this.props.drizzle.contracts.DappChat.methods.getChannelData.cacheCall(
+      this.props.channelIndex
+    );
 
     const lastMessage = await this.props.drizzle.contracts.DappChat.methods
       .getReplyData(this.props.channelIndex, channelData[3] - 1)
       .call();
-    let time = '';
-    if (lastMessage[3] !== '0') {
+    let time = "";
+    if (lastMessage[3] !== "0") {
       const date = new Date(lastMessage[3] * 1000);
       // time = `${date.getFullYear()} ${date.getMonth()} ${date.getDay()} ${date.getHours()}:${date.getMinutes()}`;
 
@@ -45,14 +47,19 @@ export default class ChannelsInHome extends React.Component {
       numOfMessagesInChannel: channelData[3],
       lastMessageInChannel: lastMessage[0],
       lastMessageSender: lastMessage[1],
-      lastMessageTime: time,
+      lastMessageTime: time
     });
   }
 
   render() {
     const { lastMessageInChannel } = this.state;
     return (
-      <div onClick={() => this.props.clickChannel(this.props.channelIndex)}>
+      <div
+        onClick={() => {
+          console.log("CLICKED");
+          this.props.clickChannel(this.props.channelIndex);
+        }}
+      >
         <div className="singleChannel">
           <div className="profilePhoto">
             {this.state.lastMessageSender ? (
@@ -60,10 +67,16 @@ export default class ChannelsInHome extends React.Component {
                 content={this.state.lastMessageSender}
                 flowing
                 hoverable
-                trigger={<img alt="blockie" className="blockies" src={makeBlockie(this.state.lastMessageSender)} />}
+                trigger={
+                  <img
+                    alt="blockie"
+                    className="blockies"
+                    src={makeBlockie(this.state.lastMessageSender)}
+                  />
+                }
               />
             ) : (
-              ''
+              ""
             )}
           </div>
 
@@ -73,11 +86,9 @@ export default class ChannelsInHome extends React.Component {
               <div>{this.state.lastMessageTime}</div>
             </div>
 
-            {lastMessageInChannel.length > msgLength ? (
-              lastMessageInChannel.slice(0, msgLength) + '...'
-            ) : (
-              lastMessageInChannel
-            )}
+            {lastMessageInChannel.length > msgLength
+              ? lastMessageInChannel.slice(0, msgLength) + "..."
+              : lastMessageInChannel}
           </div>
         </div>
       </div>

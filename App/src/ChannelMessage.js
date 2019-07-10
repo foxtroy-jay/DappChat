@@ -1,16 +1,18 @@
+
 import React from 'react';
 import makeBlockie from 'ethereum-blockies-base64';
 import { Popup } from 'semantic-ui-react';
 import { send } from 'q';
 
+
 export default class ChannelMessage extends React.Component {
   constructor(props) {
     super();
     this.state = {
-      messageData: '',
-      senderAddress: '',
-      timeStamp: '',
-      messageAuthorAlias: '',
+      messageData: "",
+      senderAddress: "",
+      timeStamp: "",
+      messageAuthorAlias: ""
     };
   }
   async componentDidMount() {
@@ -20,15 +22,16 @@ export default class ChannelMessage extends React.Component {
 
     const messageAuthorAlias = await this.props.drizzle.contracts.DappChat.methods.aliases(messageData[1]);
     console.log(messageData[1]);
+
     this.setState({
       messageData: messageData[0],
       senderAddress: messageData[1],
-      timeStamp: messageData[3],
+      timeStamp: messageData[3]
       // messageAuthorAlias
     });
     this.props.drizzle.contracts.DappChat.methods.getMessage.cacheCall(
       this.props.channelIndex,
-      this.props.messageIndex,
+      this.props.messageIndex
     );
   }
 
@@ -49,7 +52,13 @@ export default class ChannelMessage extends React.Component {
           content={this.state.senderAddress}
           flowing
           hoverable
-          trigger={<img alt="blockie" className="blockies" src={makeBlockie(this.state.senderAddress)} />}
+          trigger={
+            <img
+              alt="blockie"
+              className="blockies"
+              src={makeBlockie(this.state.senderAddress)}
+            />
+          }
         />
       );
     }
@@ -59,6 +68,7 @@ export default class ChannelMessage extends React.Component {
     console.log('user', userAddress, 'sender', senderAddress);
     console.log(this.props);
     return (
+
       <div>
         {userAddress === senderAddress ? (
           <div className="messageContainerRight">
@@ -83,6 +93,7 @@ export default class ChannelMessage extends React.Component {
             </div>{' '}
           </div>
         )}
+
       </div>
     );
   }
