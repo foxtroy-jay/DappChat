@@ -41,6 +41,8 @@ export default class Home extends React.Component {
     if (contractState.getFollowedChannels["0x0"]) {
       mapArray = contractState.getFollowedChannels["0x0"].value;
     }
+    console.log(mapArray);
+
     return (
       <div className="App">
         <div className="Home">
