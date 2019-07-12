@@ -5,7 +5,7 @@ const defaultState = {
   addressToAdd: '',
   loading: false,
 };
-export default class channelAdminView extends Component {
+export default class EditChannelForm extends Component {
   constructor() {
     super();
     this.state = { ...defaultState, membersArray: [], showModal: false };
@@ -15,7 +15,9 @@ export default class channelAdminView extends Component {
       .getMembersArray(this.props.channelIndex)
       .call();
 
-    this.props.drizzle.contracts.DappChat.methods.getMembersArray.cacheCall(this.props.channelIndex);
+    this.props.drizzle.contracts.DappChat.methods.getMembersArray.cacheCall(
+      this.props.channelIndex
+    );
 
     this.setState({
       membersArray,
@@ -66,16 +68,19 @@ export default class channelAdminView extends Component {
     this.setState(defaultState);
   };
 
-  handleInputChange = (event) => {
+  handleInputChange = event => {
     this.setState({
       [event.target.name]: event.target.value,
     });
   };
 
   updateMembersArray() {
-    const key = Object.keys(this.props.drizzleState.contracts.DappChat.getMembersArray)[0];
+    const key = Object.keys(
+      this.props.drizzleState.contracts.DappChat.getMembersArray
+    )[0];
     if (key) {
-      return this.props.drizzleState.contracts.DappChat.getMembersArray[key].value;
+      return this.props.drizzleState.contracts.DappChat.getMembersArray[key]
+        .value;
     }
     return [];
   }
@@ -119,7 +124,11 @@ export default class channelAdminView extends Component {
                   return (
                     <li key={idx}>
                       Member Address: {member}
-                      <Icon name={'close'} className={'closeBtn'} onClick={() => this.removeMember(member, idx)} />
+                      <Icon
+                        name={'close'}
+                        className={'closeBtn'}
+                        onClick={() => this.removeMember(member, idx)}
+                      />
                     </li>
                   );
                 } else return '';

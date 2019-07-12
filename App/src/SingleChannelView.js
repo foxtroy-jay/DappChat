@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import ChannelMessage from './ChannelMessage';
 import ChannelDetails from './ChannelDetails';
+import { Container, Segment } from 'semantic-ui-react';
 
 export default class SingleChannelView extends Component {
   // renders a single channel
@@ -19,7 +20,9 @@ export default class SingleChannelView extends Component {
     const channelData = await this.props.drizzle.contracts.DappChat.methods
       .getChannelData(this.props.channelIndex)
       .call();
-    this.props.drizzle.contracts.DappChat.methods.getChannelData.cacheCall(this.props.channelIndex);
+    this.props.drizzle.contracts.DappChat.methods.getChannelData.cacheCall(
+      this.props.channelIndex
+    );
 
     this.setState({
       channelOwner: channelData[0],
@@ -40,7 +43,10 @@ export default class SingleChannelView extends Component {
     let identifier;
     if (keys.length) {
       for (let i = 0; i < keys.length; i++) {
-        if (drizzleState.contracts.DappChat.getChannelData[keys[i]].args[0] === this.props.channelIndex) {
+        if (
+          drizzleState.contracts.DappChat.getChannelData[keys[i]].args[0] ===
+          this.props.channelIndex
+        ) {
           identifier = keys[i];
           break;
         }
@@ -48,7 +54,8 @@ export default class SingleChannelView extends Component {
 
       //   //Finds the newly updated num replies
       if (identifier) {
-        return drizzleState.contracts.DappChat.getChannelData[identifier].value[3];
+        return drizzleState.contracts.DappChat.getChannelData[identifier]
+          .value[3];
       }
       return 0;
     }
@@ -67,19 +74,24 @@ export default class SingleChannelView extends Component {
           drizzle={this.props.drizzle}
           drizzleState={this.props.drizzleState}
           key={idx}
-        />,
+        />
       );
     }
 
     return (
       <div>
-        <ChannelDetails
-          drizzle={this.props.drizzle}
-          drizzleState={this.props.drizzleState}
-          channelIndex={this.props.channelIndex}
-        />
-        <p>Messages: {length}</p>
-        {channelMessageArray.length === 0 ? <h2>No messages yet!</h2> : channelMessageArray}
+        <Segment>
+          <ChannelDetails
+            drizzle={this.props.drizzle}
+            drizzleState={this.props.drizzleState}
+            channelIndex={this.props.channelIndex}
+          />
+        </Segment>
+        {channelMessageArray.length === 0 ? (
+          <h2>No messages yet!</h2>
+        ) : (
+          channelMessageArray
+        )}
       </div>
     );
   }

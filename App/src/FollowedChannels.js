@@ -1,6 +1,6 @@
 import React from 'react';
 import 'react-toastify/dist/ReactToastify.css';
-import ChannelsInHome from './ChannelsInHome';
+import ChannelsInHome from './ChannelInSidebar';
 import makeBlockie from 'ethereum-blockies-base64';
 import { Popup } from 'semantic-ui-react';
 

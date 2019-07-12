@@ -1,14 +1,12 @@
 import React from 'react';
-import MessageForm from './MessageForm';
+import AddMessageForm from './AddMessageForm';
 import SingleChannelView from './SingleChannelView';
-import ChannelAdminView from './ChannelAdminView';
+import EditChannelForm from './EditChannelForm';
 import { toast, Flip } from 'react-toastify';
 import { ToastContainer } from 'react-toastify';
 import FollowButton from './FollowButton';
-import { channel } from 'redux-saga';
 
-
-export default class Channel extends React.Component {
+export default class ChannelDisplay extends React.Component {
   constructor(props) {
     super(props);
 
@@ -23,7 +21,9 @@ export default class Channel extends React.Component {
       .getChannelData(this.props.channelIndex)
       .call();
 
-    const members = await this.props.drizzle.contracts.DappChat.methods.getMembersArray(this.props.channelIndex).call();
+    const members = await this.props.drizzle.contracts.DappChat.methods
+      .getMembersArray(this.props.channelIndex)
+      .call();
 
     this.setState({
       channelOwner: channelData[0],
@@ -65,25 +65,36 @@ export default class Channel extends React.Component {
     return (
       <div id="test">
         <ToastContainer />
-        <FollowButton drizzle={drizzle} drizzleState={drizzleState} channelIndex={channelIndex} />
-        {this.state.channelOwner === this.state.userAddress ? (
-          <ChannelAdminView
-            channelIndex={channelIndex}
+        <div id="editChannelStyle">
+          <FollowButton
             drizzle={drizzle}
             drizzleState={drizzleState}
-            openToast={this.openToast}
-            closeToast={this.closeToast}
+            channelIndex={channelIndex}
           />
-        ) : (
-          ''
-        )}
+          {this.state.channelOwner === this.state.userAddress ? (
+            <EditChannelForm
+              id="editChannelStyle"
+              channelIndex={channelIndex}
+              drizzle={drizzle}
+              drizzleState={drizzleState}
+              openToast={this.openToast}
+              closeToast={this.closeToast}
+            />
+          ) : (
+            ''
+          )}
+        </div>
         <SingleChannelView
           channelIndex={channelIndex}
           drizzle={drizzle}
           drizzleState={drizzleState}
           userAddress={this.state.userAddress}
         />
-        <MessageForm channelIndex={channelIndex} drizzle={drizzle} disabled={disabled} />
+        <AddMessageForm
+          channelIndex={channelIndex}
+          drizzle={drizzle}
+          disabled={disabled}
+        />
       </div>
     );
   }

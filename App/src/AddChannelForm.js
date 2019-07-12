@@ -1,5 +1,5 @@
-import React from "react";
-import { toast, Flip } from "react-toastify";
+import React from 'react';
+import { toast, Flip } from 'react-toastify';
 import {
   Button,
   Form,
@@ -7,21 +7,21 @@ import {
   Modal,
   Icon,
   Input,
-  Select
-} from "semantic-ui-react";
+  Select,
+} from 'semantic-ui-react';
 
 const defaultState = {
-  channelName: "",
-  category: "",
+  channelName: '',
+  category: '',
   restrictedStatus: false,
   loading: false,
-  userAddress: ""
+  userAddress: '',
 };
 
 export default class AddChannelForm extends React.Component {
   constructor() {
     super();
-    this.state = { ...defaultState, errorMessage: "", showModal: false };
+    this.state = { ...defaultState, errorMessage: '', showModal: false };
   }
 
   async componentDidMount() {
@@ -33,7 +33,7 @@ export default class AddChannelForm extends React.Component {
 
   handleInputChange = event => {
     this.setState({
-      [event.target.name]: event.target.value
+      [event.target.name]: event.target.value,
     });
   };
 
@@ -44,10 +44,10 @@ export default class AddChannelForm extends React.Component {
   handleSubmit = async event => {
     event.preventDefault();
     this.setState({ loading: true });
-    toast.info("Processing change...", {
-      position: "top-right",
+    toast.info('Processing change...', {
+      position: 'top-right',
       autoClose: 10000,
-      transition: Flip
+      transition: Flip,
     });
     try {
       await this.props.drizzle.contracts.DappChat.methods
@@ -67,7 +67,7 @@ export default class AddChannelForm extends React.Component {
   };
 
   toggleModal = () => {
-    this.setState({ showModal: !this.state.showModal, errorMessage: "" });
+    this.setState({ showModal: !this.state.showModal, errorMessage: '' });
   };
 
   render() {
@@ -82,7 +82,7 @@ export default class AddChannelForm extends React.Component {
           }
         >
           <Modal.Header>Create A New Channel</Modal.Header>
-          <Icon name={"close"} onClick={this.toggleModal} />
+          <Icon name={'close'} onClick={this.toggleModal} />
           <Form onSubmit={this.handleSubmit} error={!!this.state.errorMessage}>
             <Input
               key="channelName"
@@ -105,8 +105,8 @@ export default class AddChannelForm extends React.Component {
               placeholder="Select"
               onChange={this.handleSelectChange}
               options={[
-                { key: "true", value: true, text: "True" },
-                { key: "false", value: false, text: "False" }
+                { key: 'true', value: true, text: 'True' },
+                { key: 'false', value: false, text: 'False' },
               ]}
             />
             <Message error header="Oops!" content={this.state.errorMessage} />

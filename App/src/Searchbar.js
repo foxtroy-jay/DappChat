@@ -1,7 +1,7 @@
 import React from 'react';
 import { Menu, Segment, Sidebar, Icon, Input } from 'semantic-ui-react';
 import { toast, Flip } from 'react-toastify';
-import Home from './Home';
+import Home from './FollowedChannels';
 import SearchResults from './SearchResults';
 import AddChannelForm from './AddChannelForm';
 
