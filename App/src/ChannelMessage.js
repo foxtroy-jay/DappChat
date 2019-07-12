@@ -1,18 +1,15 @@
-
 import React from 'react';
 import makeBlockie from 'ethereum-blockies-base64';
 import { Popup } from 'semantic-ui-react';
-import { send } from 'q';
-
 
 export default class ChannelMessage extends React.Component {
   constructor(props) {
     super();
     this.state = {
-      messageData: "",
-      senderAddress: "",
-      timeStamp: "",
-      messageAuthorAlias: ""
+      messageData: '',
+      senderAddress: null,
+      timeStamp: '',
+      messageAuthorAlias: '',
     };
   }
   async componentDidMount() {
@@ -20,14 +17,14 @@ export default class ChannelMessage extends React.Component {
       .getReplyData(this.props.channelIndex, this.props.messageIndex)
       .call();
 
-    const messageAuthorAlias = await this.props.drizzle.contracts.DappChat.methods.aliases(messageData[1]);
-    console.log(messageData[1]);
-
+    const messageAuthorAlias = await this.props.drizzle.contracts.DappChat.methods
+      .aliases(messageData[1])
+      .call();
     this.setState({
       messageData: messageData[0],
       senderAddress: messageData[1],
-      timeStamp: messageData[3]
-      // messageAuthorAlias
+      timeStamp: messageData[3],
+      messageAuthorAlias,
     });
     this.props.drizzle.contracts.DappChat.methods.getMessage.cacheCall(
       this.props.channelIndex,
@@ -64,11 +61,13 @@ export default class ChannelMessage extends React.Component {
     }
     const { userAddress } = this.props;
     const { senderAddress } = this.state;
-    const speechBubbleSide = userAddress === senderAddress ? 'speech-bubble-right' : 'speech-bubble-left';
-    console.log('user', userAddress, 'sender', senderAddress);
-    console.log(this.props);
-    return (
-
+    const speechBubbleSide =
+      userAddress === senderAddress
+        ? 'speech-bubble-right'
+        : 'speech-bubble-left';
+    return senderAddress === null ? (
+      <div> 'TEST' </div>
+    ) : (
       <div>
         {userAddress === senderAddress ? (
           <div className="messageContainerRight">
@@ -93,7 +92,6 @@ export default class ChannelMessage extends React.Component {
             </div>{' '}
           </div>
         )}
-
       </div>
     );
   }
