@@ -1,15 +1,15 @@
-import React from "react";
-import "react-toastify/dist/ReactToastify.css";
-import ChannelsInHome from "./ChannelsInHome";
-import makeBlockie from "ethereum-blockies-base64";
-import { Popup } from "semantic-ui-react";
+import React from 'react';
+import 'react-toastify/dist/ReactToastify.css';
+import ChannelsInHome from './ChannelsInHome';
+import makeBlockie from 'ethereum-blockies-base64';
+import { Popup } from 'semantic-ui-react';
 
 const defaultState = {
-  channelName: "",
-  category: "",
+  channelName: '',
+  category: '',
   restrictedStatus: false,
   loading: false,
-  errorMessage: ""
+  errorMessage: '',
 };
 
 export default class Home extends React.Component {
@@ -28,7 +28,7 @@ export default class Home extends React.Component {
     this.setState({
       alias: await this.props.drizzle.contracts.DappChat.methods
         .aliases(this.state.userAddress)
-        .call()
+        .call(),
     });
     this.props.drizzle.contracts.DappChat.methods.getAllChannelsLength.cacheCall();
   }
@@ -38,10 +38,10 @@ export default class Home extends React.Component {
     const contractState = this.props.drizzleState.contracts.DappChat;
     let mapArray = [];
 
-    if (contractState.getFollowedChannels["0x0"]) {
-      mapArray = contractState.getFollowedChannels["0x0"].value;
+    if (contractState.getFollowedChannels['0x0']) {
+      mapArray = contractState.getFollowedChannels['0x0'].value;
     }
-    console.log(mapArray);
+    // console.log(mapArray);
 
     return (
       <div className="App">
@@ -61,10 +61,10 @@ export default class Home extends React.Component {
                 }
               />
             ) : (
-              ""
+              ''
             )}
           </h1>
-          <h1>{this.state.alias ? `${this.state.alias}'s Channels` : ""}</h1>
+          <h1>{this.state.alias ? `${this.state.alias}'s Channels` : ''}</h1>
 
           <div className="userChannels">
             {mapArray
@@ -80,7 +80,7 @@ export default class Home extends React.Component {
                     />
                   );
                 }
-                return "";
+                return '';
               })
               .reverse()}
           </div>

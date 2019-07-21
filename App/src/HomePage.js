@@ -19,19 +19,25 @@ export default class HomePage extends React.Component {
     this.setState({ hideSideBar: !this.state.hideSideBar });
   };
 
-  clickChannel = (channelIndex) => {
-    this.setState({ channelIndex });
+  clickChannel = channelIndex => {
+    this.setState({ channelIndex: channelIndex });
+    console.log(this.state, channelIndex, 'HOME PAGE');
   };
 
   render() {
     const { drizzle, drizzleState } = this.props;
+    console.log(this.state, 'HOMEPAGE STATE');
     return (
       <div id="bigger">
         <Navbar drizzle={drizzle} drizzleState={drizzleState} />
 
         <div className="main" style={{ display: 'flex' }}>
           <div className="left">
-            <SearchSideBar drizzle={drizzle} drizzleState={drizzleState} clickChannel={this.clickChannel} />
+            <SearchSideBar
+              drizzle={drizzle}
+              drizzleState={drizzleState}
+              clickChannel={this.clickChannel}
+            />
           </div>
           {this.state.channelIndex ? (
             <div className="right">
@@ -39,7 +45,7 @@ export default class HomePage extends React.Component {
                 drizzle={drizzle}
                 drizzleState={drizzleState}
                 channelIndex={this.state.channelIndex}
-                props={this.props.props}
+                // props={this.props.props}
               />
             </div>
           ) : (

@@ -5,8 +5,6 @@ import ChannelAdminView from './ChannelAdminView';
 import { toast, Flip } from 'react-toastify';
 import { ToastContainer } from 'react-toastify';
 import FollowButton from './FollowButton';
-import { channel } from 'redux-saga';
-
 
 export default class Channel extends React.Component {
   constructor(props) {
@@ -18,12 +16,19 @@ export default class Channel extends React.Component {
       channelIndex: null,
     };
   }
-  forceUpdate = async () => {
+
+  componentDidMount() {
+    this.fetchData(this.props.channelIndex);
+  }
+
+  fetchData = async channelIndex => {
     const channelData = await this.props.drizzle.contracts.DappChat.methods
-      .getChannelData(this.props.channelIndex)
+      .getChannelData(channelIndex)
       .call();
 
-    const members = await this.props.drizzle.contracts.DappChat.methods.getMembersArray(this.props.channelIndex).call();
+    const members = await this.props.drizzle.contracts.DappChat.methods
+      .getMembersArray(channelIndex)
+      .call();
 
     this.setState({
       channelOwner: channelData[0],
@@ -58,14 +63,17 @@ export default class Channel extends React.Component {
     const { drizzle, drizzleState } = this.props;
     const disabled = this.checkMember();
 
-    if (this.props.channelIndex !== this.state.channelIndex) {
-      this.forceUpdate();
-    }
+    console.log(this.state, 'CHANNEL STATE');
+    console.log(this.props, 'CHANNELS PROPS');
 
     return (
       <div id="test">
         <ToastContainer />
-        <FollowButton drizzle={drizzle} drizzleState={drizzleState} channelIndex={channelIndex} />
+        <FollowButton
+          drizzle={drizzle}
+          drizzleState={drizzleState}
+          channelIndex={channelIndex}
+        />
         {this.state.channelOwner === this.state.userAddress ? (
           <ChannelAdminView
             channelIndex={channelIndex}
@@ -83,7 +91,11 @@ export default class Channel extends React.Component {
           drizzleState={drizzleState}
           userAddress={this.state.userAddress}
         />
-        <MessageForm channelIndex={channelIndex} drizzle={drizzle} disabled={disabled} />
+        <MessageForm
+          channelIndex={channelIndex}
+          drizzle={drizzle}
+          disabled={disabled}
+        />
       </div>
     );
   }

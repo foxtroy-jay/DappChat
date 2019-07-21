@@ -1,38 +1,44 @@
-
 import React from 'react';
 import makeBlockie from 'ethereum-blockies-base64';
 import { Popup } from 'semantic-ui-react';
-import { send } from 'q';
-
 
 export default class ChannelMessage extends React.Component {
   constructor(props) {
     super();
     this.state = {
-      messageData: "",
-      senderAddress: "",
-      timeStamp: "",
-      messageAuthorAlias: ""
+      messageData: '',
+      senderAddress: '',
+      timeStamp: '',
+      messageAuthorAlias: '',
     };
   }
   async componentDidMount() {
+    this.fetchMessage();
+  }
+
+  componentDidUpdate(prevProps) {
+    if (this.props.channelIndex !== prevProps.channelIndex) {
+      this.fetchMessage();
+    }
+  }
+
+  async fetchMessage() {
     const messageData = await this.props.drizzle.contracts.DappChat.methods
       .getReplyData(this.props.channelIndex, this.props.messageIndex)
       .call();
 
-    const messageAuthorAlias = await this.props.drizzle.contracts.DappChat.methods.aliases(messageData[1]);
-    console.log(messageData[1]);
-
     this.setState({
       messageData: messageData[0],
       senderAddress: messageData[1],
-      timeStamp: messageData[3]
-      // messageAuthorAlias
+      timeStamp: messageData[3],
     });
-    this.props.drizzle.contracts.DappChat.methods.getMessage.cacheCall(
-      this.props.channelIndex,
-      this.props.messageIndex
-    );
+  }
+
+  checkSender() {
+    if (this.props.userAddress === this.state.senderAddress) {
+      return ['messageContainerRight', 'speech-bubble-right'];
+    }
+    return ['messageContainerLeft', 'speech-bubble-left'];
   }
 
   render() {
@@ -40,9 +46,9 @@ export default class ChannelMessage extends React.Component {
     if (this.state.timeStamp) {
       const date = new Date(this.state.timeStamp * 1000);
       timeStamp = (
-        <p className="timeStamp">
+        <div className="timeStamp">
           {date.getHours()}:{date.getMinutes()}
-        </p>
+        </div>
       );
     }
     let blockie;
@@ -62,38 +68,20 @@ export default class ChannelMessage extends React.Component {
         />
       );
     }
-    const { userAddress } = this.props;
-    const { senderAddress } = this.state;
-    const speechBubbleSide = userAddress === senderAddress ? 'speech-bubble-right' : 'speech-bubble-left';
-    console.log('user', userAddress, 'sender', senderAddress);
-    console.log(this.props);
+
+    const messageOrientation = this.checkSender();
     return (
-
       <div>
-        {userAddress === senderAddress ? (
-          <div className="messageContainerRight">
-            <div>
-              {blockie}
-              <p>{this.state.messageAuthorAlias}</p>
-            </div>
-            <div className={speechBubbleSide}>
-              <p>{this.state.messageData}</p>
-              <p>{timeStamp ? timeStamp : ''}</p>
-            </div>
+        <div className={messageOrientation[0]}>
+          <div>
+            {blockie}
+            <div>{this.state.messageAuthorAlias}</div>
           </div>
-        ) : (
-          <div className="messageContainerLeft">
-            <div>
-              {blockie}
-              <p>{this.state.messageAuthorAlias}</p>
-            </div>
-            <div className={speechBubbleSide}>
-              <p>{this.state.messageData}</p>
-              <p>{timeStamp ? timeStamp : ''}</p>
-            </div>{' '}
+          <div className={messageOrientation[1]}>
+            <div>{this.state.messageData}</div>
+            <div>{timeStamp ? timeStamp : ''}</div>
           </div>
-        )}
-
+        </div>
       </div>
     );
   }
