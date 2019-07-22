@@ -23,13 +23,13 @@ export default class MessageForm extends Component {
     });
   }
 
-  handleInputChange = (event) => {
+  handleInputChange = event => {
     this.setState({
       [event.target.name]: event.target.value,
     });
   };
 
-  handleSubmit = async (event) => {
+  handleSubmit = async event => {
     event.preventDefault();
     this.setState({ loading: true });
 
@@ -53,7 +53,11 @@ export default class MessageForm extends Component {
   render() {
     return (
       <div className="messageFormStyle">
-        <Form onSubmit={this.handleSubmit} error={!!this.state.errorMessage} warning={this.props.disabled}>
+        <Form
+          onSubmit={this.handleSubmit}
+          error={!!this.state.errorMessage}
+          warning={this.props.disabled}
+        >
           <Message warning header="Oops!" content="This chat is restricted" />
           <Input
             id="messageFormStyle"
@@ -64,9 +68,13 @@ export default class MessageForm extends Component {
             placeholder="Message"
             onChange={this.handleInputChange}
             icon={
-              <Popup disabled={this.props.disabled} trigger={<Icon name="smile outline" link />} on="click">
+              <Popup
+                disabled={this.props.disabled}
+                trigger={<Icon name="smile outline" link />}
+                on="click"
+              >
                 <EmojiPicker
-                  onEmojiClick={(code) => {
+                  onEmojiClick={code => {
                     let emoji = String.fromCodePoint(`0x${code}`);
                     this.setState({
                       message: `${this.state.message}${emoji}`,
@@ -79,7 +87,10 @@ export default class MessageForm extends Component {
             position="bottom center"
           />
           <Message error header="Oops!" content={this.state.errorMessage} />
-          <Button disabled={this.props.disabled || this.state.loading} loading={this.state.loading}>
+          <Button
+            disabled={this.props.disabled || this.state.loading}
+            loading={this.state.loading}
+          >
             Message
           </Button>
         </Form>

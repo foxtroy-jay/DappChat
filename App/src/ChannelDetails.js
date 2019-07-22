@@ -1,5 +1,5 @@
 import React from 'react';
-import { Loader } from 'semantic-ui-react';
+import { Loader, Container } from 'semantic-ui-react';
 
 export default class ChannelDetails extends React.Component {
   constructor(props) {
@@ -25,8 +25,7 @@ export default class ChannelDetails extends React.Component {
   }
 
   fetchData() {
-    const channelData = this.props.drizzleState.contracts.DappChat
-      .getChannelData[this.props.channelAddress].value;
+    const channelData = this.props.drizzleState.contracts.DappChat.getChannelData[this.props.channelAddress].value;
     this.setState({
       channelOwner: channelData[0],
       channelName: channelData[1],
@@ -39,35 +38,19 @@ export default class ChannelDetails extends React.Component {
 
   render() {
     return (
-      <div>
+      <Container textAlign="justified">
         <div>
-          Channel Owner:{' '}
-          {this.state.channelOwner ? (
-            this.state.channelOwner
-          ) : (
-            <Loader size="mini" active inline />
-          )}
+          Channel Owner: {this.state.channelOwner ? this.state.channelOwner : <Loader size="mini" active inline />}
         </div>
         <div>
-          Channel Name:{' '}
-          {this.state.channelName ? (
-            this.state.channelName
-          ) : (
-            <Loader size="mini" active inline />
-          )}
+          Channel Name: {this.state.channelName ? this.state.channelName : <Loader size="mini" active inline />}
         </div>
         <div>
           Channel Category:{' '}
-          {this.state.channelCategory ? (
-            this.state.channelCategory
-          ) : (
-            <Loader size="mini" active inline />
-          )}
+          {this.state.channelCategory ? this.state.channelCategory : <Loader size="mini" active inline />}
         </div>
-        <div>
-          Restricted: {this.state.channelRestrictedStatus ? 'True' : 'False'}
-        </div>
-      </div>
+        <div>Restricted: {this.state.channelRestrictedStatus ? 'True' : 'False'}</div>
+      </Container>
     );
   }
 }

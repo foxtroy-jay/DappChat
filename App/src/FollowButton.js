@@ -1,5 +1,6 @@
 import React from 'react';
 import { Button } from 'semantic-ui-react';
+// import EditChannelForm from './EditChannelForm';
 
 export default class FollowButton extends React.Component {
   constructor() {
@@ -14,13 +15,9 @@ export default class FollowButton extends React.Component {
 
   async componentDidMount() {
     const { drizzle } = this.props;
-    const followedChannels = await drizzle.contracts.DappChat.methods
-      .getFollowedChannels()
-      .call();
+    const followedChannels = await drizzle.contracts.DappChat.methods.getFollowedChannels().call();
 
-    const followedStatus = followedChannels.includes(
-      this.props.channelIndex.toString()
-    );
+    const followedStatus = followedChannels.includes(this.props.channelIndex.toString());
 
     this.setState({ followedStatus: followedStatus });
     const index = followedChannels.indexOf(this.props.channelIndex);
@@ -35,14 +32,10 @@ export default class FollowButton extends React.Component {
     try {
       this.setState({ loading: true });
       if (!this.state.followedStatus) {
-        await drizzle.contracts.DappChat.methods
-          .followChannel(channelIndex)
-          .send({ from: drizzleState.accounts[0] });
+        await drizzle.contracts.DappChat.methods.followChannel(channelIndex).send({ from: drizzleState.accounts[0] });
         this.setState({ followedStatus: true });
       } else {
-        await drizzle.contracts.DappChat.methods
-          .unfollowChannel(channelIndex)
-          .send({ from: drizzleState.accounts[0] });
+        await drizzle.contracts.DappChat.methods.unfollowChannel(channelIndex).send({ from: drizzleState.accounts[0] });
         this.setState({ followedStatus: false });
       }
     } catch (error) {}
@@ -51,21 +44,13 @@ export default class FollowButton extends React.Component {
 
   render() {
     return this.state.followedStatus ? (
-      <Button
-        loading={this.state.loading}
-        disabled={this.state.loading}
-        onClick={this.follow}
-      >
+      <Button loading={this.state.loading} disabled={this.state.loading} onClick={this.follow}>
         {' '}
         Unfollow{' '}
       </Button>
     ) : (
-      <Button
-        primary
-        loading={this.state.loading}
-        disabled={this.state.loading}
-        onClick={this.follow}
-      >
+      // </Button>
+      <Button primary loading={this.state.loading} disabled={this.state.loading} onClick={this.follow}>
         {' '}
         Follow{' '}
       </Button>
