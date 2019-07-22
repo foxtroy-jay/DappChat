@@ -7,7 +7,11 @@ import {
   Modal,
   Icon,
   Input,
+<<<<<<< HEAD
+  Checkbox,
+=======
   Select,
+>>>>>>> master
 } from 'semantic-ui-react';
 
 const defaultState = {
@@ -38,7 +42,7 @@ export default class AddChannelForm extends React.Component {
   };
 
   handleSelectChange = (event, restriction) => {
-    this.setState({ restrictedStatus: restriction.value });
+    this.setState({ restrictedStatus: restriction.checked });
   };
 
   handleSubmit = async event => {
@@ -98,16 +102,20 @@ export default class AddChannelForm extends React.Component {
               placeholder="Channel Category"
               onChange={this.handleInputChange}
             />
-            <Select
+            <Checkbox
+              toggle
+              label={<label>Restricted Chat</label>}
+              fitted={true}
               key="restrictedStatus"
-              name="restrictedStatus"
-              // value={this.state.restrictedStatus}
-              placeholder="Select"
               onChange={this.handleSelectChange}
+<<<<<<< HEAD
+              checked={this.state.restrictedStatus}
+=======
               options={[
                 { key: 'true', value: true, text: 'True' },
                 { key: 'false', value: false, text: 'False' },
               ]}
+>>>>>>> master
             />
             <Message error header="Oops!" content={this.state.errorMessage} />
             <Button
