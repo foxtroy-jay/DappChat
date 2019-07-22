@@ -1,18 +1,6 @@
 import React from 'react';
 import { toast, Flip } from 'react-toastify';
-import {
-  Button,
-  Form,
-  Message,
-  Modal,
-  Icon,
-  Input,
-<<<<<<< HEAD
-  Checkbox,
-=======
-  Select,
->>>>>>> master
-} from 'semantic-ui-react';
+import { Button, Form, Message, Modal, Icon, Input, Checkbox } from 'semantic-ui-react';
 
 const defaultState = {
   channelName: '',
@@ -35,7 +23,7 @@ export default class AddChannelForm extends React.Component {
     }
   }
 
-  handleInputChange = event => {
+  handleInputChange = (event) => {
     this.setState({
       [event.target.name]: event.target.value,
     });
@@ -45,7 +33,7 @@ export default class AddChannelForm extends React.Component {
     this.setState({ restrictedStatus: restriction.checked });
   };
 
-  handleSubmit = async event => {
+  handleSubmit = async (event) => {
     event.preventDefault();
     this.setState({ loading: true });
     toast.info('Processing change...', {
@@ -55,11 +43,7 @@ export default class AddChannelForm extends React.Component {
     });
     try {
       await this.props.drizzle.contracts.DappChat.methods
-        .addChannelStruct(
-          this.state.channelName,
-          this.state.category,
-          this.state.restrictedStatus
-        )
+        .addChannelStruct(this.state.channelName, this.state.category, this.state.restrictedStatus)
         .send({ from: this.state.userAddress });
       this.setState({ showModal: false });
     } catch (error) {
@@ -108,21 +92,11 @@ export default class AddChannelForm extends React.Component {
               fitted={true}
               key="restrictedStatus"
               onChange={this.handleSelectChange}
-<<<<<<< HEAD
               checked={this.state.restrictedStatus}
-=======
-              options={[
-                { key: 'true', value: true, text: 'True' },
-                { key: 'false', value: false, text: 'False' },
-              ]}
->>>>>>> master
+              options={[ { key: 'true', value: true, text: 'True' }, { key: 'false', value: false, text: 'False' } ]}
             />
             <Message error header="Oops!" content={this.state.errorMessage} />
-            <Button
-              primary
-              loading={this.state.loading}
-              disabled={this.state.loading}
-            >
+            <Button primary loading={this.state.loading} disabled={this.state.loading}>
               Create New Channel
             </Button>
           </Form>
