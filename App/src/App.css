@@ -270,3 +270,7 @@
   color: #111d4a;
   font-size: 1rem;
 }
+
+.singleChannel:hover {
+  background-color: #111d4a;
+}
