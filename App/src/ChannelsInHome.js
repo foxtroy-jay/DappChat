@@ -1,6 +1,6 @@
-import React from "react";
-import makeBlockie from "ethereum-blockies-base64";
-import { Popup } from "semantic-ui-react";
+import React from 'react';
+import makeBlockie from 'ethereum-blockies-base64';
+import { Popup } from 'semantic-ui-react';
 
 const msgLength = 45;
 
@@ -9,18 +9,18 @@ export default class ChannelsInHome extends React.Component {
     super(props);
 
     this.state = {
-      channel: "",
-      numOfMessagesInChannel: "",
-      lastMessageInChannel: "",
-      lastMessageSender: "",
-      lastMessageTime: "",
+      channel: '',
+      numOfMessagesInChannel: '',
+      lastMessageInChannel: '',
+      lastMessageSender: '',
+      lastMessageTime: '',
       activeIndex: false,
 
       loading: false,
-      errorMessage: "",
+      errorMessage: '',
       displayReply: false,
       loadingData: true,
-      channelIndex: null
+      channelIndex: null,
     };
   }
   async componentDidMount() {
@@ -34,8 +34,8 @@ export default class ChannelsInHome extends React.Component {
     const lastMessage = await this.props.drizzle.contracts.DappChat.methods
       .getReplyData(this.props.channelIndex, channelData[3] - 1)
       .call();
-    let time = "";
-    if (lastMessage[3] !== "0") {
+    let time = '';
+    if (lastMessage[3] !== '0') {
       const date = new Date(lastMessage[3] * 1000);
       // time = `${date.getFullYear()} ${date.getMonth()} ${date.getDay()} ${date.getHours()}:${date.getMinutes()}`;
 
@@ -47,7 +47,7 @@ export default class ChannelsInHome extends React.Component {
       numOfMessagesInChannel: channelData[3],
       lastMessageInChannel: lastMessage[0],
       lastMessageSender: lastMessage[1],
-      lastMessageTime: time
+      lastMessageTime: time,
     });
   }
 
@@ -56,7 +56,6 @@ export default class ChannelsInHome extends React.Component {
     return (
       <div
         onClick={() => {
-          console.log("CLICKED");
           this.props.clickChannel(this.props.channelIndex);
         }}
       >
@@ -76,7 +75,7 @@ export default class ChannelsInHome extends React.Component {
                 }
               />
             ) : (
-              ""
+              ''
             )}
           </div>
 
@@ -87,7 +86,7 @@ export default class ChannelsInHome extends React.Component {
             </div>
 
             {lastMessageInChannel.length > msgLength
-              ? lastMessageInChannel.slice(0, msgLength) + "..."
+              ? lastMessageInChannel.slice(0, msgLength) + '...'
               : lastMessageInChannel}
           </div>
         </div>
