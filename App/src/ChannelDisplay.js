@@ -1,12 +1,12 @@
 import React from 'react';
-import MessageForm from './MessageForm';
+import AddMessageForm from './AddMessageForm';
 import SingleChannelView from './SingleChannelView';
-import ChannelAdminView from './ChannelAdminView';
+import EditChannelForm from './EditChannelForm';
 import { toast, Flip } from 'react-toastify';
 import { ToastContainer } from 'react-toastify';
 import FollowButton from './FollowButton';
 
-export default class Channel extends React.Component {
+export default class ChannelDisplay extends React.Component {
   constructor(props) {
     super(props);
 
@@ -21,6 +21,7 @@ export default class Channel extends React.Component {
     this.fetchData(this.props.channelIndex);
   }
 
+<<<<<<< HEAD:App/src/Channel.js
   componentDidUpdate(prevProps) {
     if (this.props.channelIndex !== prevProps.channelIndex) {
       this.fetchData(this.props.channelIndex);
@@ -34,6 +35,12 @@ export default class Channel extends React.Component {
     const members = await this.props.drizzle.contracts.DappChat.methods
       .getMembersArray(channelIndex)
       .call();
+=======
+  fetchData = async (channelIndex) => {
+    const channelData = await this.props.drizzle.contracts.DappChat.methods.getChannelData(channelIndex).call();
+
+    const members = await this.props.drizzle.contracts.DappChat.methods.getMembersArray(channelIndex).call();
+>>>>>>> master:App/src/ChannelDisplay.js
 
     this.setState({
       channelOwner: channelData[0],
@@ -71,33 +78,28 @@ export default class Channel extends React.Component {
     return (
       <div id="test">
         <ToastContainer />
-        <FollowButton
-          drizzle={drizzle}
-          drizzleState={drizzleState}
-          channelIndex={channelIndex}
-        />
-        {this.state.channelOwner === this.state.userAddress ? (
-          <ChannelAdminView
-            channelIndex={channelIndex}
-            drizzle={drizzle}
-            drizzleState={drizzleState}
-            openToast={this.openToast}
-            closeToast={this.closeToast}
-          />
-        ) : (
-          ''
-        )}
+        <div id="editChannelStyle">
+          <FollowButton drizzle={drizzle} drizzleState={drizzleState} channelIndex={channelIndex} />
+          {this.state.channelOwner === this.state.userAddress ? (
+            <EditChannelForm
+              id="editChannelStyle"
+              channelIndex={channelIndex}
+              drizzle={drizzle}
+              drizzleState={drizzleState}
+              openToast={this.openToast}
+              closeToast={this.closeToast}
+            />
+          ) : (
+            ''
+          )}
+        </div>
         <SingleChannelView
           channelIndex={channelIndex}
           drizzle={drizzle}
           drizzleState={drizzleState}
           userAddress={this.state.userAddress}
         />
-        <MessageForm
-          channelIndex={channelIndex}
-          drizzle={drizzle}
-          disabled={disabled}
-        />
+        <AddMessageForm channelIndex={channelIndex} drizzle={drizzle} disabled={disabled} />
       </div>
     );
   }

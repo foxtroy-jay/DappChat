@@ -2,23 +2,11 @@ import React from 'react';
 import { Menu, Segment, Sidebar, Icon, Input } from 'semantic-ui-react';
 import { toast, Flip } from 'react-toastify';
 import ChannelList from './ChannelList';
+// import Home from './FollowedChannels';
 import SearchResults from './SearchResults';
 import AddChannelForm from './AddChannelForm';
 
-const wordsToIgnore = [
-  'at',
-  'for',
-  'in',
-  'off',
-  'on',
-  'over',
-  'and',
-  'under',
-  'of',
-  'the',
-  'is',
-  'a',
-];
+const wordsToIgnore = [ 'at', 'for', 'in', 'off', 'on', 'over', 'and', 'under', 'of', 'the', 'is', 'a' ];
 
 export default class SidebarExampleSidebar extends React.Component {
   constructor() {
@@ -35,22 +23,19 @@ export default class SidebarExampleSidebar extends React.Component {
     this.props.drizzle.contracts.DappChat.methods.getAllChannelsLength.cacheCall();
   }
 
-  search = async event => {
+  search = async (event) => {
     this.setState({ showSearch: false });
     if (event.key === 'Enter' || event.key === undefined) {
       this.setState({ loading: true });
-      const searchWords = this.state.search
-        .toLowerCase()
-        .split(' ')
-        .filter(word => {
-          return !wordsToIgnore.includes(word);
-        });
+      const searchWords = this.state.search.toLowerCase().split(' ').filter((word) => {
+        return !wordsToIgnore.includes(word);
+      });
 
       this.setState({ searchWords, showSearch: true });
     }
   };
 
-  handleInputChange = event => {
+  handleInputChange = (event) => {
     this.setState({ search: event.target.value });
   };
 
@@ -86,14 +71,9 @@ export default class SidebarExampleSidebar extends React.Component {
             <Menu.Item>
               <div className="ui input focus flex" id="searchInputBox">
                 {showSearch ? (
-                  <Icon
-                    name="arrow left"
-                    link
-                    inverted
-                    onClick={() => this.setState({ showSearch: false })}
-                  />
+                  <Icon name="arrow left" link inverted onClick={() => this.setState({ showSearch: false })} />
                 ) : (
-                  ''
+                  <Icon name="arrow right" link inverted />
                 )}
 
                 <Input

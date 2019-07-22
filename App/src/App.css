@@ -263,3 +263,16 @@
 .singleChannel:hover {
   background-color: #111d4a;
 }
+
+#editChannelStyle {
+  display: flex;
+  justify-content: space-between;
+}
+
+#unfollow {
+  width: 15 vw;
+}
+
+#follow {
+  width: 15 vw;
+}

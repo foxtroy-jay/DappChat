@@ -22,20 +22,17 @@ export default class SearchResult extends React.Component {
   }
 
   search = async () => {
-    let channelsLength = this.props.drizzleState.contracts.DappChat
-      .getAllChannelsLength['0x0'].value;
+    let channelsLength = this.props.drizzleState.contracts.DappChat.getAllChannelsLength['0x0'].value;
 
     const searchWords = this.props.searchWords;
 
     let results = [];
     let channel;
     for (let i = 0; i < channelsLength; i++) {
-      channel = await this.props.drizzle.contracts.DappChat.methods
-        .getChannelData(i)
-        .call();
+      channel = await this.props.drizzle.contracts.DappChat.methods.getChannelData(i).call();
       let channelName = channel[1].toLowerCase();
 
-      let doWeInclude = searchWords.every(word => {
+      let doWeInclude = searchWords.every((word) => {
         return channelName.includes(word);
       });
       if (doWeInclude) {
@@ -55,11 +52,7 @@ export default class SearchResult extends React.Component {
           <h1>
             Search
             {this.state.userAddress ? (
-              <img
-                alt="blockies"
-                className="blockies"
-                src={makeBlockie(this.state.userAddress)}
-              />
+              <img alt="blockies" className="blockies" src={makeBlockie(this.state.userAddress)} />
             ) : (
               ''
             )}
@@ -69,7 +62,7 @@ export default class SearchResult extends React.Component {
           <div className="userChannels">
             {results.length !== 0 ? (
               results
-                .map(channelIndex => {
+                .map((channelIndex) => {
                   if (channelIndex > -1) {
                     return (
                       <SingleChannelList

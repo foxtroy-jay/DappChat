@@ -7,7 +7,7 @@ export default class ChannelMessage extends React.Component {
     super();
     this.state = {
       messageData: '',
-      senderAddress: '',
+      senderAddress: null,
       timeStamp: '',
       messageAuthorAlias: '',
     };
@@ -27,18 +27,20 @@ export default class ChannelMessage extends React.Component {
       .getReplyData(this.props.channelIndex, this.props.messageIndex)
       .call();
 
+    const messageAuthorAlias = await this.props.drizzle.contracts.DappChat.methods.aliases(messageData[1]).call();
     this.setState({
       messageData: messageData[0],
       senderAddress: messageData[1],
       timeStamp: messageData[3],
+      messageAuthorAlias,
     });
   }
 
   checkSender() {
     if (this.props.userAddress === this.state.senderAddress) {
-      return ['messageContainerRight', 'speech-bubble-right'];
+      return [ 'messageContainerRight', 'speech-bubble-right' ];
     }
-    return ['messageContainerLeft', 'speech-bubble-left'];
+    return [ 'messageContainerLeft', 'speech-bubble-left' ];
   }
 
   createBlockie() {
@@ -47,13 +49,7 @@ export default class ChannelMessage extends React.Component {
         content={this.state.senderAddress}
         flowing
         hoverable
-        trigger={
-          <img
-            alt="blockie"
-            className="blockies"
-            src={makeBlockie(this.state.senderAddress)}
-          />
-        }
+        trigger={<img alt="blockie" className="blockies" src={makeBlockie(this.state.senderAddress)} />}
       />
     );
   }
@@ -86,6 +82,7 @@ export default class ChannelMessage extends React.Component {
             <div>{timeStamp ? timeStamp : ''}</div>
           </div>
         </div>
+        )}
       </div>
     );
   }

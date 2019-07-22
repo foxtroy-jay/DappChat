@@ -7,7 +7,11 @@ import {
   Modal,
   Icon,
   Input,
+<<<<<<< HEAD
   Checkbox,
+=======
+  Select,
+>>>>>>> master
 } from 'semantic-ui-react';
 
 const defaultState = {
@@ -104,7 +108,14 @@ export default class AddChannelForm extends React.Component {
               fitted={true}
               key="restrictedStatus"
               onChange={this.handleSelectChange}
+<<<<<<< HEAD
               checked={this.state.restrictedStatus}
+=======
+              options={[
+                { key: 'true', value: true, text: 'True' },
+                { key: 'false', value: false, text: 'False' },
+              ]}
+>>>>>>> master
             />
             <Message error header="Oops!" content={this.state.errorMessage} />
             <Button
