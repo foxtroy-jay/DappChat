@@ -1,5 +1,6 @@
-import React from "react";
-import { Button } from "semantic-ui-react";
+import React from 'react';
+import { Button } from 'semantic-ui-react';
+import EditChannelForm from './EditChannelForm';
 
 export default class FollowButton extends React.Component {
   constructor() {
@@ -8,7 +9,7 @@ export default class FollowButton extends React.Component {
       channelIndex: null,
       channelNumber: null,
       followedStatus: false,
-      loading: false
+      loading: false,
     };
   }
 
@@ -60,18 +61,19 @@ export default class FollowButton extends React.Component {
         disabled={this.state.loading}
         onClick={this.follow}
       >
-        {" "}
-        Unfollow{" "}
+        {' '}
+        Unfollow{' '}
       </Button>
     ) : (
+      // </Button>
       <Button
         primary
         loading={this.state.loading}
         disabled={this.state.loading}
         onClick={this.follow}
       >
-        {" "}
-        Follow{" "}
+        {' '}
+        Follow{' '}
       </Button>
     );
   }

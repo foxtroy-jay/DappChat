@@ -1,16 +1,16 @@
-import React from "react";
-import { Loader } from "semantic-ui-react";
+import React from 'react';
+import { Loader, Container } from 'semantic-ui-react';
 
 export default class ChannelDetails extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       channelIndex: null,
-      channelOwner: "",
-      channelName: "",
-      channelCategory: "",
+      channelOwner: '',
+      channelName: '',
+      channelCategory: '',
       channelMessages: 0,
-      channelRestrictedStatus: true
+      channelRestrictedStatus: true,
     };
   }
 
@@ -27,7 +27,7 @@ export default class ChannelDetails extends React.Component {
       channelCategory: channelData[2],
       channelMessages: channelData[3],
       channelRestrictedStatus: channelData[4],
-      channelIndex: this.props.channelIndex
+      channelIndex: this.props.channelIndex,
     });
   };
   render() {
@@ -35,9 +35,9 @@ export default class ChannelDetails extends React.Component {
       this.forceUpdate(this.props.channelIndex);
     }
     return (
-      <div>
+      <Container textAlign="justified">
         <div>
-          Channel Owner:{" "}
+          Channel Owner:{' '}
           {this.state.channelOwner ? (
             this.state.channelOwner
           ) : (
@@ -45,7 +45,7 @@ export default class ChannelDetails extends React.Component {
           )}
         </div>
         <div>
-          Channel Name:{" "}
+          Channel Name:{' '}
           {this.state.channelName ? (
             this.state.channelName
           ) : (
@@ -53,7 +53,7 @@ export default class ChannelDetails extends React.Component {
           )}
         </div>
         <div>
-          Channel Category:{" "}
+          Channel Category:{' '}
           {this.state.channelCategory ? (
             this.state.channelCategory
           ) : (
@@ -61,9 +61,9 @@ export default class ChannelDetails extends React.Component {
           )}
         </div>
         <div>
-          Restricted: {this.state.channelRestrictedStatus ? "True" : "False"}
+          Restricted: {this.state.channelRestrictedStatus ? 'True' : 'False'}
         </div>
-      </div>
+      </Container>
     );
   }
 }
