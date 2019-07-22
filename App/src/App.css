@@ -1,7 +1,3 @@
-.App {
-  /* text-align: center; */
-}
-
 .App-logo {
   animation: App-logo-spin infinite 20s linear;
   height: 40vmin;
@@ -66,7 +62,6 @@
 }
 
 .channelDisplay {
-  /* height: 100vh; */
   height: calc(100vh - 55.52px);
   width: 80vw;
   left: 20%;
@@ -86,10 +81,8 @@
 }
 
 .singleChannel {
-  /* border: 1px solid black; */
   border-top: 1px solid black;
   border-bottom: 1px solid black;
-  /* border-radius: 10px; */
   margin-bottom: 1px;
   align-self: center;
   padding: 10px;
@@ -156,7 +149,6 @@
 .right {
   display: flex;
   flex: 2;
-  /* width: 65vw; */
 }
 
 #bigger {
@@ -181,7 +173,6 @@
 
 #sidebarStyle {
   background-color: #8789c0;
-  /* background-color: #c2cae8; */
 }
 
 #searchInputBox {
@@ -203,8 +194,6 @@
 }
 
 #messageFormStyle {
-  /* position: fixed; */
-  /* bottom: 10px; */
   width: 50vw;
 }
 

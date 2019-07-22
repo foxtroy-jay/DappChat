@@ -39,14 +39,13 @@ export default class SingleChannelView extends Component {
   fetchChannelAddress = () => {
     const { channelIndex, drizzleState } = this.props;
     const keys = Object.keys(drizzleState.contracts.DappChat.getChannelData);
-
     //Searches through the ChannelData arguments, matches the index, and saves identifier
     let identifier;
     if (keys.length) {
       for (let i = 0; i < keys.length; i++) {
         if (
-          drizzleState.contracts.DappChat.getChannelData[keys[i]].args[0] ===
-          channelIndex
+          +drizzleState.contracts.DappChat.getChannelData[keys[i]].args[0] ===
+          +channelIndex
         ) {
           identifier = keys[i];
           break;

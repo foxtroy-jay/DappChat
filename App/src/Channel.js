@@ -21,11 +21,16 @@ export default class Channel extends React.Component {
     this.fetchData(this.props.channelIndex);
   }
 
+  componentDidUpdate(prevProps) {
+    if (this.props.channelIndex !== prevProps.channelIndex) {
+      this.fetchData(this.props.channelIndex);
+    }
+  }
+
   fetchData = async channelIndex => {
     const channelData = await this.props.drizzle.contracts.DappChat.methods
       .getChannelData(channelIndex)
       .call();
-
     const members = await this.props.drizzle.contracts.DappChat.methods
       .getMembersArray(channelIndex)
       .call();
