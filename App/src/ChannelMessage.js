@@ -3,7 +3,7 @@ import makeBlockie from 'ethereum-blockies-base64';
 import { Popup } from 'semantic-ui-react';
 
 export default class ChannelMessage extends React.Component {
-  constructor(props) {
+  constructor() {
     super();
     this.state = {
       messageData: '',
@@ -12,7 +12,7 @@ export default class ChannelMessage extends React.Component {
       messageAuthorAlias: '',
     };
   }
-  async componentDidMount() {
+  componentDidMount() {
     this.fetchMessage();
   }
 
@@ -41,6 +41,23 @@ export default class ChannelMessage extends React.Component {
     return ['messageContainerLeft', 'speech-bubble-left'];
   }
 
+  createBlockie() {
+    return (
+      <Popup
+        content={this.state.senderAddress}
+        flowing
+        hoverable
+        trigger={
+          <img
+            alt="blockie"
+            className="blockies"
+            src={makeBlockie(this.state.senderAddress)}
+          />
+        }
+      />
+    );
+  }
+
   render() {
     let timeStamp;
     if (this.state.timeStamp) {
@@ -53,20 +70,7 @@ export default class ChannelMessage extends React.Component {
     }
     let blockie;
     if (this.state.senderAddress) {
-      blockie = (
-        <Popup
-          content={this.state.senderAddress}
-          flowing
-          hoverable
-          trigger={
-            <img
-              alt="blockie"
-              className="blockies"
-              src={makeBlockie(this.state.senderAddress)}
-            />
-          }
-        />
-      );
+      blockie = this.createBlockie();
     }
 
     const messageOrientation = this.checkSender();

@@ -14,19 +14,27 @@ export default class ChannelDetails extends React.Component {
     };
   }
 
+  componentDidMount() {
+    this.fetchData();
+  }
+
   componentDidUpdate(prevProps) {
     if (this.props.channelAddress !== prevProps.channelAddress) {
-      const channelData = this.props.drizzleState.contracts.DappChat
-        .getChannelData[this.props.channelAddress].value;
-      this.setState({
-        channelOwner: channelData[0],
-        channelName: channelData[1],
-        channelCategory: channelData[2],
-        channelMessages: channelData[3],
-        channelRestrictedStatus: channelData[4],
-        channelIndex: this.props.channelIndex,
-      });
+      this.fetchData();
     }
+  }
+
+  fetchData() {
+    const channelData = this.props.drizzleState.contracts.DappChat
+      .getChannelData[this.props.channelAddress].value;
+    this.setState({
+      channelOwner: channelData[0],
+      channelName: channelData[1],
+      channelCategory: channelData[2],
+      channelMessages: channelData[3],
+      channelRestrictedStatus: channelData[4],
+      channelIndex: this.props.channelIndex,
+    });
   }
 
   render() {

@@ -1,7 +1,5 @@
 import React from 'react';
-// import { Menu, SearchResult, SearchResults, Search } from 'semantic-ui-react';
 import EditAlias from './EditAlias';
-// import SearchPage from './SearchResults';
 import { toast, Flip } from 'react-toastify';
 import { ToastContainer } from 'react-toastify';
 import logo from './assets/dappChat.jpg';
@@ -12,7 +10,7 @@ export default class Navbar extends React.Component {
     this.state = { search: '' };
   }
 
-  handleInputChange = (event) => {
+  handleInputChange = event => {
     this.setState({ search: event.target.value });
   };
 
@@ -37,8 +35,13 @@ export default class Navbar extends React.Component {
             <img className="logo" alt="dappChat" src={logo} />
           </div>
         </div>
-        <div className="item">Explore</div>
-        <EditAlias drizzle={this.props.drizzle} openToast={this.openToast} closeToast={this.closeToast} />
+        <div className="item" />
+        <EditAlias
+          drizzle={this.props.drizzle}
+          openToast={this.openToast}
+          closeToast={this.closeToast}
+          id="editAliasButton"
+        />
       </div>
     );
   }

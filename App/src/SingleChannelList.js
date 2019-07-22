@@ -4,7 +4,7 @@ import { Popup } from 'semantic-ui-react';
 
 const msgLength = 45;
 
-export default class ChannelsInHome extends React.Component {
+export default class SingleChannelList extends React.Component {
   constructor(props) {
     super(props);
 
@@ -41,7 +41,6 @@ export default class ChannelsInHome extends React.Component {
 
       time = `${date.getHours()}:${date.getMinutes()}`;
     }
-    // console.log(channelData, 'CIH CDM');
     this.setState({
       channelIndex: this.props.channelIndex,
       channelName: channelData[1],
@@ -57,7 +56,6 @@ export default class ChannelsInHome extends React.Component {
     return (
       <div
         onClick={() => {
-          console.log('CLICKED', this.props, this.state);
           this.props.clickChannel(this.props.channelIndex);
         }}
       >

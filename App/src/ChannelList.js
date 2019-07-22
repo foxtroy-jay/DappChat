@@ -1,6 +1,6 @@
 import React from 'react';
 import 'react-toastify/dist/ReactToastify.css';
-import ChannelsInHome from './ChannelsInHome';
+import SingleChannelList from './SingleChannelList';
 import makeBlockie from 'ethereum-blockies-base64';
 import { Popup } from 'semantic-ui-react';
 
@@ -12,7 +12,7 @@ const defaultState = {
   errorMessage: '',
 };
 
-export default class Home extends React.Component {
+export default class ChannelList extends React.Component {
   constructor(props, context) {
     super(props);
     this.drizzleState = context.drizzle;
@@ -41,7 +41,6 @@ export default class Home extends React.Component {
     if (contractState.getFollowedChannels['0x0']) {
       mapArray = contractState.getFollowedChannels['0x0'].value;
     }
-    // console.log(mapArray);
 
     return (
       <div className="App">
@@ -71,7 +70,7 @@ export default class Home extends React.Component {
               .map(channelIndex => {
                 if (channelIndex > -1) {
                   return (
-                    <ChannelsInHome
+                    <SingleChannelList
                       channelIndex={channelIndex}
                       drizzle={drizzle}
                       drizzleState={drizzleState}

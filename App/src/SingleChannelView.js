@@ -3,9 +3,10 @@ import ChannelMessage from './ChannelMessage';
 import ChannelDetails from './ChannelDetails';
 
 export default class SingleChannelView extends Component {
-  constructor(props) {
+  constructor() {
     super();
     this.state = {
+      channelIndex: null,
       channelOwner: '',
       channelName: '',
       channelAddress: '',
@@ -19,20 +20,27 @@ export default class SingleChannelView extends Component {
     this.props.drizzle.contracts.DappChat.methods.getChannelData.cacheCall(
       this.props.channelIndex
     );
-    this.setState({ channelMessages: this.fetchMessageCountAndAddress() });
+
+    this.setState({
+      channelMessages: this.fetchMessageCount(),
+      channelAddress: this.fetchChannelAddress(),
+    });
   }
 
   componentDidUpdate(prevProps) {
     if (this.props.channelIndex !== prevProps.channelIndex) {
-      this.setState({ channelMessages: this.fetchMessageCountAndAddress() });
+      this.setState({
+        channelMessages: this.fetchMessageCount(),
+        channelAddress: this.fetchChannelAddress(),
+      });
     }
   }
 
-  fetchMessageCountAndAddress = () => {
+  fetchChannelAddress = () => {
     const { channelIndex, drizzleState } = this.props;
     const keys = Object.keys(drizzleState.contracts.DappChat.getChannelData);
 
-    // //Searches through the ChannelData arguments, matches the index, and saves identifier
+    //Searches through the ChannelData arguments, matches the index, and saves identifier
     let identifier;
     if (keys.length) {
       for (let i = 0; i < keys.length; i++) {
@@ -44,22 +52,26 @@ export default class SingleChannelView extends Component {
           break;
         }
       }
-
-      //Finds the newly number of messages and sets the channel address
-      if (identifier) {
-        this.setState({ channelAddress: identifier });
-        return drizzleState.contracts.DappChat.getChannelData[identifier]
-          .value[3];
-      }
-
-      //If not in ChannelData message count should be 0
-      return 0;
+      return identifier;
     }
+  };
+
+  fetchMessageCount = () => {
+    const { drizzleState } = this.props;
+    let identifier = this.fetchChannelAddress();
+
+    //Finds the updated number of messages
+    if (identifier) {
+      return drizzleState.contracts.DappChat.getChannelData[identifier]
+        .value[3];
+    }
+
+    //If address doesn't exist in ChannelData message count should be 0
+    return 0;
   };
 
   generateMessages() {
     let channelMessageArray = [];
-
     if (
       this.props.drizzleState.drizzleStatus.initialized &&
       this.state.channelAddress
@@ -71,7 +83,6 @@ export default class SingleChannelView extends Component {
       if (length !== this.state.channelMessages) {
         this.setState({ channelMessages: length });
       }
-
       for (let idx = 0; idx < length; idx++) {
         channelMessageArray.push(
           <ChannelMessage
@@ -89,15 +100,16 @@ export default class SingleChannelView extends Component {
 
   render() {
     let channelMessageArray = this.generateMessages();
-
     return (
       <div>
-        <ChannelDetails
-          drizzle={this.props.drizzle}
-          drizzleState={this.props.drizzleState}
-          channelIndex={this.props.channelIndex}
-          channelAddress={this.state.channelAddress}
-        />
+        {this.state.channelAddress && (
+          <ChannelDetails
+            drizzle={this.props.drizzle}
+            drizzleState={this.props.drizzleState}
+            channelIndex={this.props.channelIndex}
+            channelAddress={this.state.channelAddress}
+          />
+        )}
         <p>Messages: {this.state.channelMessages}</p>
         {channelMessageArray.length === 0 ? (
           <h2>No messages yet!</h2>

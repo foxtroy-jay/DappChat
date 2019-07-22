@@ -63,9 +63,6 @@ export default class Channel extends React.Component {
     const { drizzle, drizzleState } = this.props;
     const disabled = this.checkMember();
 
-    console.log(this.state, 'CHANNEL STATE');
-    console.log(this.props, 'CHANNELS PROPS');
-
     return (
       <div id="test">
         <ToastContainer />
