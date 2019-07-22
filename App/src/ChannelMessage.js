@@ -82,7 +82,6 @@ export default class ChannelMessage extends React.Component {
             <div>{timeStamp ? timeStamp : ''}</div>
           </div>
         </div>
-        )}
       </div>
     );
   }
