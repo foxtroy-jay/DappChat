@@ -1,16 +1,4 @@
-<p align="center">
-  <img src="https://github.com/xMNG/dappchatwebsite/blob/master/img/tech/dappchatWhiteBg.png" width="350" title="DappChat">
-</p>
-
-
-DappChat is a real time messaging app hosted on the Ethereum blockchain. By storing our data on the blockchain, DappChat allows people from around the world to communicate without restrictions. 
-
-Many people around the world live in oppressive regimes and do not have the right of free speech. They are prevented from sharing literature, censored from current events, and prohibited from criticizing bad actors in their government. Our tool allows people to share information and peacefully coordinate, free from unwanted interference.
-
-----
 Instructions to have a working DappChat
-
-----
 
 1. Delete contracts folder in App/src/contracts
 

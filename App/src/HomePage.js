@@ -4,7 +4,6 @@ import SearchSideBar from './SearchSideBar';
 import Channel from './Channel';
 
 const defaultState = {
-  hideSideBar: true,
   channelIndex: null,
 };
 
@@ -15,12 +14,9 @@ export default class HomePage extends React.Component {
     this.state = defaultState;
   }
 
-  toggleSidebar = () => {
-    this.setState({ hideSideBar: !this.state.hideSideBar });
-  };
-
-  clickChannel = (channelIndex) => {
-    this.setState({ channelIndex });
+  clickChannel = channelIndex => {
+    //Need to convert channel index to string for all conditional checks
+    this.setState({ channelIndex: `${channelIndex}` });
   };
 
   render() {
@@ -31,7 +27,11 @@ export default class HomePage extends React.Component {
 
         <div className="main" style={{ display: 'flex' }}>
           <div className="left">
-            <SearchSideBar drizzle={drizzle} drizzleState={drizzleState} clickChannel={this.clickChannel} />
+            <SearchSideBar
+              drizzle={drizzle}
+              drizzleState={drizzleState}
+              clickChannel={this.clickChannel}
+            />
           </div>
           {this.state.channelIndex ? (
             <div className="right">
@@ -39,7 +39,6 @@ export default class HomePage extends React.Component {
                 drizzle={drizzle}
                 drizzleState={drizzleState}
                 channelIndex={this.state.channelIndex}
-                props={this.props.props}
               />
             </div>
           ) : (

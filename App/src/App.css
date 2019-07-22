@@ -184,6 +184,14 @@
   /* background-color: #c2cae8; */
 }
 
+#searchInputBox {
+  justify-content: flex-end;
+}
+
+.item:nth-child(4) {
+  cursor: pointer;
+}
+
 #test {
   width: 55vw;
 }
@@ -214,7 +222,7 @@
 .speech-bubble-left {
   position: relative;
   background: #8789c0;
-  border-radius: .4em;
+  border-radius: 0.4em;
   margin-left: 20px;
   margin-bottom: 20px;
   box-shadow: 2px 2px 1px 1px grey;
@@ -238,7 +246,7 @@
 .speech-bubble-right {
   position: relative;
   background: #00aabb;
-  border-radius: .4em;
+  border-radius: 0.4em;
   margin-right: 20px;
   margin-bottom: 20px;
   border: 1px solid grey;
@@ -261,4 +269,8 @@
 .timeStamp {
   color: #111d4a;
   font-size: 1rem;
+}
+
+.singleChannel:hover {
+  background-color: #111d4a;
 }

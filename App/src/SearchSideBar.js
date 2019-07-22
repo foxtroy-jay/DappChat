@@ -1,33 +1,33 @@
-import React from "react";
-import { Menu, Segment, Sidebar, Icon, Input } from "semantic-ui-react";
-import { toast, Flip } from "react-toastify";
-import Home from "./Home";
-import SearchResults from "./SearchResults";
-import AddChannelForm from "./AddChannelForm";
+import React from 'react';
+import { Menu, Segment, Sidebar, Icon, Input } from 'semantic-ui-react';
+import { toast, Flip } from 'react-toastify';
+import ChannelList from './ChannelList';
+import SearchResults from './SearchResults';
+import AddChannelForm from './AddChannelForm';
 
 const wordsToIgnore = [
-  "at",
-  "for",
-  "in",
-  "off",
-  "on",
-  "over",
-  "and",
-  "under",
-  "of",
-  "the",
-  "is",
-  "a"
+  'at',
+  'for',
+  'in',
+  'off',
+  'on',
+  'over',
+  'and',
+  'under',
+  'of',
+  'the',
+  'is',
+  'a',
 ];
 
 export default class SidebarExampleSidebar extends React.Component {
   constructor() {
     super();
     this.state = {
-      search: "",
+      search: '',
       results: [],
       showSearch: false,
-      searchWords: []
+      searchWords: [],
     };
   }
 
@@ -37,11 +37,11 @@ export default class SidebarExampleSidebar extends React.Component {
 
   search = async event => {
     this.setState({ showSearch: false });
-    if (event.key === "Enter" || event.key === undefined) {
+    if (event.key === 'Enter' || event.key === undefined) {
       this.setState({ loading: true });
       const searchWords = this.state.search
         .toLowerCase()
-        .split(" ")
+        .split(' ')
         .filter(word => {
           return !wordsToIgnore.includes(word);
         });
@@ -55,10 +55,10 @@ export default class SidebarExampleSidebar extends React.Component {
   };
 
   openToast = () => {
-    toast.info("Processing change...", {
-      position: "top-right",
+    toast.info('Processing change...', {
+      position: 'top-right',
       autoClose: 10000,
-      transition: Flip
+      transition: Flip,
     });
   };
 
@@ -74,17 +74,17 @@ export default class SidebarExampleSidebar extends React.Component {
         <Sidebar.Pushable as={Segment}>
           <Sidebar
             as={Menu}
+            id="sidebarStyle"
             animation="overlay"
             icon="labeled"
             inverted
-            onHide={this.handleSidebarHide}
             vertical
             visible={true}
             width="very wide"
             direction="left"
           >
             <Menu.Item>
-              <div className="ui input focus flex">
+              <div className="ui input focus flex" id="searchInputBox">
                 {showSearch ? (
                   <Icon
                     name="arrow left"
@@ -93,7 +93,7 @@ export default class SidebarExampleSidebar extends React.Component {
                     onClick={() => this.setState({ showSearch: false })}
                   />
                 ) : (
-                  ""
+                  ''
                 )}
 
                 <Input
@@ -120,7 +120,7 @@ export default class SidebarExampleSidebar extends React.Component {
                   clickChannel={this.props.clickChannel}
                 />
               ) : (
-                <Home
+                <ChannelList
                   drizzle={drizzle}
                   drizzleState={drizzleState}
                   props={props}
@@ -131,7 +131,7 @@ export default class SidebarExampleSidebar extends React.Component {
           </Sidebar>
 
           <Sidebar.Pusher>
-            <div className="channelDisplay" style={{ width: "475px" }}>
+            <div className="channelDisplay" style={{ width: '475px' }}>
               YO LOOK HERE
             </div>
           </Sidebar.Pusher>
