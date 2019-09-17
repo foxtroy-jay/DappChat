@@ -5,7 +5,7 @@
 
 DappChat is a real time messaging app hosted on the Ethereum blockchain. By storing our data on the blockchain, DappChat allows people from around the world to communicate without restrictions. 
 
-Many people around the world live in oppressive regimes and do not have the right of free speech. They are prevented from sharing literature, censored from current events, and prohibited from criticizing bad actors in their government. Our tool allows people to share information and peacefully coordinate, free from unwanted interference.
+Many people around the world live in oppressive regimes and do not have the right of free speech. They are prevented from sharing literature, censored from current events, and prohibited from criticizing bad actors in their government. Our tool allows people to share information and peacefully coordinate, free from unwanted interference. Live demo here: https://youtu.be/--pYZHsWzXQ.
 
 ----
 Instructions to have a working DappChat
