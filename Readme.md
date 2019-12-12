@@ -1,7 +1,10 @@
+
 <p align="center">
   <img src="https://raw.githubusercontent.com/xMNG/dappchatwebsite/master/img/tech/dappchatWhiteBg1.jpg" width="350" title="DappChat">
 </p>
 
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com)
+[![License: asd](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 DappChat is a real time messaging app hosted on the Ethereum blockchain. By storing our data on the blockchain, DappChat allows people from around the world to communicate without restrictions.
 
