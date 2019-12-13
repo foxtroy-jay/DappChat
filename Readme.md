@@ -1,26 +1,27 @@
+
 <p align="center">
-  <img src="https://github.com/xMNG/dappchatwebsite/blob/master/img/tech/dappchatWhiteBg.png" width="350" title="DappChat">
+  <img src="https://raw.githubusercontent.com/xMNG/dappchatwebsite/master/img/tech/dappchatWhiteBg1.jpg" width="350" title="DappChat">
 </p>
 
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com)
+[![License: asd](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-DappChat is a real time messaging app hosted on the Ethereum blockchain. By storing our data on the blockchain, DappChat allows people from around the world to communicate without restrictions. 
+DappChat is a real time messaging app hosted on the Ethereum blockchain. By storing our data on the blockchain, DappChat allows people from around the world to communicate without restrictions.
 
-Many people around the world live in oppressive regimes and do not have the right of free speech. They are prevented from sharing literature, censored from current events, and prohibited from criticizing bad actors in their government. Our tool allows people to share information and peacefully coordinate, free from unwanted interference. Live demo here: https://youtu.be/--pYZHsWzXQ.
+Many people around the world live in oppressive regimes and do not have the right of free speech. They are prevented from sharing literature, censored from current events, and prohibited from criticizing bad actors in their government. Our tool allows people to share information and peacefully coordinate, free from unwanted interference. [Live demo](https://youtu.be/--pYZHsWzXQ).
 
 ----
 Instructions to have a working DappChat
-
 ----
-
-1. "npm i" on root directory and app directory
+1. `npm i` on root directory and app directory
 
 2. Download and open up Ganache (https://www.trufflesuite.com/ganache)
 
-3. Compile contracts using command "truffle compile" (If you do not have truffle installed globally
-   use "./node_modules/.bin/truffle compile")
+3. Compile contracts using command `truffle compile` (If you do not have truffle installed globally
+   use `./node_modules/.bin/truffle compile`)
 
-4. Migrate using command "truffle migrate" (If you do not have truffle installed globally
-   use "./node_modules/.bin/truffle migrate")
+4. Migrate using command `truffle migrate` (If you do not have truffle installed globally
+   use `./node_modules/.bin/truffle migrate`)
 
 5. Create a .secret file in your root directory.
 
@@ -33,4 +34,4 @@ Instructions to have a working DappChat
 
 9. Change metamask network to localhost 8545
 
-10. "npm run start" in App folder
+10. `npm run start` in App folder
