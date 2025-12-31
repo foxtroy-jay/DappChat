@@ -16,7 +16,7 @@
   "license": "ISC",
   "dependencies": {
     "truffle": "^5.0.25",
-    "truffle-hdwallet-provider": "^1.0.12"
+    "truffle-hdwallet-provider": "^1.0.17"
   },
   "browserslist": {
     "production": [
